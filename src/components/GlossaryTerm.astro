@@ -1,0 +1,19 @@
+---
+interface Props {
+  term: string;
+  short: string;
+  detail: string;
+}
+
+const { term, short, detail } = Astro.props;
+---
+
+<span class="glossary-term">
+  <button class="glossary-term__trigger" type="button" aria-describedby={`glossary-${term}`}>
+    <slot>{term}</slot>
+  </button>
+  <span class="glossary-term__popover" id={`glossary-${term}`} role="tooltip">
+    <strong>{short}</strong>
+    <span>{detail}</span>
+  </span>
+</span>
