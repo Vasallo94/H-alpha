@@ -1,0 +1,22 @@
+---
+import type { Locale } from "../../i18n/routes";
+import { siteCopy } from "../../content/siteCopy";
+import FilterComparison from "../interactive/FilterComparison";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = siteCopy[locale];
+const filters = copy.sections.filters;
+---
+
+<section class="section" id="filters">
+  <div class="section__inner">
+    <p class="eyebrow">{filters.eyebrow}</p>
+    <h2 class="section-title">{filters.heading}</h2>
+    <p class="lead">{filters.lead}</p>
+    <FilterComparison ariaLabel={filters.ariaLabel} cards={filters.cards} client:load />
+  </div>
+</section>

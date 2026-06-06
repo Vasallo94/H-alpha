@@ -17,3 +17,11 @@ test("renders the English home page hero", async ({ page }) => {
   ).toBeVisible();
   await expect(page.getByText("The Sun in one spectral line")).toBeVisible();
 });
+
+test("updates the Spanish spectrum explorer readout", async ({ page }) => {
+  await page.goto("/");
+
+  await page.getByLabel("Longitud de onda seleccionada").fill("520");
+
+  await expect(page.getByText("Selección: 520 nm")).toBeVisible();
+});

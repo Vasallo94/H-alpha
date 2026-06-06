@@ -1,6 +1,37 @@
 import { describe, expect, it } from "vitest";
 import { siteCopy } from "./siteCopy";
 
+const keysOf = (value: unknown) => Object.keys(value as Record<string, unknown>).sort();
+
+const expectCopyShapeToMatch = (spanish: unknown, english: unknown) => {
+  expect(Array.isArray(spanish)).toBe(Array.isArray(english));
+
+  if (Array.isArray(spanish) && Array.isArray(english)) {
+    expect(spanish).toHaveLength(english.length);
+
+    spanish.forEach((spanishItem, index) => {
+      expectCopyShapeToMatch(spanishItem, english[index]);
+    });
+    return;
+  }
+
+  if (
+    spanish &&
+    english &&
+    typeof spanish === "object" &&
+    typeof english === "object"
+  ) {
+    expect(keysOf(spanish)).toEqual(keysOf(english));
+
+    for (const key of keysOf(spanish)) {
+      expectCopyShapeToMatch(
+        (spanish as Record<string, unknown>)[key],
+        (english as Record<string, unknown>)[key],
+      );
+    }
+  }
+};
+
 describe("site copy", () => {
   it("has Spanish and English content", () => {
     expect(Object.keys(siteCopy)).toEqual(["es", "en"]);
@@ -11,11 +42,28 @@ describe("site copy", () => {
   });
 
   it("keeps narrative section keys synchronized", () => {
-    expect(Object.keys(siteCopy.es.sections).sort()).toEqual(Object.keys(siteCopy.en.sections).sort());
+    expectCopyShapeToMatch(siteCopy.es.sections, siteCopy.en.sections);
+  });
 
-    for (const sectionKey of Object.keys(siteCopy.es.sections) as Array<keyof typeof siteCopy.es.sections>) {
-      expect(Object.keys(siteCopy.es.sections[sectionKey]).sort()).toEqual(Object.keys(siteCopy.en.sections[sectionKey]).sort());
-    }
+  it("keeps interactive spectrum and filter copy centralized in both languages", () => {
+    expect(siteCopy.es.sections.spectrum.explorer).toEqual(
+      expect.objectContaining({
+        ariaLabel: expect.any(String),
+        body: expect.any(String),
+        label: expect.any(String),
+        lineLabel: expect.any(String),
+      }),
+    );
+    expect(siteCopy.en.sections.spectrum.explorer).toEqual(
+      expect.objectContaining({
+        ariaLabel: expect.any(String),
+        body: expect.any(String),
+        label: expect.any(String),
+        lineLabel: expect.any(String),
+      }),
+    );
+    expect(siteCopy.es.sections.filters.cards).toHaveLength(3);
+    expect(siteCopy.en.sections.filters.cards).toHaveLength(3);
   });
 
   it("keeps seasonal callout configurable in both languages", () => {

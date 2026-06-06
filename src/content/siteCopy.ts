@@ -13,12 +13,35 @@ type SeasonalSafetyCallout = {
   body: string;
 };
 
+type SpectrumExplorerCopy = {
+  ariaLabel: string;
+  label: string;
+  body: string;
+  lineLabel: string;
+  controlLabel: string;
+  selectedLabel: string;
+};
+
+type FilterCardCopy = {
+  title: string;
+  tag: string;
+  body: string;
+};
+
 type SectionCopy = {
   spectrum: {
     eyebrow: string;
     heading: string;
     leadStart: string;
     leadEnd: string;
+    explorer: SpectrumExplorerCopy;
+  };
+  filters: {
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    ariaLabel: string;
+    cards: FilterCardCopy[];
   };
   opticalSystem: {
     eyebrow: string;
@@ -62,6 +85,37 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         heading: "H-alpha es una línea, no solo un color",
         leadStart: "El telescopio selecciona un ",
         leadEnd: " alrededor de hidrógeno-alfa, revelando estructuras en la cromosfera solar.",
+        explorer: {
+          ariaLabel: "Explorador del espectro visible y la línea H-alpha",
+          label: "Panel espectral",
+          body: "Mueve el selector para ver lo estrecha que es la ventana H-alpha dentro del espectro visible.",
+          lineLabel: "Línea H-alpha: 656,28 nm",
+          controlLabel: "Longitud de onda seleccionada",
+          selectedLabel: "Selección",
+        },
+      },
+      filters: {
+        eyebrow: "Comparación segura",
+        heading: "Cada filtro solar protege para un uso distinto",
+        lead: "La seguridad depende de usar el filtro correcto en el lugar correcto: delante de los ojos, delante del telescopio o dentro de un sistema H-alpha completo.",
+        ariaLabel: "Comparación de tipos de filtros solares",
+        cards: [
+          {
+            title: "Gafas de eclipse",
+            tag: "Sin aumento",
+            body: "Sirven para mirar el Sol directamente sin óptica de aumento cuando cumplen ISO 12312-2.",
+          },
+          {
+            title: "Filtro telescópico de luz blanca",
+            tag: "Apertura frontal",
+            body: "Reduce toda la luz solar antes de entrar al telescopio y muestra fotosfera, manchas y granulación.",
+          },
+          {
+            title: "Telescopio H-alpha",
+            tag: "Sistema dedicado",
+            body: "Combina rechazo de energía, etalon y blocking filter para aislar la cromosfera con seguridad.",
+          },
+        ],
       },
       opticalSystem: {
         eyebrow: "Cadena óptica",
@@ -122,6 +176,37 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         heading: "H-alpha is a line, not just a color",
         leadStart: "The telescope selects a narrow ",
         leadEnd: " around hydrogen-alpha, revealing structures in the solar chromosphere.",
+        explorer: {
+          ariaLabel: "Explorer for the visible spectrum and the H-alpha line",
+          label: "Spectrum panel",
+          body: "Move the selector to see how narrow the H-alpha window is within the visible spectrum.",
+          lineLabel: "H-alpha line: 656.28 nm",
+          controlLabel: "Selected wavelength",
+          selectedLabel: "Selection",
+        },
+      },
+      filters: {
+        eyebrow: "Safe comparison",
+        heading: "Each solar filter protects for a different use",
+        lead: "Safety depends on using the right filter in the right place: in front of your eyes, in front of the telescope, or inside a complete H-alpha system.",
+        ariaLabel: "Comparison of solar filter types",
+        cards: [
+          {
+            title: "Eclipse glasses",
+            tag: "No magnification",
+            body: "They are for direct unmagnified solar viewing when they comply with ISO 12312-2.",
+          },
+          {
+            title: "White-light telescope filter",
+            tag: "Front aperture",
+            body: "It reduces all sunlight before it enters the telescope and shows the photosphere, sunspots, and granulation.",
+          },
+          {
+            title: "H-alpha telescope",
+            tag: "Dedicated system",
+            body: "It combines energy rejection, an etalon, and a blocking filter to isolate the chromosphere safely.",
+          },
+        ],
       },
       opticalSystem: {
         eyebrow: "Optical chain",

@@ -27,7 +27,7 @@ describe("Task 3 bilingual navigation foundation", () => {
     expect(siteNav).toMatch(/href={getLocalizedPath\(locale\)}/);
     expect(siteNav).toMatch(/<nav\b[^>]*aria-label={navAriaLabel}[^>]*>/);
     expect(siteNav).toMatch(/href="#physics"[^>]*>\{copy\.nav\.physics\}/);
-    expect(siteNav).toMatch(/href="#spectrum"[^>]*>\{copy\.nav\.filters\}/);
+    expect(siteNav).toMatch(/href="#filters"[^>]*>\{copy\.nav\.filters\}/);
     expect(siteNav).toMatch(/href="#safety"[^>]*>\{copy\.nav\.safety\}/);
     expect(siteNav).toMatch(/href="#image"[^>]*>\{copy\.nav\.image\}/);
   });
