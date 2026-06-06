@@ -1,54 +1,56 @@
-// @ts-expect-error Vitest runs in Node, but this Astro project intentionally has no Node ambient types.
-import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import spanishPage from "./pages/index.astro?raw";
 import englishPage from "./pages/en/index.astro?raw";
 import siteNav from "./components/SiteNav.astro?raw";
 import languageToggle from "./components/LanguageToggle.astro?raw";
+import css from "./styles/global.css?raw";
 
-const css = readFileSync(new URL("./styles/global.css", import.meta.url), "utf8");
+const localizedPages = [
+  { locale: "es", source: spanishPage },
+  { locale: "en", source: englishPage },
+] as const;
 
 describe("Task 3 bilingual navigation foundation", () => {
   it("renders hero copy from the shared copy module on both localized pages", () => {
-    expect(spanishPage).toContain('import { siteCopy } from "../content/siteCopy";');
-    expect(spanishPage).toContain('const copy = siteCopy["es"];');
-    expect(spanishPage).toContain("{copy.hero.eyebrow}");
-    expect(spanishPage).toContain("{copy.hero.title}");
-    expect(spanishPage).toContain("{copy.hero.intro}");
-
-    expect(englishPage).toContain('import { siteCopy } from "../../content/siteCopy";');
-    expect(englishPage).toContain('const copy = siteCopy["en"];');
-    expect(englishPage).toContain("{copy.hero.eyebrow}");
-    expect(englishPage).toContain("{copy.hero.title}");
-    expect(englishPage).toContain("{copy.hero.intro}");
+    for (const { locale, source } of localizedPages) {
+      expect(source).toContain("siteCopy");
+      expect(source).toMatch(new RegExp(`siteCopy\\["${locale}"\\]`));
+      expect(source).toContain("{copy.hero.eyebrow}");
+      expect(source).toContain("{copy.hero.title}");
+      expect(source).toContain("{copy.hero.intro}");
+    }
   });
 
   it("anchors the current hero section as the physics target", () => {
-    expect(spanishPage).toContain('<section id="physics" class="section">');
-    expect(englishPage).toContain('<section id="physics" class="section">');
+    for (const { source } of localizedPages) {
+      expect(source).toMatch(/<section\b[^>]*id="physics"[^>]*>/);
+    }
   });
 
   it("uses localized nav metadata and home paths", () => {
-    expect(siteNav).toContain('import { getLocalizedPath, type Locale } from "../i18n/routes";');
-    expect(siteNav).toContain('const navAriaLabel = locale === "es" ? "Principal" : "Primary";');
-    expect(siteNav).toContain("href={getLocalizedPath(locale)}");
-    expect(siteNav).toContain("aria-label={navAriaLabel}");
+    expect(siteNav).toMatch(/import\s+\{[^}]*getLocalizedPath[^}]*\}\s+from\s+"..\/i18n\/routes";/);
+    expect(siteNav).toMatch(/navAriaLabel\s*=\s*locale\s*===\s*"es"\s*\?\s*"Principal"\s*:\s*"Primary"/);
+    expect(siteNav).toMatch(/href={getLocalizedPath\(locale\)}/);
+    expect(siteNav).toMatch(/<nav\b[^>]*aria-label={navAriaLabel}[^>]*>/);
+    expect(siteNav).toMatch(/href="#physics"[^>]*>\{copy\.nav\.physics\}/);
+    expect(siteNav).toMatch(/href="#filters"[^>]*>\{copy\.nav\.filters\}/);
+    expect(siteNav).toMatch(/href="#safety"[^>]*>\{copy\.nav\.safety\}/);
+    expect(siteNav).toMatch(/href="#image"[^>]*>\{copy\.nav\.image\}/);
   });
 
   it("describes the target language link for assistive tech and alternate-language metadata", () => {
-    expect(languageToggle).toContain('const ariaLabel = targetLocale === "en" ? "Switch to English" : "Cambiar a español";');
-    expect(languageToggle).toContain("aria-label={ariaLabel}");
-    expect(languageToggle).toContain("lang={targetLocale}");
-    expect(languageToggle).toContain("hreflang={targetLocale}");
+    expect(languageToggle).toMatch(/targetLocale\s*=\s*locale\s*===\s*"es"\s*\?\s*"en"\s*:\s*"es"/);
+    expect(languageToggle).toMatch(/ariaLabel\s*=\s*targetLocale\s*===\s*"en"\s*\?\s*"Switch to English"\s*:\s*"Cambiar a español"/);
+    expect(languageToggle).toMatch(/<a\b[^>]*aria-label={ariaLabel}[^>]*>/);
+    expect(languageToggle).toMatch(/<a\b[^>]*lang={targetLocale}[^>]*>/);
+    expect(languageToggle).toMatch(/<a\b[^>]*hreflang={targetLocale}[^>]*>/);
   });
 
   it("keeps brand and language toggle on the first mobile nav row", () => {
-    expect(css).toContain("color: var(--solar-deep);");
-    expect(css).toContain("grid-template-columns: 1fr auto;");
-    expect(css).toContain("grid-column: 1;");
-    expect(css).toContain("grid-column: 2;");
-    expect(css).toContain("grid-row: 1;");
-    expect(css).toContain("grid-column: 1 / -1;");
-    expect(css).toContain("grid-row: 2;");
+    expect(css).toMatch(/\.site-nav__brand\s*\{[^}]*color:\s*var\(--solar-deep\);/s);
+    expect(css).toMatch(/@media\s*\(max-width:\s*760px\)\s*\{[\s\S]*\.site-nav\s*\{[^}]*grid-template-columns:\s*1fr auto;/);
+    expect(css).toMatch(/\.site-nav__brand\s*\{[^}]*grid-column:\s*1;[^}]*grid-row:\s*1;/s);
+    expect(css).toMatch(/\.language-toggle\s*\{[^}]*grid-column:\s*2;[^}]*grid-row:\s*1;/s);
+    expect(css).toMatch(/\.site-nav nav\s*\{[^}]*grid-column:\s*1 \/ -1;[^}]*grid-row:\s*2;/s);
   });
 });
