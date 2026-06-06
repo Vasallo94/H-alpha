@@ -14,6 +14,14 @@ describe("i18n routes", () => {
     expect(getLocaleFromPath("/en/")).toBe("en");
   });
 
+  it("detects English from paths under /en", () => {
+    expect(getLocaleFromPath("/en/foo")).toBe("en");
+  });
+
+  it("does not treat Spanish paths beginning with en as English", () => {
+    expect(getLocaleFromPath("/energia")).toBe("es");
+  });
+
   it("builds localized paths", () => {
     expect(getLocalizedPath("es")).toBe("/");
     expect(getLocalizedPath("en")).toBe("/en/");

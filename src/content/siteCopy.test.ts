@@ -7,7 +7,7 @@ describe("site copy", () => {
   });
 
   it("keeps glossary keys synchronized", () => {
-    expect(Object.keys(siteCopy.es.glossary)).toEqual(Object.keys(siteCopy.en.glossary));
+    expect(Object.keys(siteCopy.es.glossary).sort()).toEqual(Object.keys(siteCopy.en.glossary).sort());
   });
 
   it("keeps seasonal callout configurable in both languages", () => {
