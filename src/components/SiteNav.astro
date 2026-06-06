@@ -1,0 +1,23 @@
+---
+import type { Locale } from "../i18n/routes";
+import { siteCopy } from "../content/siteCopy";
+import LanguageToggle from "./LanguageToggle.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = siteCopy[locale];
+---
+
+<header class="site-nav">
+  <a class="site-nav__brand" href={locale === "es" ? "/" : "/en/"}>H-alpha</a>
+  <nav aria-label="Primary">
+    <a href="#physics">{copy.nav.physics}</a>
+    <a href="#filters">{copy.nav.filters}</a>
+    <a href="#safety">{copy.nav.safety}</a>
+    <a href="#image">{copy.nav.image}</a>
+  </nav>
+  <LanguageToggle locale={locale} label={copy.languageLabel} />
+</header>

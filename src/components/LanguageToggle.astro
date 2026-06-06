@@ -1,0 +1,16 @@
+---
+import type { Locale } from "../i18n/routes";
+import { getLocalizedPath } from "../i18n/routes";
+
+interface Props {
+  locale: Locale;
+  label: string;
+}
+
+const { locale, label } = Astro.props;
+const targetLocale = locale === "es" ? "en" : "es";
+---
+
+<a class="language-toggle" href={getLocalizedPath(targetLocale)} aria-label={label}>
+  {label}
+</a>
