@@ -5,5 +5,6 @@ export default defineConfig({
     css: {
       include: /.+/,
     },
+    include: ["src/**/*.test.ts"],
   },
 });
