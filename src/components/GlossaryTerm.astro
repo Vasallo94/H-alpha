@@ -3,16 +3,26 @@ interface Props {
   term: string;
   short: string;
   detail: string;
+  id?: string;
 }
 
-const { term, short, detail } = Astro.props;
+const { term, short, detail, id } = Astro.props;
+const tooltipSeed = id ?? term;
+const sanitizedTooltipSeed = tooltipSeed
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, "-")
+  .replace(/-+/g, "-")
+  .replace(/^-|-$/g, "");
+const tooltipId = sanitizedTooltipSeed.startsWith("glossary-")
+  ? sanitizedTooltipSeed
+  : `glossary-${sanitizedTooltipSeed}`;
 ---
 
 <span class="glossary-term">
-  <button class="glossary-term__trigger" type="button" aria-describedby={`glossary-${term}`}>
+  <button class="glossary-term__trigger" type="button" aria-describedby={tooltipId}>
     <slot>{term}</slot>
   </button>
-  <span class="glossary-term__popover" id={`glossary-${term}`} role="tooltip">
+  <span class="glossary-term__popover" id={tooltipId} role="tooltip">
     <strong>{short}</strong>
     <span>{detail}</span>
   </span>

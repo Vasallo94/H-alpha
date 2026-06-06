@@ -178,19 +178,29 @@ button, input { font: inherit; }
   font-size: 0.92rem;
   line-height: 1.45;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
   padding: 12px 14px;
-  transition: opacity 160ms ease;
+  transition: opacity 160ms ease, visibility 160ms ease;
 }
 
 .glossary-term__trigger:hover + .glossary-term__popover,
 .glossary-term__trigger:focus + .glossary-term__popover {
   opacity: 1;
+  visibility: visible;
 }
 
 @media (max-width: 620px) {
+  .glossary-term {
+    position: static;
+  }
+
   .glossary-term__popover {
-    left: 0;
+    position: fixed;
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+    width: auto;
     transform: none;
   }
 }
