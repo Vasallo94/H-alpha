@@ -1,16 +1,14 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { siteCopy } from "../content/siteCopy";
-
-const copy = siteCopy["es"];
+import HeroSection from "../components/sections/HeroSection.astro";
+import SpectrumSection from "../components/sections/SpectrumSection.astro";
+import OpticalSystemSection from "../components/sections/OpticalSystemSection.astro";
+import SafetySection from "../components/sections/SafetySection.astro";
 ---
 
 <BaseLayout locale="es">
-  <section id="physics" class="section">
-    <div class="section__inner">
-      <p class="eyebrow">{copy.hero.eyebrow}</p>
-      <h1 class="section-title">{copy.hero.title}</h1>
-      <p class="lead">{copy.hero.intro}</p>
-    </div>
-  </section>
+  <HeroSection locale="es" />
+  <SpectrumSection locale="es" />
+  <OpticalSystemSection locale="es" />
+  <SafetySection locale="es" />
 </BaseLayout>

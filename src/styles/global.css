@@ -190,6 +190,39 @@ button, input { font: inherit; }
   visibility: visible;
 }
 
+.hero-section {
+  min-height: calc(100vh - 80px);
+  display: grid;
+  align-items: center;
+}
+
+.hero-section__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(240px, 0.7fr);
+  gap: clamp(32px, 6vw, 86px);
+  align-items: center;
+}
+
+.hero-section__sun {
+  aspect-ratio: 1;
+  width: min(420px, 100%);
+  justify-self: center;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 42% 38%, #ffd1ad 0 7%, #e6533f 32%, #8f2119 66%, #54100c 100%);
+  box-shadow: 0 0 80px rgba(217, 67, 50, 0.28);
+}
+
+@media (max-width: 780px) {
+  .hero-section {
+    min-height: auto;
+  }
+
+  .hero-section__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 620px) {
   .glossary-term {
     position: static;

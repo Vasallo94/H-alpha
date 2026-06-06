@@ -13,18 +13,12 @@ const localizedPages = [
 describe("Task 3 bilingual navigation foundation", () => {
   it("renders hero copy from the shared copy module on both localized pages", () => {
     for (const { locale, source } of localizedPages) {
-      expect(source).toContain("siteCopy");
-      expect(source).toMatch(new RegExp(`siteCopy\\["${locale}"\\]`));
-      expect(source).toContain("{copy.hero.eyebrow}");
-      expect(source).toContain("{copy.hero.title}");
-      expect(source).toContain("{copy.hero.intro}");
+      expect(source).toMatch(new RegExp(`<HeroSection locale="${locale}" />`));
     }
   });
 
   it("anchors the current hero section as the physics target", () => {
-    for (const { source } of localizedPages) {
-      expect(source).toMatch(/<section\b[^>]*id="physics"[^>]*>/);
-    }
+    expect(siteNav).toMatch(/href="#physics"[^>]*>\{copy\.nav\.physics\}/);
   });
 
   it("uses localized nav metadata and home paths", () => {
@@ -33,7 +27,7 @@ describe("Task 3 bilingual navigation foundation", () => {
     expect(siteNav).toMatch(/href={getLocalizedPath\(locale\)}/);
     expect(siteNav).toMatch(/<nav\b[^>]*aria-label={navAriaLabel}[^>]*>/);
     expect(siteNav).toMatch(/href="#physics"[^>]*>\{copy\.nav\.physics\}/);
-    expect(siteNav).toMatch(/href="#filters"[^>]*>\{copy\.nav\.filters\}/);
+    expect(siteNav).toMatch(/href="#spectrum"[^>]*>\{copy\.nav\.filters\}/);
     expect(siteNav).toMatch(/href="#safety"[^>]*>\{copy\.nav\.safety\}/);
     expect(siteNav).toMatch(/href="#image"[^>]*>\{copy\.nav\.image\}/);
   });

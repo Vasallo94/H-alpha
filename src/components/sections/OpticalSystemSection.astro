@@ -1,0 +1,37 @@
+---
+import type { Locale } from "../../i18n/routes";
+import { siteCopy } from "../../content/siteCopy";
+import GlossaryTerm from "../GlossaryTerm.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = siteCopy[locale];
+const isSpanish = locale === "es";
+const etalon = copy.glossary.etalon;
+const blockingFilter = copy.glossary.blockingFilter;
+const eyebrow = isSpanish ? "Cadena óptica" : "Optical chain";
+const heading = isSpanish ? "Un telescopio H-alpha seguro es un sistema" : "A safe H-alpha telescope is a system";
+const leadStart = isSpanish ? "El " : "The ";
+const leadMiddle = isSpanish ? " selecciona la línea espectral, mientras que el " : " selects the spectral line, while the ";
+const leadEnd = isSpanish
+  ? " mantiene la luz residual peligrosa fuera del recorrido final de la imagen."
+  : " keeps dangerous residual light out of the final image path.";
+---
+
+<section class="section" id="optics">
+  <div class="section__inner">
+    <p class="eyebrow">{eyebrow}</p>
+    <h2 class="section-title">{heading}</h2>
+    <p class="lead">
+      {leadStart}<GlossaryTerm {...etalon} id="etalon-optical-system">{etalon.term}</GlossaryTerm>{leadMiddle}<GlossaryTerm
+        {...blockingFilter}
+        id="blocking-filter-optical-system"
+      >
+        {blockingFilter.term}
+      </GlossaryTerm>{leadEnd}
+    </p>
+  </div>
+</section>

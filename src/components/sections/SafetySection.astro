@@ -1,0 +1,29 @@
+---
+import type { Locale } from "../../i18n/routes";
+import { siteCopy } from "../../content/siteCopy";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = siteCopy[locale];
+const isSpanish = locale === "es";
+const eyebrow = isSpanish ? "Seguridad solar" : "Solar safety";
+const heading = isSpanish ? "Los filtros solares no son intercambiables" : "Solar filters are not interchangeable";
+---
+
+<section class="section" id="safety">
+  <div class="section__inner">
+    <p class="eyebrow">{eyebrow}</p>
+    <h2 class="section-title">{heading}</h2>
+    {
+      copy.seasonalSafetyCallout.enabled && (
+        <aside class="warning">
+          <strong>{copy.seasonalSafetyCallout.title}</strong>
+          <p>{copy.seasonalSafetyCallout.body}</p>
+        </aside>
+      )
+    }
+  </div>
+</section>
