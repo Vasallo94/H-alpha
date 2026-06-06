@@ -8,19 +8,18 @@ interface Props {
 
 const { locale } = Astro.props;
 const copy = siteCopy[locale];
-const isSpanish = locale === "es";
-const eyebrow = isSpanish ? "Seguridad solar" : "Solar safety";
-const heading = isSpanish ? "Los filtros solares no son intercambiables" : "Solar filters are not interchangeable";
+const safety = copy.sections.safety;
+const seasonalSafetyTitleId = `seasonal-safety-title-${locale}`;
 ---
 
 <section class="section" id="safety">
   <div class="section__inner">
-    <p class="eyebrow">{eyebrow}</p>
-    <h2 class="section-title">{heading}</h2>
+    <p class="eyebrow">{safety.eyebrow}</p>
+    <h2 class="section-title">{safety.heading}</h2>
     {
       copy.seasonalSafetyCallout.enabled && (
-        <aside class="warning">
-          <strong>{copy.seasonalSafetyCallout.title}</strong>
+        <aside class="warning" role="note" aria-labelledby={seasonalSafetyTitleId}>
+          <h3 id={seasonalSafetyTitleId}>{copy.seasonalSafetyCallout.title}</h3>
           <p>{copy.seasonalSafetyCallout.body}</p>
         </aside>
       )

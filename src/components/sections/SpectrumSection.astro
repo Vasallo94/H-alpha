@@ -9,22 +9,16 @@ interface Props {
 
 const { locale } = Astro.props;
 const copy = siteCopy[locale];
-const isSpanish = locale === "es";
+const spectrum = copy.sections.spectrum;
 const bandpass = copy.glossary.bandpass;
-const eyebrow = isSpanish ? "656,28 nm" : "656.28 nm";
-const heading = isSpanish ? "H-alpha es una línea, no solo un color" : "H-alpha is a line, not just a color";
-const leadStart = isSpanish ? "El telescopio selecciona un " : "The telescope selects a narrow ";
-const leadEnd = isSpanish
-  ? " alrededor de hidrógeno-alfa, revelando estructuras en la cromosfera solar."
-  : " around hydrogen-alpha, revealing structures in the solar chromosphere.";
 ---
 
 <section class="section" id="spectrum">
   <div class="section__inner">
-    <p class="eyebrow">{eyebrow}</p>
-    <h2 class="section-title">{heading}</h2>
+    <p class="eyebrow">{spectrum.eyebrow}</p>
+    <h2 class="section-title">{spectrum.heading}</h2>
     <p class="lead">
-      {leadStart}<GlossaryTerm {...bandpass} id="bandpass-spectrum">{bandpass.term}</GlossaryTerm>{leadEnd}
+      {spectrum.leadStart}<GlossaryTerm {...bandpass} id="bandpass-spectrum">{bandpass.term}</GlossaryTerm>{spectrum.leadEnd}
     </p>
   </div>
 </section>

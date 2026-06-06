@@ -34,6 +34,7 @@ button, input { font: inherit; }
 
 .section {
   padding: clamp(56px, 8vw, 108px) clamp(20px, 5vw, 72px);
+  scroll-margin-top: 96px;
 }
 
 .section__inner {
@@ -77,9 +78,20 @@ button, input { font: inherit; }
   padding: 18px 20px;
 }
 
+.warning h3 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.warning p {
+  margin: 0;
+}
+
 @media (max-width: 720px) {
   .section {
     padding: 44px 18px;
+    scroll-margin-top: 132px;
   }
 }
 

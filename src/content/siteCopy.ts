@@ -13,11 +13,32 @@ type SeasonalSafetyCallout = {
   body: string;
 };
 
+type SectionCopy = {
+  spectrum: {
+    eyebrow: string;
+    heading: string;
+    leadStart: string;
+    leadEnd: string;
+  };
+  opticalSystem: {
+    eyebrow: string;
+    heading: string;
+    leadStart: string;
+    leadMiddle: string;
+    leadEnd: string;
+  };
+  safety: {
+    eyebrow: string;
+    heading: string;
+  };
+};
+
 type SiteCopy = {
   meta: { title: string; description: string };
   nav: { physics: string; filters: string; safety: string; image: string };
   languageLabel: string;
   hero: { eyebrow: string; title: string; intro: string };
+  sections: SectionCopy;
   glossary: Record<string, GlossaryEntry>;
   seasonalSafetyCallout: SeasonalSafetyCallout;
 };
@@ -34,6 +55,25 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       eyebrow: "Sol en una sola línea espectral",
       title: "Cómo un telescopio H-alpha revela la cromosfera",
       intro: "Una explicación visual, segura y bilingüe de la línea H-alpha, los etalones, el tuning y los filtros solares.",
+    },
+    sections: {
+      spectrum: {
+        eyebrow: "656,28 nm",
+        heading: "H-alpha es una línea, no solo un color",
+        leadStart: "El telescopio selecciona un ",
+        leadEnd: " alrededor de hidrógeno-alfa, revelando estructuras en la cromosfera solar.",
+      },
+      opticalSystem: {
+        eyebrow: "Cadena óptica",
+        heading: "Un telescopio H-alpha seguro es un sistema",
+        leadStart: "El ",
+        leadMiddle: " selecciona la línea espectral, mientras que el ",
+        leadEnd: " mantiene la luz residual peligrosa fuera del recorrido final de la imagen.",
+      },
+      safety: {
+        eyebrow: "Seguridad solar",
+        heading: "Los filtros solares no son intercambiables",
+      },
     },
     glossary: {
       angstrom: {
@@ -75,6 +115,25 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       eyebrow: "The Sun in one spectral line",
       title: "How an H-alpha telescope reveals the chromosphere",
       intro: "A visual, safe, bilingual explanation of the H-alpha line, etalons, tuning, and solar filters.",
+    },
+    sections: {
+      spectrum: {
+        eyebrow: "656.28 nm",
+        heading: "H-alpha is a line, not just a color",
+        leadStart: "The telescope selects a narrow ",
+        leadEnd: " around hydrogen-alpha, revealing structures in the solar chromosphere.",
+      },
+      opticalSystem: {
+        eyebrow: "Optical chain",
+        heading: "A safe H-alpha telescope is a system",
+        leadStart: "The ",
+        leadMiddle: " selects the spectral line, while the ",
+        leadEnd: " keeps dangerous residual light out of the final image path.",
+      },
+      safety: {
+        eyebrow: "Solar safety",
+        heading: "Solar filters are not interchangeable",
+      },
     },
     glossary: {
       angstrom: {

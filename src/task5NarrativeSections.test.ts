@@ -23,9 +23,13 @@ describe("Task 5 narrative sections", () => {
     expect(spectrumSection).toContain('id="spectrum"');
     expect(spectrumSection).toContain('id="bandpass-spectrum"');
     expect(spectrumSection).toContain("copy.glossary.bandpass");
-    expect(spectrumSection).toContain("H-alpha es una línea, no solo un color");
-    expect(spectrumSection).toContain("H-alpha is a line, not just a color");
-    expect(spectrumSection).toContain("El telescopio selecciona");
+    expect(spectrumSection).toContain("copy.sections.spectrum");
+    expect(spectrumSection).toContain("{spectrum.eyebrow}");
+    expect(spectrumSection).toContain("{spectrum.heading}");
+    expect(spectrumSection).toContain("{spectrum.leadStart}");
+    expect(spectrumSection).toContain("{spectrum.leadEnd}");
+    expect(spectrumSection).not.toContain("H-alpha es una línea, no solo un color");
+    expect(spectrumSection).not.toContain("H-alpha is a line, not just a color");
   });
 
   it("keeps optical copy localized and gives each glossary tooltip a stable id", () => {
@@ -34,18 +38,27 @@ describe("Task 5 narrative sections", () => {
     expect(opticalSystemSection).toContain('id="blocking-filter-optical-system"');
     expect(opticalSystemSection).toContain("copy.glossary.etalon");
     expect(opticalSystemSection).toContain("copy.glossary.blockingFilter");
-    expect(opticalSystemSection).toContain("Cadena óptica");
-    expect(opticalSystemSection).toContain("Optical chain");
+    expect(opticalSystemSection).toContain("copy.sections.opticalSystem");
+    expect(opticalSystemSection).toContain("{opticalSystem.eyebrow}");
+    expect(opticalSystemSection).toContain("{opticalSystem.heading}");
+    expect(opticalSystemSection).toContain("{opticalSystem.leadStart}");
+    expect(opticalSystemSection).toContain("{opticalSystem.leadMiddle}");
+    expect(opticalSystemSection).toContain("{opticalSystem.leadEnd}");
+    expect(opticalSystemSection).not.toContain("Cadena óptica");
+    expect(opticalSystemSection).not.toContain("Optical chain");
   });
 
   it("renders localized safety copy with the seasonal callout in a warning", () => {
     expect(safetySection).toContain('id="safety"');
-    expect(safetySection).toContain("Seguridad solar");
-    expect(safetySection).toContain("Solar safety");
-    expect(safetySection).toContain("Los filtros solares no son intercambiables");
-    expect(safetySection).toContain("Solar filters are not interchangeable");
+    expect(safetySection).toContain("copy.sections.safety");
+    expect(safetySection).toContain("{safety.eyebrow}");
+    expect(safetySection).toContain("{safety.heading}");
+    expect(safetySection).not.toContain("Seguridad solar");
+    expect(safetySection).not.toContain("Solar safety");
     expect(safetySection).toContain("copy.seasonalSafetyCallout.enabled");
-    expect(safetySection).toContain('<aside class="warning">');
+    expect(safetySection).toContain('role="note"');
+    expect(safetySection).toContain('aria-labelledby={seasonalSafetyTitleId}');
+    expect(safetySection).toContain('<h3 id={seasonalSafetyTitleId}>');
     expect(safetySection).toContain("{copy.seasonalSafetyCallout.title}");
     expect(safetySection).toContain("{copy.seasonalSafetyCallout.body}");
   });
@@ -62,5 +75,7 @@ describe("Task 5 narrative sections", () => {
     expect(css).toMatch(/\.hero-section__grid\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1\.1fr\) minmax\(240px,\s*0\.7fr\);/s);
     expect(css).toMatch(/\.hero-section__sun\s*\{[^}]*aspect-ratio:\s*1;[^}]*border-radius:\s*50%;[^}]*radial-gradient/s);
     expect(css).toMatch(/@media\s*\(max-width:\s*780px\)\s*\{[\s\S]*\.hero-section\s*\{[^}]*min-height:\s*auto;/s);
+    expect(css).toMatch(/\.section\s*\{[^}]*scroll-margin-top:\s*96px;/s);
+    expect(css).toMatch(/@media\s*\(max-width:\s*720px\)\s*\{[\s\S]*\.section\s*\{[^}]*scroll-margin-top:\s*132px;/s);
   });
 });
