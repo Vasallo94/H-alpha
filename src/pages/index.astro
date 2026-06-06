@@ -1,13 +1,16 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteCopy } from "../content/siteCopy";
+
+const copy = siteCopy["es"];
 ---
 
 <BaseLayout locale="es">
-  <section class="section">
+  <section id="physics" class="section">
     <div class="section__inner">
-      <p class="eyebrow">Sol en H-alpha</p>
-      <h1 class="section-title">Cómo funciona un telescopio H-alpha</h1>
-      <p class="lead">Una guía visual sobre la física, seguridad y óptica que hacen visible la cromosfera solar.</p>
+      <p class="eyebrow">{copy.hero.eyebrow}</p>
+      <h1 class="section-title">{copy.hero.title}</h1>
+      <p class="lead">{copy.hero.intro}</p>
     </div>
   </section>
 </BaseLayout>

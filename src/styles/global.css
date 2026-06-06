@@ -98,7 +98,7 @@ button, input { font: inherit; }
 }
 
 .site-nav__brand {
-  color: var(--solar);
+  color: var(--solar-deep);
   font-weight: 820;
   text-decoration: none;
 }
@@ -128,10 +128,21 @@ button, input { font: inherit; }
     grid-template-columns: 1fr auto;
   }
 
+  .site-nav__brand {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
   .site-nav nav {
     grid-column: 1 / -1;
+    grid-row: 2;
     justify-content: flex-start;
     overflow-x: auto;
     padding-bottom: 2px;
+  }
+
+  .language-toggle {
+    grid-column: 2;
+    grid-row: 1;
   }
 }
