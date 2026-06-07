@@ -33,6 +33,14 @@ type RangeInputEvent = {
   currentTarget: HTMLInputElement;
 };
 
+export type BandpassState = "offBand" | "narrow" | "wide";
+
+export const classifyBandpassState = (width: number, offset: number): BandpassState => {
+  if (Math.abs(offset) > width / 2) return "offBand";
+  if (width <= 0.5) return "narrow";
+  return "wide";
+};
+
 const formatAngstroms = (value: number) => `${value.toFixed(2)} A`;
 
 export default function BandpassTuningSimulator({ copy }: BandpassTuningSimulatorProps) {
@@ -45,10 +53,9 @@ export default function BandpassTuningSimulator({ copy }: BandpassTuningSimulato
   const [offset, setOffset] = useState(DEFAULT_OFFSET);
 
   const resultLabel = useMemo(() => {
-    if (Math.abs(offset) > 0.25) return copy.results.offBand;
-    if (width <= 0.5) return copy.results.narrow;
-    return copy.results.wide;
-  }, [copy.results.narrow, copy.results.offBand, copy.results.wide, offset, width]);
+    const state = classifyBandpassState(width, offset);
+    return copy.results[state];
+  }, [copy.results, offset, width]);
 
   const windowWidth = (width / PLOT_RANGE) * 100;
   const windowCenter = 50 + (offset / PLOT_RANGE) * 100;

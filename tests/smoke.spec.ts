@@ -52,5 +52,19 @@ test("updates the Spanish bandpass tuning explanation", async ({ page }) => {
   await expect(readout.getByText("Banda ancha")).toBeVisible();
 
   await simulator.getByRole("slider", { name: "Desplazamiento de tuning" }).press("End");
+  await expect(readout.getByText("Banda ancha")).toBeVisible();
+
+  await simulator.getByRole("slider", { name: "Anchura de bandpass" }).press("Home");
   await expect(readout.getByText("Fuera de banda")).toBeVisible();
+});
+
+test("renders English bandpass controls and readout", async ({ page }) => {
+  await page.goto("/en/");
+
+  const simulator = page.getByRole("group", { name: "Simulator for the H-alpha spectral window" });
+  const readout = simulator.locator(".bandpass-sim__readout");
+
+  await expect(simulator.getByRole("slider", { name: "Bandpass width" })).toBeVisible();
+  await expect(simulator.getByRole("slider", { name: "Tuning offset" })).toBeVisible();
+  await expect(readout).toContainText("Result: Narrow band");
 });

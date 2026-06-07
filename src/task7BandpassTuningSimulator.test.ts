@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
+import { classifyBandpassState } from "./components/interactive/BandpassTuningSimulator";
 import spanishPage from "./pages/index.astro?raw";
 import englishPage from "./pages/en/index.astro?raw";
 import css from "./styles/global.css?raw";
@@ -36,12 +37,23 @@ describe("Task 7 bandpass tuning simulator", () => {
     expect(bandpassSimulator).toContain("aria-describedby={`${readoutId} ${descriptionId}`}");
     expect(bandpassSimulator).toContain("id={widthInputId}");
     expect(bandpassSimulator).toContain("id={offsetInputId}");
-    expect(bandpassSimulator).toContain("copy.results.offBand");
-    expect(bandpassSimulator).toContain("copy.results.narrow");
-    expect(bandpassSimulator).toContain("copy.results.wide");
     expect(bandpassSimulator).not.toContain('id="bandpass-width"');
     expect(bandpassSimulator).not.toContain('id="bandpass-offset"');
   });
+
+  it.each([
+    { width: 0.5, offset: 0, expected: "narrow" },
+    { width: 1.2, offset: 0, expected: "wide" },
+    { width: 0.3, offset: 0.3, expected: "offBand" },
+    { width: 1.2, offset: 0.5, expected: "wide" },
+    { width: 0.5, offset: 0.25, expected: "narrow" },
+    { width: 0.5, offset: 0.3, expected: "offBand" },
+  ] as const)(
+    "classifies width $width A and offset $offset A as $expected",
+    ({ width, offset, expected }) => {
+      expect(classifyBandpassState(width, offset)).toBe(expected);
+    },
+  );
 
   it("wires the bandpass section after optics on both localized pages", () => {
     expect(spanishPage).toMatch(/import BandpassSection from "\.\.\/components\/sections\/BandpassSection\.astro";/);
