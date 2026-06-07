@@ -233,51 +233,61 @@ button, input { font: inherit; }
 }
 
 .bandpass-sim__plot {
-  position: relative;
-  min-height: 160px;
-  overflow: hidden;
+  display: block;
+  width: 100%;
+  height: auto;
   border-left: 2px solid var(--instrument);
   border-bottom: 2px solid var(--instrument);
   border-radius: 8px;
+  background: color-mix(in srgb, var(--instrument), transparent 95%);
+}
+
+.bandpass-sim__preview {
+  height: 120px;
+  border-radius: 8px;
+  margin-top: 6px;
+  border: 1px solid rgba(24, 32, 38, 0.18);
+  transition: background 160ms ease;
+}
+
+/* Washed out: flat, low-contrast grey. */
+.bandpass-sim__preview--washed {
+  background: #8b8b86;
+}
+
+/* Disk: solar tint with subtle filament texture suggesting surface detail. */
+.bandpass-sim__preview--disk {
   background:
-    linear-gradient(180deg, transparent 64%, rgba(217, 67, 50, 0.16) 64% 66%, transparent 66%),
-    linear-gradient(90deg, rgba(217, 67, 50, 0.03), rgba(217, 67, 50, 0.12), rgba(217, 67, 50, 0.03));
+    repeating-linear-gradient(
+      28deg,
+      rgba(0, 0, 0, 0.16) 0 2px,
+      transparent 2px 9px
+    ),
+    repeating-linear-gradient(
+      -52deg,
+      rgba(0, 0, 0, 0.1) 0 1px,
+      transparent 1px 7px
+    ),
+    radial-gradient(circle at 50% 50%, var(--solar) 0%, var(--solar-deep) 100%);
 }
 
-.bandpass-sim__center {
-  position: absolute;
-  left: 50%;
-  top: 18px;
-  bottom: 0;
-  width: 2px;
-  background: var(--solar);
-  box-shadow: 0 0 18px rgba(217, 67, 50, 0.34);
-  transform: translateX(-50%);
-}
-
-.bandpass-sim__window {
-  position: absolute;
-  top: 22px;
-  bottom: 14px;
-  min-width: 42px;
-  border-left: 3px solid var(--solar);
-  border-right: 3px solid var(--solar);
-  background: rgba(217, 67, 50, 0.2);
-  transform: translateX(-50%);
-  transition: left 140ms ease, width 140ms ease;
-}
-
-.bandpass-sim__labels {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  color: var(--muted);
-  font-size: 0.88rem;
-}
-
-.bandpass-sim__labels span:first-child {
-  color: var(--solar-deep);
-  font-weight: 760;
+/* Prominence: dark limb background with bright red arcs at the edge. */
+.bandpass-sim__preview--prominence {
+  background:
+    radial-gradient(
+      circle at 10% 50%,
+      rgba(217, 67, 50, 0.9) 0 6%,
+      rgba(217, 67, 50, 0.35) 8% 13%,
+      transparent 15%
+    ),
+    radial-gradient(
+      circle at 90% 50%,
+      rgba(217, 67, 50, 0.9) 0 6%,
+      rgba(217, 67, 50, 0.35) 8% 13%,
+      transparent 15%
+    ),
+    radial-gradient(circle at 50% 120%, rgba(157, 36, 28, 0.5) 0%, transparent 55%),
+    #160c0a;
 }
 
 .bandpass-sim__readout {

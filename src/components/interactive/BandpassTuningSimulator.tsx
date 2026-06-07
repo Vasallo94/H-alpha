@@ -1,143 +1,100 @@
-import { useId, useMemo, useState } from "react";
+import { useId, useState } from "react";
+import { contrastUnderWindow, classifyView, transmissionWindow, gaussian } from "../../lib/physics";
 
-type BandpassTuningSimulatorCopy = {
-  ariaLabel: string;
-  widthLabel: string;
-  offsetLabel: string;
-  widthReadoutLabel: string;
-  offsetReadoutLabel: string;
-  resultReadoutLabel: string;
-  centerLabel: string;
-  windowLabel: string;
-  helpText: string;
-  results: {
-    offBand: string;
-    narrow: string;
-    wide: string;
-  };
+type Labels = {
+  aria: string;
+  width: string;
+  offset: string;
+  contrast: string;
+  views: { disk: string; prominence: string; washed: string };
 };
 
-type BandpassTuningSimulatorProps = {
-  copy: BandpassTuningSimulatorCopy;
-};
-
-const MIN_WIDTH = 0.3;
-const MAX_WIDTH = 1.2;
-const DEFAULT_WIDTH = 0.5;
-const MIN_OFFSET = -0.5;
-const MAX_OFFSET = 0.5;
+const MIN_FWHM = 0.3;
+const MAX_FWHM = 1.2;
+const DEFAULT_FWHM = 0.4;
+const MIN_OFFSET = -0.6;
+const MAX_OFFSET = 0.6;
 const DEFAULT_OFFSET = 0;
-const PLOT_RANGE = 1.6;
 
-type RangeInputEvent = {
-  currentTarget: HTMLInputElement;
-};
+// Plot spans -1.5 .. +1.5 Å around line center, sampled across 60 points.
+const SAMPLES = Array.from({ length: 60 }, (_, i) => -1.5 + (i * 3) / 59);
 
-export type BandpassState = "offBand" | "narrow" | "wide";
-
-export const classifyBandpassState = (width: number, offset: number): BandpassState => {
-  if (Math.abs(offset) > width / 2) return "offBand";
-  if (width <= 0.5) return "narrow";
-  return "wide";
-};
-
-const formatAngstroms = (value: number) => `${value.toFixed(2)} A`;
-
-export default function BandpassTuningSimulator({ copy }: BandpassTuningSimulatorProps) {
+export function BandpassTuningSimulator({ labels }: { labels: Labels }) {
   const baseId = useId();
-  const widthInputId = `${baseId}-width`;
-  const offsetInputId = `${baseId}-offset`;
+  const widthId = `${baseId}-width`;
+  const offsetId = `${baseId}-offset`;
   const readoutId = `${baseId}-readout`;
-  const descriptionId = `${baseId}-description`;
-  const [width, setWidth] = useState(DEFAULT_WIDTH);
+  const [fwhm, setFwhm] = useState(DEFAULT_FWHM);
   const [offset, setOffset] = useState(DEFAULT_OFFSET);
 
-  const resultLabel = useMemo(() => {
-    const state = classifyBandpassState(width, offset);
-    return copy.results[state];
-  }, [copy.results, offset, width]);
+  const view = classifyView({ centerOffset: offset, fwhm });
+  const contrast = contrastUnderWindow({ centerOffset: offset, fwhm });
 
-  const windowWidth = (width / PLOT_RANGE) * 100;
-  const windowCenter = 50 + (offset / PLOT_RANGE) * 100;
-
-  const updateWidth = (event: RangeInputEvent) => {
-    setWidth(Number(event.currentTarget.value));
-  };
-
-  const updateOffset = (event: RangeInputEvent) => {
-    setOffset(Number(event.currentTarget.value));
-  };
+  // y maps a 0..1 transmission to plot coordinates (top = high transmission).
+  const lineY = (d: number) => 100 - 70 * (1 - 0.85 * gaussian(d, 0, 0.21)); // absorption dip
+  const winY = (d: number) => 100 - 70 * transmissionWindow(d, { centerOffset: offset, fwhm });
+  const toX = (d: number) => ((d + 1.5) / 3) * 300;
 
   return (
-    <div className="instrument-panel bandpass-sim" aria-label={copy.ariaLabel} role="group">
-      <div className="bandpass-sim__plot" aria-hidden="true">
-        <span className="bandpass-sim__center" />
-        <span
-          className="bandpass-sim__window"
-          style={{
-            left: `${windowCenter}%`,
-            width: `${windowWidth}%`,
-          }}
+    <div className="instrument-panel bandpass-sim" role="group" aria-label={labels.aria}>
+      <svg viewBox="0 0 300 110" className="bandpass-sim__plot" aria-hidden="true">
+        <polyline
+          fill="none"
+          stroke="var(--instrument)"
+          strokeWidth={2}
+          points={SAMPLES.map((d) => `${toX(d)},${lineY(d)}`).join(" ")}
         />
-      </div>
-
-      <div className="bandpass-sim__labels" aria-hidden="true">
-        <span>{copy.centerLabel}</span>
-        <span>{copy.windowLabel}</span>
-      </div>
-
-      <p className="sr-only" id={descriptionId}>
-        {copy.helpText}
-      </p>
-
-      <output
-        aria-live="polite"
-        className="bandpass-sim__readout"
-        htmlFor={`${widthInputId} ${offsetInputId}`}
-        id={readoutId}
-      >
-        <span>
-          {copy.widthReadoutLabel}: {formatAngstroms(width)}
-        </span>
-        <span>
-          {copy.offsetReadoutLabel}: {formatAngstroms(offset)}
-        </span>
-        <strong>
-          {copy.resultReadoutLabel}: {resultLabel}
-        </strong>
-      </output>
+        <polyline
+          fill="none"
+          stroke="var(--solar)"
+          strokeWidth={2}
+          points={SAMPLES.map((d) => `${toX(d)},${winY(d)}`).join(" ")}
+        />
+      </svg>
 
       <div className="bandpass-sim__controls">
-        <label htmlFor={widthInputId}>
-          <span>{copy.widthLabel}</span>
+        <label htmlFor={widthId}>
+          <span>
+            {labels.width}: {fwhm.toFixed(2)} Å
+          </span>
           <input
-            aria-describedby={`${readoutId} ${descriptionId}`}
-            id={widthInputId}
-            max={MAX_WIDTH}
-            min={MIN_WIDTH}
-            step="0.05"
+            id={widthId}
             type="range"
-            value={width}
-            onChange={updateWidth}
-            onInput={updateWidth}
+            min={MIN_FWHM}
+            max={MAX_FWHM}
+            step={0.05}
+            value={fwhm}
+            aria-label={labels.width}
+            aria-describedby={readoutId}
+            onChange={(e) => setFwhm(Number(e.target.value))}
+            onInput={(e) => setFwhm(Number(e.currentTarget.value))}
           />
         </label>
 
-        <label htmlFor={offsetInputId}>
-          <span>{copy.offsetLabel}</span>
+        <label htmlFor={offsetId}>
+          <span>
+            {labels.offset}: {offset.toFixed(2)} Å
+          </span>
           <input
-            aria-describedby={`${readoutId} ${descriptionId}`}
-            id={offsetInputId}
-            max={MAX_OFFSET}
-            min={MIN_OFFSET}
-            step="0.05"
+            id={offsetId}
             type="range"
+            min={MIN_OFFSET}
+            max={MAX_OFFSET}
+            step={0.05}
             value={offset}
-            onChange={updateOffset}
-            onInput={updateOffset}
+            aria-label={labels.offset}
+            aria-describedby={readoutId}
+            onChange={(e) => setOffset(Number(e.target.value))}
+            onInput={(e) => setOffset(Number(e.currentTarget.value))}
           />
         </label>
       </div>
+
+      <p className="bandpass-sim__readout" aria-live="polite" id={readoutId}>
+        {labels.contrast}: {(contrast * 100).toFixed(0)}% — {labels.views[view]}
+      </p>
+
+      <div className={`bandpass-sim__preview bandpass-sim__preview--${view}`} aria-hidden="true" />
     </div>
   );
 }

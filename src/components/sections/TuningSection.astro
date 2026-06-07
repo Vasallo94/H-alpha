@@ -1,0 +1,30 @@
+---
+import type { Locale } from "../../i18n/routes";
+import { siteCopy } from "../../content/siteCopy";
+import DopplerTuning from "../diagrams/DopplerTuning.astro";
+import { BandpassTuningSimulator } from "../interactive/BandpassTuningSimulator";
+import DeepDive from "../DeepDive.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = siteCopy[locale];
+const s = copy.sections.tuning;
+---
+
+<section class="section" id="tuning">
+  <div class="section__inner">
+    <p class="eyebrow">{s.eyebrow}</p>
+    <h2 class="section-title">{s.heading}</h2>
+    <p class="lead">{s.lead}</p>
+    {s.body.map((paragraph) => <p>{paragraph}</p>)}
+
+    <DopplerTuning labels={copy.diagrams.dopplerTuning} />
+
+    <BandpassTuningSimulator client:visible labels={copy.interactive.tuningSimulator} />
+
+    {s.deepDive && <DeepDive deepDive={s.deepDive} />}
+  </div>
+</section>
