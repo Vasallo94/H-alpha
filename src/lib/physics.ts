@@ -31,10 +31,32 @@ export function classifyView(w: Window): View {
   return "disk";
 }
 
-// Rydberg for hydrogen Balmer-ish mapping (pedagogical).
-export function wavelengthToTransition(nm: number): { from: number; to: number } {
-  // H-alpha 656 (3->2), H-beta 486 (4->2), H-gamma 434 (5->2)
-  if (nm >= 600) return { from: 3, to: 2 };
-  if (nm >= 460) return { from: 4, to: 2 };
-  return { from: 5, to: 2 };
+export type SpectralLine = {
+  nm: number;
+  element: "H" | "Mg" | "Na" | "Ca";
+  label: string; // e.g. "Hα", "Hβ", "Mg b", "Na D"
+  transition?: { from: number; to: number }; // hydrogen only
+};
+
+export const SPECTRAL_LINES: SpectralLine[] = [
+  { nm: 410.2, element: "H", label: "Hδ", transition: { from: 6, to: 2 } },
+  { nm: 434.0, element: "H", label: "Hγ", transition: { from: 5, to: 2 } },
+  { nm: 486.1, element: "H", label: "Hβ", transition: { from: 4, to: 2 } },
+  { nm: 517.3, element: "Mg", label: "Mg b" },
+  { nm: 589.0, element: "Na", label: "Na D" },
+  { nm: 656.3, element: "H", label: "Hα", transition: { from: 3, to: 2 } },
+];
+
+/** Returns the known spectral line closest to `nm` within `tol` nm, or null. */
+export function nearestLine(nm: number, tol = 5): SpectralLine | null {
+  let closest: SpectralLine | null = null;
+  let minDist = Infinity;
+  for (const line of SPECTRAL_LINES) {
+    const dist = Math.abs(line.nm - nm);
+    if (dist < minDist) {
+      minDist = dist;
+      closest = line;
+    }
+  }
+  return closest !== null && minDist <= tol ? closest : null;
 }

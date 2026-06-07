@@ -1,28 +1,53 @@
 import { useState } from "react";
-import { wavelengthToTransition, H_ALPHA_NM } from "../../lib/physics";
+import { SPECTRAL_LINES, nearestLine, H_ALPHA_NM } from "../../lib/physics";
 
-type Labels = { aria: string; control: string; selected: string; transition: string };
+type Labels = {
+  aria: string;
+  control: string;
+  selected: string;
+  hydrogenTransition: string;
+  notHydrogen: string;
+  continuum: string;
+  elements: { H: string; Mg: string; Na: string; Ca: string };
+};
 
 const MIN_NM = 400;
 const MAX_NM = 700;
-// Prominent Fraunhofer lines across the visible band (nm).
-const FRAUNHOFER = [430, 486, 517, 589, 656];
 
 const toPercent = (nm: number) => ((nm - MIN_NM) / (MAX_NM - MIN_NM)) * 100;
 
 export function SpectrumExplorer({ labels }: { labels: Labels }) {
   const [nm, setNm] = useState(H_ALPHA_NM);
-  const t = wavelengthToTransition(nm);
+  const line = nearestLine(nm);
   const pct = toPercent(nm);
+
+  // Build the readout message
+  let readout: string;
+  if (line === null) {
+    readout = labels.continuum;
+  } else if (line.element === "H" && line.transition) {
+    readout = `${line.label} — ${labels.hydrogenTransition}: n=${line.transition.from} → n=${line.transition.to} (${line.nm} nm)`;
+  } else {
+    const elementName = labels.elements[line.element] ?? line.element;
+    readout = `${line.label} — ${elementName} — ${labels.notHydrogen} (${line.nm} nm)`;
+  }
 
   return (
     <div className="instrument-panel spectrum-explorer" role="group" aria-label={labels.aria}>
       <div className="spectrum-explorer__bar" aria-hidden="true">
-        {FRAUNHOFER.map((w) => (
+        {SPECTRAL_LINES.map((l) => (
           <span
-            key={w}
-            className="spectrum-explorer__fraunhofer"
-            style={{ left: `${toPercent(w)}%` }}
+            key={l.nm}
+            className={[
+              "spectrum-explorer__fraunhofer",
+              l.element === "H" ? "spectrum-explorer__fraunhofer--hydrogen" : "",
+              line !== null && Math.abs(l.nm - nm) <= 5
+                ? "spectrum-explorer__fraunhofer--active"
+                : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+            style={{ left: `${toPercent(l.nm)}%` }}
           />
         ))}
         <span className="spectrum-explorer__cursor" style={{ left: `${pct}%` }} />
@@ -47,7 +72,7 @@ export function SpectrumExplorer({ labels }: { labels: Labels }) {
 
       {/* aria-live region for screen readers; no id needed */}
       <p className="spectrum-explorer__readout" aria-live="polite">
-        {labels.selected}: {Math.round(nm)} nm — {labels.transition} n={t.from} → n={t.to}
+        {labels.selected}: {Math.round(nm)} nm — {readout}
       </p>
     </div>
   );

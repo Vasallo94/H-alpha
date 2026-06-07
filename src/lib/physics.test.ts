@@ -5,7 +5,7 @@ import {
   transmissionWindow,
   contrastUnderWindow,
   classifyView,
-  wavelengthToTransition,
+  nearestLine,
 } from "./physics";
 
 describe("physics helpers", () => {
@@ -42,8 +42,30 @@ describe("physics helpers", () => {
     expect(classifyView({ centerOffset: 0.4, fwhm: 0.4 })).toBe("prominence");
   });
 
-  it("maps wavelengths near H-alpha to the n=3->n=2 transition", () => {
-    expect(wavelengthToTransition(656).from).toBe(3);
-    expect(wavelengthToTransition(656).to).toBe(2);
+  it("nearestLine: 656 nm identifies Hα with n=3→n=2 transition", () => {
+    const line = nearestLine(656);
+    expect(line).not.toBeNull();
+    expect(line!.label).toBe("Hα");
+    expect(line!.element).toBe("H");
+    expect(line!.transition).toEqual({ from: 3, to: 2 });
+  });
+
+  it("nearestLine: 486 nm identifies Hβ with n=4→n=2 transition", () => {
+    const line = nearestLine(486);
+    expect(line).not.toBeNull();
+    expect(line!.label).toBe("Hβ");
+    expect(line!.element).toBe("H");
+    expect(line!.transition).toEqual({ from: 4, to: 2 });
+  });
+
+  it("nearestLine: 589 nm identifies Na D (not hydrogen)", () => {
+    const line = nearestLine(589);
+    expect(line).not.toBeNull();
+    expect(line!.element).toBe("Na");
+    expect(line!.transition).toBeUndefined();
+  });
+
+  it("nearestLine: 550 nm (far from any line) returns null", () => {
+    expect(nearestLine(550)).toBeNull();
   });
 });

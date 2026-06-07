@@ -76,7 +76,15 @@ type SiteCopy = {
       aria: string;
       control: string;
       selected: string;
-      transition: string;
+      hydrogenTransition: string;
+      notHydrogen: string;
+      continuum: string;
+      elements: {
+        H: string;
+        Mg: string;
+        Na: string;
+        Ca: string;
+      };
     };
     tuningSimulator: {
       aria: string;
@@ -145,13 +153,15 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         lead: "Si descomponemos la luz del Sol con cuidado, el arcoíris aparece cruzado por finas rayas oscuras. H‑alpha es una de ellas.",
         body: [
           "Cuando separamos la luz solar en sus colores esperamos un arcoíris continuo, pero al mirarlo de cerca aparece interrumpido por cientos de líneas oscuras muy estrechas. Son las líneas de Fraunhofer, y cada una marca un color que ha sido absorbido por un elemento concreto presente en el Sol antes de que su luz llegara hasta nosotros.",
-          "Cada línea oscura es la firma de un átomo: el sodio, el calcio, el magnesio, el hierro y, por supuesto, el hidrógeno tienen las suyas. La línea H‑alpha es una de las más conocidas, una raya oscura situada en el rojo profundo, en 656,28 nm. Un telescopio solar de H‑alpha está diseñado para hacer exactamente lo contrario que el resto del espectro: en lugar de descartar esa rendija, se queda solo con ella y rechaza todo lo demás.",
+          "Cada línea oscura es la firma de un átomo: el sodio, el calcio, el magnesio, el hierro y, por supuesto, el hidrógeno tienen las suyas. Las líneas del hidrógeno visible forman la serie de Balmer: todas son transiciones electrónicas que terminan en el nivel n=2. H‑alpha (n=3→2, 656,28 nm) es la primera y más intensa; le siguen H‑beta (n=4→2, 486,1 nm), H‑gamma (n=5→2, 434,0 nm) y H‑delta (n=6→2, 410,2 nm). Otras líneas oscuras del mismo espectro —como las de sodio (Na D, 589 nm) o magnesio (Mg b, 517 nm)— pertenecen a elementos distintos y no son transiciones del hidrógeno.",
+          "Un telescopio solar de H‑alpha está diseñado para hacer exactamente lo contrario que el resto del espectro: en lugar de descartar la rendija de H‑alpha, se queda solo con ella y rechaza todo lo demás.",
         ],
         deepDive: {
           title: "Línea oscura en el disco, línea brillante en el limbo",
           paragraphs: [
             "Sobre el disco solar, la luz blanca brillante de la fotosfera atraviesa la cromosfera por encima. El hidrógeno de esa capa absorbe selectivamente los fotones de 656,28 nm, restándolos del fondo continuo. Por eso, en el espectro del disco, H‑alpha aparece como una línea de absorción: una muesca oscura sobre un fondo intenso.",
             "En el limbo del Sol y en las protuberancias que se elevan sobre él no hay fotosfera brillante detrás, sino el cielo oscuro. Ese mismo hidrógeno, en lugar de absorber, emite sus propios fotones H‑alpha. El resultado es una línea de emisión brillante. Es el motivo de que las protuberancias se vean encendidas en el borde mientras los filamentos (el mismo gas, pero proyectado sobre el disco) se vean oscuros: son el anverso y el reverso del mismo fenómeno.",
+            "La serie de Balmer completa las transiciones al nivel n=2 del hidrógeno. Solo H‑alpha, H‑beta, H‑gamma y H‑delta caen en el visible; las de n más alto caen en el ultravioleta. Las demás líneas oscuras del espectro solar (sodio, magnesio, calcio, hierro…) corresponden a transiciones electrónicas de esos otros elementos y no tienen relación con la serie de Balmer.",
           ],
         },
       },
@@ -426,10 +436,18 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     interactive: {
       spectrumExplorer: {
-        aria: "Explorador del espectro visible: mueve el control para elegir una longitud de onda y ver a qué transición del hidrógeno corresponde.",
+        aria: "Explorador del espectro visible: mueve el control para elegir una longitud de onda y ver qué línea de Fraunhofer corresponde.",
         control: "Longitud de onda",
         selected: "Seleccionado",
-        transition: "Transición del hidrógeno",
+        hydrogenTransition: "Transición del hidrógeno",
+        notHydrogen: "Otro elemento — no es hidrógeno",
+        continuum: "Continuo (sin línea de Fraunhofer)",
+        elements: {
+          H: "Hidrógeno",
+          Mg: "Magnesio",
+          Na: "Sodio",
+          Ca: "Calcio",
+        },
       },
       tuningSimulator: {
         aria: "Simulador de tuning: ajusta la anchura y el desplazamiento de la ventana del etalon sobre la línea H‑alpha y observa cómo cambia la vista.",
@@ -522,13 +540,15 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         lead: "If we carefully break up the Sun's light, the rainbow appears crossed by thin dark lines. H‑alpha is one of them.",
         body: [
           "When we split sunlight into its colors we expect a continuous rainbow, but on closer inspection it is interrupted by hundreds of very narrow dark lines. These are the Fraunhofer lines, and each one marks a color that was absorbed by a specific element present in the Sun before its light reached us.",
-          "Each dark line is the signature of an atom: sodium, calcium, magnesium, iron and, of course, hydrogen each have their own. The H‑alpha line is one of the best known, a dark stripe in the deep red, at 656.28 nm. An H‑alpha solar telescope is designed to do exactly the opposite of the rest of the spectrum: instead of discarding that slit, it keeps only that one and rejects everything else.",
+          "Each dark line is the signature of an atom: sodium, calcium, magnesium, iron, and, of course, hydrogen each have their own. The hydrogen lines in the visible range form the Balmer series: all are electron transitions ending at level n=2. H‑alpha (n=3→2, 656.28 nm) is the first and most intense; it is followed by H‑beta (n=4→2, 486.1 nm), H‑gamma (n=5→2, 434.0 nm), and H‑delta (n=6→2, 410.2 nm). Other dark lines in the same spectrum — such as sodium (Na D, 589 nm) or magnesium (Mg b, 517 nm) — belong to different elements and are not hydrogen transitions.",
+          "An H‑alpha solar telescope is designed to do exactly the opposite of the rest of the spectrum: instead of discarding the H‑alpha slit, it keeps only that one and rejects everything else.",
         ],
         deepDive: {
           title: "Dark line on the disk, bright line at the limb",
           paragraphs: [
             "Over the solar disk, the bright white light of the photosphere travels through the chromosphere above it. The hydrogen in that layer selectively absorbs the 656.28 nm photons, subtracting them from the continuous background. That is why, in the disk spectrum, H‑alpha appears as an absorption line: a dark notch on an intense background.",
             "At the Sun's limb and in the prominences that rise above it there is no bright photosphere behind, only the dark sky. That same hydrogen, instead of absorbing, emits its own H‑alpha photons. The result is a bright emission line. This is why prominences appear lit up at the edge while filaments (the same gas, but projected onto the disk) appear dark: they are two sides of the same phenomenon.",
+            "The full Balmer series covers all transitions to n=2 in hydrogen. Only H‑alpha, H‑beta, H‑gamma, and H‑delta fall in the visible range; those for higher n fall in the ultraviolet. The other dark lines in the solar spectrum (sodium, magnesium, calcium, iron…) correspond to electron transitions in those other elements and have no connection to the Balmer series.",
           ],
         },
       },
@@ -803,10 +823,18 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     interactive: {
       spectrumExplorer: {
-        aria: "Visible-spectrum explorer: move the control to pick a wavelength and see which hydrogen transition it corresponds to.",
+        aria: "Visible-spectrum explorer: move the control to pick a wavelength and see which Fraunhofer line it corresponds to.",
         control: "Wavelength",
         selected: "Selected",
-        transition: "Hydrogen transition",
+        hydrogenTransition: "Hydrogen transition",
+        notHydrogen: "Different element — not hydrogen",
+        continuum: "Continuum (no Fraunhofer line)",
+        elements: {
+          H: "Hydrogen",
+          Mg: "Magnesium",
+          Na: "Sodium",
+          Ca: "Calcium",
+        },
       },
       tuningSimulator: {
         aria: "Tuning simulator: adjust the width and offset of the etalon window over the H‑alpha line and watch how the view changes.",
