@@ -1,0 +1,12 @@
+---
+import type { DeepDive } from "../content/siteCopy";
+interface Props { deepDive: DeepDive }
+const { deepDive } = Astro.props;
+---
+<details class="deep-dive">
+  <summary>{deepDive.title}</summary>
+  <div class="deep-dive__body">
+    {deepDive.paragraphs.map((p) => <p>{p}</p>)}
+    {deepDive.formula && <p class="deep-dive__formula">{deepDive.formula}</p>}
+  </div>
+</details>
