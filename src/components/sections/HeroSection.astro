@@ -1,32 +1,19 @@
 ---
 import type { Locale } from "../../i18n/routes";
 import { siteCopy } from "../../content/siteCopy";
-
-interface Props {
-  locale: Locale;
-}
-
-const { locale } = Astro.props;
+const { locale } = Astro.props as { locale: Locale };
 const copy = siteCopy[locale];
-const hero = copy.hero;
 ---
 
-<section class="section hero-section" id="origin">
+<section class="section hero-section" id="top">
   <div class="section__inner hero-section__grid">
     <div>
-      <p class="eyebrow">{hero.eyebrow}</p>
-      <h1 class="section-title">{hero.title}</h1>
-      <p class="lead">{hero.intro}</p>
+      <p class="eyebrow">{copy.hero.eyebrow}</p>
+      <h1 class="section-title">{copy.hero.title}</h1>
+      <p class="lead">{copy.hero.intro}</p>
     </div>
-    <figure class="hero-section__image">
-      <img
-        src="/images/sun-h-alpha.png"
-        alt={hero.imageAlt}
-        width="1608"
-        height="905"
-        loading="eager"
-        decoding="async"
-      />
+    <figure class="hero-section__figure">
+      <img src="/images/sun-h-alpha.png" alt={copy.hero.imageAlt} fetchpriority="high" />
     </figure>
   </div>
 </section>
