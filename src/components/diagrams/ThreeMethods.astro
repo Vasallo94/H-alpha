@@ -1,0 +1,79 @@
+---
+interface Props { labels: Record<string, string> }
+const { labels } = Astro.props;
+// Three parallel mini-schematics: eclipse glasses, white-light filter, H-alpha system.
+// Each column shows where the filter sits and which solar layer it reveals.
+const colW = 160;
+const cx = (i: number) => 8 + i * colW + colW / 2;
+const sunX = (i: number) => cx(i); // sun drawn at top of each column
+const sunY = 56;
+const eyeY = 214;
+const titleY = 26;
+const placeY = 246;
+const revealY = 262;
+---
+<figure class="diagram">
+  <svg viewBox="0 0 488 290" role="img" aria-label={labels.aria}>
+    <defs>
+      <marker id="tm-ray" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)" />
+      </marker>
+    </defs>
+
+    <!-- Column separators -->
+    <line x1={8 + colW} y1="14" x2={8 + colW} y2="232" stroke="var(--line)" stroke-width="1" />
+    <line x1={8 + 2 * colW} y1="14" x2={8 + 2 * colW} y2="232" stroke="var(--line)" stroke-width="1" />
+
+    {[0, 1, 2].map((i) => {
+      const titleKey = ["eclipseGlasses", "whiteLight", "hAlpha"][i];
+      const placeKey = ["eclipsePlacement", "whiteLightPlacement", "hAlphaPlacement"][i];
+      const revealKey = ["eclipseReveals", "whiteLightReveals", "hAlphaReveals"][i];
+      // The Sun for column 2 (white light) shows photosphere; column 3 (H-alpha) shows chromosphere ring.
+      const sunFill = "#f3b14a";
+      return (
+        <g>
+          <text x={cx(i)} y={titleY} font-size="12" font-weight="700" fill="var(--ink)" text-anchor="middle">{labels[titleKey]}</text>
+
+          <!-- Sun -->
+          <circle cx={sunX(i)} cy={sunY} r="20" fill={sunFill} />
+          {i === 2 && <circle cx={sunX(i)} cy={sunY} r="20" fill="none" stroke="var(--solar)" stroke-width="4" />}
+
+          <!-- Light ray down toward the eye -->
+          <line x1={sunX(i)} y1={sunY + 22} x2={sunX(i)} y2={eyeY - 16} stroke="var(--ink)" stroke-width="1.2" marker-end="url(#tm-ray)" />
+
+          <!-- Eye -->
+          <circle cx={cx(i)} cy={eyeY} r="9" fill="none" stroke="var(--ink)" stroke-width="1.4" />
+          <circle cx={cx(i)} cy={eyeY} r="3" fill="var(--ink)" />
+
+          <!-- Filter position marker -->
+          {i === 0 && (
+            <g>
+              {/* eclipse glasses: right in front of the eye */}
+              <rect x={cx(i) - 16} y={eyeY - 26} width="32" height="9" rx="3" fill="var(--instrument)" />
+            </g>
+          )}
+          {i === 1 && (
+            <g>
+              {/* white-light filter: at the front aperture (top), full spectrum attenuation */}
+              <rect x={cx(i) - 22} y={sunY + 30} width="44" height="8" rx="3" fill="var(--instrument)" />
+            </g>
+          )}
+          {i === 2 && (
+            <g>
+              {/* H-alpha: internal system = ERF + etalon + blocking stacked inside the path */}
+              <rect x={cx(i) - 22} y={sunY + 30} width="44" height="7" rx="3" fill="var(--instrument)" />
+              <rect x={cx(i) - 22} y={sunY + 70} width="44" height="7" rx="3" fill="var(--solar)" />
+              <rect x={cx(i) - 22} y={eyeY - 30} width="44" height="7" rx="3" fill="var(--instrument)" />
+            </g>
+          )}
+
+          <!-- Placement caption -->
+          <text x={cx(i)} y={placeY} font-size="10" fill="var(--muted)" text-anchor="middle">{labels[placeKey]}</text>
+          <!-- What it reveals -->
+          <text x={cx(i)} y={revealY} font-size="10.5" font-weight="700" fill={i === 2 ? "var(--solar-deep)" : "var(--ink)"} text-anchor="middle">{labels[revealKey]}</text>
+        </g>
+      );
+    })}
+  </svg>
+  <figcaption>{labels.caption}</figcaption>
+</figure>
