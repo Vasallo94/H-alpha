@@ -125,34 +125,39 @@ button, input { font: inherit; }
   overflow: hidden;
   border: 1px solid rgba(24, 32, 38, 0.22);
   border-radius: 8px;
-  background:
-    linear-gradient(
-      90deg,
-      #3a2f9d 0%,
-      #2365c8 18%,
-      #1d8d7c 36%,
-      #d2b934 55%,
-      #df6a31 75%,
-      #b12a25 100%
-    );
+  /* Real visible spectrum, ~400nm (violet) -> ~700nm (red). */
+  background: linear-gradient(
+    90deg,
+    #6a00b8 0%,
+    #4400ff 8%,
+    #0040ff 18%,
+    #00b6ff 30%,
+    #00d65a 44%,
+    #b6ff00 56%,
+    #ffe000 68%,
+    #ff8a00 82%,
+    #ff1a00 94%,
+    #b10000 100%
+  );
 }
 
-.spectrum-explorer__line {
+.spectrum-explorer__fraunhofer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(0, 0, 0, 0.65);
+  transform: translateX(-50%);
+}
+
+.spectrum-explorer__cursor {
   position: absolute;
   top: 0;
   bottom: 0;
   width: 3px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(24, 32, 38, 0.55), 0 0 16px rgba(255, 255, 255, 0.95);
   transform: translateX(-50%);
-}
-
-.spectrum-explorer__line--halpha {
-  background: var(--surface);
-  box-shadow: 0 0 0 2px rgba(24, 32, 38, 0.32), 0 0 18px rgba(255, 255, 255, 0.9);
-}
-
-.spectrum-explorer__line--selected {
-  background: var(--instrument);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.55);
 }
 
 .spectrum-explorer__scale {

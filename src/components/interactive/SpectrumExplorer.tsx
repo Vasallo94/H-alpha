@@ -1,94 +1,56 @@
-import { useId, useMemo, useState } from "react";
+import { useId, useState } from "react";
+import { wavelengthToTransition, H_ALPHA_NM } from "../../lib/physics";
 
-type SpectrumExplorerCopy = {
-  ariaLabel: string;
-  label: string;
-  body: string;
-  lineLabel: string;
-  markerDescription: string;
-  controlLabel: string;
-  selectedLabel: string;
-};
+type Labels = { aria: string; control: string; selected: string; transition: string };
 
-type SpectrumExplorerProps = {
-  copy: SpectrumExplorerCopy;
-};
+const MIN_NM = 400;
+const MAX_NM = 700;
+// Prominent Fraunhofer lines across the visible band (nm).
+const FRAUNHOFER = [430, 486, 517, 589, 656];
 
-const MIN_WAVELENGTH = 400;
-const MAX_WAVELENGTH = 700;
-const H_ALPHA_WAVELENGTH = 656.28;
+const toPercent = (nm: number) => ((nm - MIN_NM) / (MAX_NM - MIN_NM)) * 100;
 
-const getPosition = (wavelength: number) =>
-  ((wavelength - MIN_WAVELENGTH) / (MAX_WAVELENGTH - MIN_WAVELENGTH)) * 100;
-
-type RangeInputEvent = {
-  currentTarget: HTMLInputElement;
-};
-
-export default function SpectrumExplorer({ copy }: SpectrumExplorerProps) {
+export function SpectrumExplorer({ labels }: { labels: Labels }) {
   const baseId = useId();
   const inputId = `${baseId}-wavelength`;
   const readoutId = `${baseId}-readout`;
-  const markerDescriptionId = `${baseId}-marker-description`;
-  const [selectedWavelength, setSelectedWavelength] = useState(H_ALPHA_WAVELENGTH);
-  const selectedPosition = useMemo(() => getPosition(selectedWavelength), [selectedWavelength]);
-  const hAlphaPosition = getPosition(H_ALPHA_WAVELENGTH);
-  const updateSelectedWavelength = (event: RangeInputEvent) => {
-    setSelectedWavelength(Number(event.currentTarget.value));
-  };
+  const [nm, setNm] = useState(H_ALPHA_NM);
+  const t = wavelengthToTransition(nm);
+  const pct = toPercent(nm);
 
   return (
-    <div className="instrument-panel spectrum-explorer" aria-label={copy.ariaLabel} role="group">
-      <div className="spectrum-explorer__header">
-        <div>
-          <p className="spectrum-explorer__label">{copy.label}</p>
-          <p>{copy.body}</p>
-        </div>
-        <output
-          aria-live="polite"
-          className="spectrum-explorer__readout"
-          htmlFor={inputId}
-          id={readoutId}
-        >
-          {copy.selectedLabel}: {selectedWavelength.toFixed(0)} nm
-        </output>
-      </div>
-
+    <div className="instrument-panel spectrum-explorer" role="group" aria-label={labels.aria}>
       <div className="spectrum-explorer__bar" aria-hidden="true">
-        <span
-          className="spectrum-explorer__line spectrum-explorer__line--halpha"
-          style={{ left: `${hAlphaPosition}%` }}
-        />
-        <span
-          className="spectrum-explorer__line spectrum-explorer__line--selected"
-          style={{ left: `${selectedPosition}%` }}
-        />
+        {FRAUNHOFER.map((w) => (
+          <span
+            key={w}
+            className="spectrum-explorer__fraunhofer"
+            style={{ left: `${toPercent(w)}%` }}
+          />
+        ))}
+        <span className="spectrum-explorer__cursor" style={{ left: `${pct}%` }} />
       </div>
-
-      <div className="spectrum-explorer__scale" aria-hidden="true">
-        <span>400 nm</span>
-        <span>{copy.lineLabel}</span>
-        <span>700 nm</span>
-      </div>
-
-      <p className="sr-only" id={markerDescriptionId}>
-        {copy.markerDescription}
-      </p>
 
       <label className="spectrum-explorer__control" htmlFor={inputId}>
-        <span>{copy.controlLabel}</span>
+        <span>
+          {labels.control}: {Math.round(nm)} nm
+        </span>
         <input
-          aria-describedby={`${readoutId} ${markerDescriptionId}`}
+          aria-describedby={readoutId}
           id={inputId}
-          max={MAX_WAVELENGTH}
-          min={MIN_WAVELENGTH}
-          step="1"
           type="range"
-          value={Math.round(selectedWavelength)}
-          onChange={updateSelectedWavelength}
-          onInput={updateSelectedWavelength}
+          min={MIN_NM}
+          max={MAX_NM}
+          step={1}
+          value={Math.round(nm)}
+          onChange={(e) => setNm(Number(e.target.value))}
+          onInput={(e) => setNm(Number(e.currentTarget.value))}
         />
       </label>
+
+      <p className="spectrum-explorer__readout" aria-live="polite" id={readoutId}>
+        {labels.selected}: {Math.round(nm)} nm — {labels.transition} n={t.from} → n={t.to}
+      </p>
     </div>
   );
 }

@@ -72,6 +72,21 @@ type SiteCopy = {
     threeMethods: Record<string, string>;
     dopplerTuning: Record<string, string>;
   };
+  interactive: {
+    spectrumExplorer: {
+      aria: string;
+      control: string;
+      selected: string;
+      transition: string;
+    };
+    tuningSimulator: {
+      aria: string;
+      width: string;
+      offset: string;
+      contrast: string;
+      views: { disk: string; prominence: string; washed: string };
+    };
+  };
 };
 
 export const siteCopy: Record<Locale, SiteCopy> = {
@@ -400,6 +415,25 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         wavelengthAxis: "Longitud de onda",
       },
     },
+    interactive: {
+      spectrumExplorer: {
+        aria: "Explorador del espectro visible: mueve el control para elegir una longitud de onda y ver a qué transición del hidrógeno corresponde.",
+        control: "Longitud de onda",
+        selected: "Seleccionado",
+        transition: "Transición del hidrógeno",
+      },
+      tuningSimulator: {
+        aria: "Simulador de tuning: ajusta la anchura y el desplazamiento de la ventana del etalon sobre la línea H-alpha y observa cómo cambia la vista.",
+        width: "Anchura de banda (FWHM)",
+        offset: "Desplazamiento del centro",
+        contrast: "Contraste del disco",
+        views: {
+          disk: "Disco: filamentos y plages",
+          prominence: "Protuberancias en el limbo",
+          washed: "Lavado: poco contraste",
+        },
+      },
+    },
   },
   en: {
     meta: {
@@ -724,6 +758,25 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         centerLabel: "Centered: disk",
         wingLabel: "On the wing: prominences",
         wavelengthAxis: "Wavelength",
+      },
+    },
+    interactive: {
+      spectrumExplorer: {
+        aria: "Visible-spectrum explorer: move the control to pick a wavelength and see which hydrogen transition it corresponds to.",
+        control: "Wavelength",
+        selected: "Selected",
+        transition: "Hydrogen transition",
+      },
+      tuningSimulator: {
+        aria: "Tuning simulator: adjust the width and offset of the etalon window over the H-alpha line and watch how the view changes.",
+        width: "Bandpass width (FWHM)",
+        offset: "Center offset",
+        contrast: "Disk contrast",
+        views: {
+          disk: "Disk: filaments and plages",
+          prominence: "Prominences at the limb",
+          washed: "Washed out: low contrast",
+        },
       },
     },
   },
