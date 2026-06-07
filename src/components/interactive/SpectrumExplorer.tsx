@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useState } from "react";
 import { wavelengthToTransition, H_ALPHA_NM } from "../../lib/physics";
 
 type Labels = { aria: string; control: string; selected: string; transition: string };
@@ -11,9 +11,6 @@ const FRAUNHOFER = [430, 486, 517, 589, 656];
 const toPercent = (nm: number) => ((nm - MIN_NM) / (MAX_NM - MIN_NM)) * 100;
 
 export function SpectrumExplorer({ labels }: { labels: Labels }) {
-  const baseId = useId();
-  const inputId = `${baseId}-wavelength`;
-  const readoutId = `${baseId}-readout`;
   const [nm, setNm] = useState(H_ALPHA_NM);
   const t = wavelengthToTransition(nm);
   const pct = toPercent(nm);
@@ -31,13 +28,13 @@ export function SpectrumExplorer({ labels }: { labels: Labels }) {
         <span className="spectrum-explorer__cursor" style={{ left: `${pct}%` }} />
       </div>
 
-      <label className="spectrum-explorer__control" htmlFor={inputId}>
+      {/* Implicit label association: input is nested inside label */}
+      <label className="spectrum-explorer__control">
         <span>
           {labels.control}: {Math.round(nm)} nm
         </span>
         <input
-          aria-describedby={readoutId}
-          id={inputId}
+          aria-label={labels.control}
           type="range"
           min={MIN_NM}
           max={MAX_NM}
@@ -48,7 +45,8 @@ export function SpectrumExplorer({ labels }: { labels: Labels }) {
         />
       </label>
 
-      <p className="spectrum-explorer__readout" aria-live="polite" id={readoutId}>
+      {/* aria-live region for screen readers; no id needed */}
+      <p className="spectrum-explorer__readout" aria-live="polite">
         {labels.selected}: {Math.round(nm)} nm — {labels.transition} n={t.from} → n={t.to}
       </p>
     </div>

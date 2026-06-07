@@ -17,10 +17,16 @@ export function LightPathAnimation({ labels }: { labels: Labels }) {
   const [playing, setPlaying] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Detect reduced-motion preference
-  const prefersReduced =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Start false (same as SSR) and sync to the real value after mount to
+  // avoid hydration mismatches from window.matchMedia being unavailable on server.
+  const [prefersReduced, setPrefersReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReduced(mq.matches);
+    const onChange = () => setPrefersReduced(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
 
   const total = labels.stages.length;
 

@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useState } from "react";
 import { contrastUnderWindow, classifyView, transmissionWindow, gaussian } from "../../lib/physics";
 
 type Labels = {
@@ -20,10 +20,6 @@ const DEFAULT_OFFSET = 0;
 const SAMPLES = Array.from({ length: 60 }, (_, i) => -1.5 + (i * 3) / 59);
 
 export function BandpassTuningSimulator({ labels }: { labels: Labels }) {
-  const baseId = useId();
-  const widthId = `${baseId}-width`;
-  const offsetId = `${baseId}-offset`;
-  const readoutId = `${baseId}-readout`;
   const [fwhm, setFwhm] = useState(DEFAULT_FWHM);
   const [offset, setOffset] = useState(DEFAULT_OFFSET);
 
@@ -53,44 +49,42 @@ export function BandpassTuningSimulator({ labels }: { labels: Labels }) {
       </svg>
 
       <div className="bandpass-sim__controls">
-        <label htmlFor={widthId}>
+        {/* Implicit label association: inputs are nested inside their labels */}
+        <label>
           <span>
             {labels.width}: {fwhm.toFixed(2)} Å
           </span>
           <input
-            id={widthId}
             type="range"
             min={MIN_FWHM}
             max={MAX_FWHM}
             step={0.05}
             value={fwhm}
             aria-label={labels.width}
-            aria-describedby={readoutId}
             onChange={(e) => setFwhm(Number(e.target.value))}
             onInput={(e) => setFwhm(Number(e.currentTarget.value))}
           />
         </label>
 
-        <label htmlFor={offsetId}>
+        <label>
           <span>
             {labels.offset}: {offset.toFixed(2)} Å
           </span>
           <input
-            id={offsetId}
             type="range"
             min={MIN_OFFSET}
             max={MAX_OFFSET}
             step={0.05}
             value={offset}
             aria-label={labels.offset}
-            aria-describedby={readoutId}
             onChange={(e) => setOffset(Number(e.target.value))}
             onInput={(e) => setOffset(Number(e.currentTarget.value))}
           />
         </label>
       </div>
 
-      <p className="bandpass-sim__readout" aria-live="polite" id={readoutId}>
+      {/* aria-live region for screen readers; no id needed */}
+      <p className="bandpass-sim__readout" aria-live="polite">
         {labels.contrast}: {(contrast * 100).toFixed(0)}% — {labels.views[view]}
       </p>
 

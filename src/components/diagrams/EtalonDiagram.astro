@@ -77,16 +77,16 @@ const airyPath = (cx: number) =>
       <path d={airyPath(cx)} fill="none" stroke={i === 1 ? "var(--solar)" : "var(--muted)"} stroke-width={i === 1 ? "2.4" : "1.4"} />
     ))}
 
-    <!-- FSR between consecutive peaks -->
+    <!-- FSR between consecutive peaks — arrow at insetTop+2, label at insetTop-14 to clear the peak label -->
     <line x1={peaks[0]} y1={insetTop + 2} x2={peaks[1]} y2={insetTop + 2} stroke="var(--ink)" stroke-width="0.9" marker-start="url(#et-arrow-ink)" marker-end="url(#et-arrow-ink)" />
-    <text x={(peaks[0] + peaks[1]) / 2} y={insetTop - 2} font-size="10.5" fill="var(--ink)" text-anchor="middle">{labels.fsrLabel}</text>
+    <text x={(peaks[0] + peaks[1]) / 2} y={insetTop - 14} font-size="10.5" fill="var(--ink)" text-anchor="middle">{labels.fsrLabel}</text>
 
     <!-- FWHM at half height of the highlighted peak -->
     <line x1={peaks[1] - 8} y1={halfY} x2={peaks[1] + 8} y2={halfY} stroke="var(--solar-deep)" stroke-width="1" marker-start="url(#et-arrow)" marker-end="url(#et-arrow)" />
     <text x={peaks[1] + 14} y={halfY + 4} font-size="10.5" fill="var(--solar-deep)">{labels.fwhmLabel}</text>
 
-    <!-- Peak label -->
-    <text x={peaks[1]} y={peakTop - 4} font-size="10" fill="var(--solar-deep)" text-anchor="middle">{labels.peakLabel}</text>
+    <!-- Peak label — placed just above the peak, clear of the FSR label -->
+    <text x={peaks[1]} y={peakTop - 16} font-size="10" fill="var(--solar-deep)" text-anchor="middle">{labels.peakLabel}</text>
   </svg>
   <figcaption>{labels.caption}</figcaption>
 </figure>
