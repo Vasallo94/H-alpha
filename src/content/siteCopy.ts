@@ -270,32 +270,40 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       annotations: [
         {
           id: "filaments",
-          x: 38,
-          y: 44,
+          x: 42,
+          y: 51,
           label: "Filamentos",
           description:
             "Hebras oscuras sobre el disco: gas más frío suspendido por campos magnéticos. Es el mismo material que, en el borde, vemos como protuberancia brillante.",
         },
         {
-          id: "prominences",
-          x: 92,
-          y: 50,
-          label: "Protuberancias",
-          description:
-            "Arcos y chorros de gas que se elevan sobre el limbo. Brillan en emisión porque no tienen detrás el fondo deslumbrante de la fotosfera.",
-        },
-        {
           id: "plages",
-          x: 60,
-          y: 33,
+          x: 40,
+          y: 37,
           label: "Plages",
           description:
             "Regiones brillantes alrededor de zonas activas, asociadas a campos magnéticos intensos en la cromosfera.",
         },
         {
+          id: "sunspot",
+          x: 48,
+          y: 38,
+          label: "Mancha solar",
+          description:
+            "Zona más fría y oscura de una región activa, donde el campo magnético es intenso. En H‑alpha aparece como un punto oscuro rodeado de plages brillantes.",
+        },
+        {
+          id: "prominences",
+          x: 69,
+          y: 31,
+          label: "Protuberancias",
+          description:
+            "Arcos y chorros de gas que se elevan sobre el limbo. Brillan en emisión porque no tienen detrás el fondo deslumbrante de la fotosfera.",
+        },
+        {
           id: "texture",
-          x: 50,
-          y: 62,
+          x: 57,
+          y: 60,
           label: "Textura cromosférica",
           description:
             "El moteado fino del disco son las espículas y la red cromosférica: pequeños chorros de gas que dan a la superficie su aspecto granulado.",
@@ -639,32 +647,40 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       annotations: [
         {
           id: "filaments",
-          x: 38,
-          y: 44,
+          x: 42,
+          y: 51,
           label: "Filaments",
           description:
             "Dark threads over the disk: cooler gas suspended by magnetic fields. It is the same material that, at the edge, we see as a bright prominence.",
         },
         {
-          id: "prominences",
-          x: 92,
-          y: 50,
-          label: "Prominences",
-          description:
-            "Arcs and jets of gas rising above the limb. They glow in emission because they have no dazzling photospheric background behind them.",
-        },
-        {
           id: "plages",
-          x: 60,
-          y: 33,
+          x: 40,
+          y: 37,
           label: "Plages",
           description:
             "Bright regions around active areas, associated with intense magnetic fields in the chromosphere.",
         },
         {
+          id: "sunspot",
+          x: 48,
+          y: 38,
+          label: "Sunspot",
+          description:
+            "A cooler, darker patch of an active region where the magnetic field is intense. In H‑alpha it shows up as a dark point surrounded by bright plages.",
+        },
+        {
+          id: "prominences",
+          x: 69,
+          y: 31,
+          label: "Prominences",
+          description:
+            "Arcs and jets of gas rising above the limb. They glow in emission because they have no dazzling photospheric background behind them.",
+        },
+        {
           id: "texture",
-          x: 50,
-          y: 62,
+          x: 57,
+          y: 60,
           label: "Chromospheric texture",
           description:
             "The fine mottling of the disk is the spicules and the chromospheric network: small jets of gas that give the surface its grainy look.",
