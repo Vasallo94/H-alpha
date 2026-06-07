@@ -39,6 +39,7 @@ type SiteCopy = {
   meta: { title: string; description: string };
   nav: { origin: string; etalon: string; tuning: string; safety: string; image: string };
   languageLabel: string;
+  social: { byline: string; github: string; linkedin: string; githubUrl: string; linkedinUrl: string };
   hero: { eyebrow: string; title: string; intro: string; imageAlt: string };
   sections: {
     origin: Section;
@@ -91,6 +92,7 @@ type SiteCopy = {
       width: string;
       offset: string;
       contrast: string;
+      explanation: string;
       views: { disk: string; prominence: string; washed: string };
     };
     filterComparison: {
@@ -128,6 +130,13 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       image: "Imagen real",
     },
     languageLabel: "English",
+    social: {
+      byline: "Hecho por Enrique con fotografía solar, código y bastante respeto al Sol.",
+      github: "GitHub",
+      linkedin: "LinkedIn",
+      githubUrl: "https://github.com/enriquebook",
+      linkedinUrl: "https://www.linkedin.com/in/enriquebook/",
+    },
     hero: {
       eyebrow: "El Sol en una sola línea de color",
       title: "¿Por qué el Sol se ve tan distinto en H‑alpha?",
@@ -272,6 +281,14 @@ export const siteCopy: Record<Locale, SiteCopy> = {
           title: "Los buscadores se usan por proyección",
           body: "Nunca se mira por el buscador de un telescopio apuntando al Sol. Se localiza el Sol por la sombra del tubo o por proyección, o se usa un buscador solar dedicado.",
         },
+        {
+          title: "Revisa los filtros antes de cada sesión",
+          body: "Si un filtro tiene golpes, arañazos, holguras, perforaciones o no queda firmemente sujeto, no se usa. Un filtro solar debe inspeccionarse antes de apuntar al Sol.",
+        },
+        {
+          title: "La regla de oro: si hay duda, se tapa el tubo",
+          body: "No dejes un instrumento solar apuntando al Sol sin supervisión, especialmente en sesiones públicas o con niños cerca. Ante cualquier duda sobre una pieza, se tapa el objetivo y se deja de observar.",
+        },
       ],
       seasonalCallout: {
         enabled: true,
@@ -378,13 +395,13 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         balmerLabel: "Serie de Balmer (al nivel n=2)",
       },
       sunLayers: {
-        caption: "Capas del Sol: qué ve la luz blanca y qué ve el H‑alpha.",
+        caption: "Capas del Sol: qué muestra la luz blanca y qué revela H‑alpha.",
         aria: "Diagrama en sección de las capas del Sol, de la fotosfera a la corona.",
         photosphere: "Fotosfera",
         chromosphere: "Cromosfera",
         corona: "Corona",
-        whiteLightLabel: "Luz blanca: ve la fotosfera",
-        hAlphaLabel: "H‑alpha: ve la cromosfera",
+        whiteLightLabel: "Luz blanca: muestra la fotosfera",
+        hAlphaLabel: "H‑alpha: revela detalle cromosférico",
         photosphereNote: "Superficie visible y brillante.",
         chromosphereNote: "Capa fina que brilla en H‑alpha.",
         coronaNote: "Atmósfera exterior tenue.",
@@ -464,6 +481,8 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         width: "Anchura de banda (FWHM)",
         offset: "Desplazamiento del centro",
         contrast: "Contraste del disco",
+        explanation:
+          "La curva roja es la ventana de transmisión del etalon. Si la desplazas hacia un ala de H‑alpha, solo el gas cuya línea se ha corrido por efecto Doppler cae dentro de esa ventana: por eso aparece un limbo/protuberancia concreto, no dos puntos simétricos.",
         views: {
           disk: "Disco: filamentos y plages",
           prominence: "Protuberancias en el limbo",
@@ -528,6 +547,13 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       image: "Real image",
     },
     languageLabel: "Español",
+    social: {
+      byline: "Made by Enrique with solar imaging, code, and a healthy respect for the Sun.",
+      github: "GitHub",
+      linkedin: "LinkedIn",
+      githubUrl: "https://github.com/enriquebook",
+      linkedinUrl: "https://www.linkedin.com/in/enriquebook/",
+    },
     hero: {
       eyebrow: "The Sun in a single color of light",
       title: "Why does the Sun look so different in H‑alpha?",
@@ -672,6 +698,14 @@ export const siteCopy: Record<Locale, SiteCopy> = {
           title: "Finders are used by projection",
           body: "Never look through a telescope's finder when pointing at the Sun. Locate the Sun by the tube's shadow or by projection, or use a dedicated solar finder.",
         },
+        {
+          title: "Inspect filters before every session",
+          body: "If a filter is dented, scratched, loose, punctured, or does not stay firmly attached, it is not used. A solar filter is inspected before the instrument points at the Sun.",
+        },
+        {
+          title: "Golden rule: when in doubt, cap the telescope",
+          body: "Do not leave a solar instrument pointed at the Sun without supervision, especially in public sessions or around children. If any part is uncertain, cover the objective and stop observing.",
+        },
       ],
       seasonalCallout: {
         enabled: true,
@@ -778,13 +812,13 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         balmerLabel: "Balmer series (to level n=2)",
       },
       sunLayers: {
-        caption: "Layers of the Sun: what white light sees and what H‑alpha sees.",
+        caption: "Layers of the Sun: what white light shows and what H‑alpha reveals.",
         aria: "Cross-section diagram of the Sun's layers, from the photosphere to the corona.",
         photosphere: "Photosphere",
         chromosphere: "Chromosphere",
         corona: "Corona",
-        whiteLightLabel: "White light: sees the photosphere",
-        hAlphaLabel: "H‑alpha: sees the chromosphere",
+        whiteLightLabel: "White light: shows the photosphere",
+        hAlphaLabel: "H‑alpha: reveals chromospheric detail",
         photosphereNote: "Bright, visible surface.",
         chromosphereNote: "Thin layer that glows in H‑alpha.",
         coronaNote: "Faint outer atmosphere.",
@@ -864,6 +898,8 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         width: "Bandpass width (FWHM)",
         offset: "Center offset",
         contrast: "Disk contrast",
+        explanation:
+          "The red curve is the etalon transmission window. Shift it into one wing of H‑alpha and only gas whose line has been Doppler-shifted into that window stands out: that is why one limb/prominence appears, not two symmetric red spots.",
         views: {
           disk: "Disk: filaments and plages",
           prominence: "Prominences at the limb",

@@ -2,6 +2,7 @@
 import type { Locale } from "../i18n/routes";
 import { siteCopy } from "../content/siteCopy";
 import SiteNav from "../components/SiteNav.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 import "katex/dist/katex.min.css";
 import "../styles/global.css";
 
@@ -27,6 +28,7 @@ const copy = siteCopy[locale];
       <main>
         <slot />
       </main>
+      <SiteFooter locale={locale} />
     </div>
   </body>
 </html>

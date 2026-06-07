@@ -61,8 +61,21 @@ test("final image has annotations", async ({ page }) => {
   await expect(page.locator("#image .hotspot").first()).toBeVisible();
 });
 
-test("safety shows at least four evergreen rules", async ({ page }) => {
+test("safety shows seven evergreen rules", async ({ page }) => {
   await page.goto("/");
   const items = page.locator("#safety .safety-rules__item");
-  expect(await items.count()).toBeGreaterThanOrEqual(4);
+  await expect(items).toHaveCount(7);
+});
+
+test("tuning explains the single Doppler-shifted limb cue", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("#tuning").scrollIntoViewIfNeeded();
+  await expect(page.locator(".bandpass-sim__note")).toContainText("Doppler");
+  await expect(page.locator(".bandpass-sim__preview")).toBeVisible();
+});
+
+test("footer links to Enrique's social profiles", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".site-footer__links a[href='https://github.com/enriquebook']")).toBeVisible();
+  await expect(page.locator(".site-footer__links a[href='https://www.linkedin.com/in/enriquebook/']")).toBeVisible();
 });

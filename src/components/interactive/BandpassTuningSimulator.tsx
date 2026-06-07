@@ -6,6 +6,7 @@ type Labels = {
   width: string;
   offset: string;
   contrast: string;
+  explanation: string;
   views: { disk: string; prominence: string; washed: string };
 };
 
@@ -24,6 +25,7 @@ export function BandpassTuningSimulator({ labels }: { labels: Labels }) {
   const [offset, setOffset] = useState(DEFAULT_OFFSET);
 
   const view = classifyView({ centerOffset: offset, fwhm });
+  const wing = offset < -0.05 ? "blue-wing" : offset > 0.05 ? "red-wing" : "line-center";
   const contrast = contrastUnderWindow({ centerOffset: offset, fwhm });
 
   // y maps a 0..1 transmission to plot coordinates (top = high transmission).
@@ -87,8 +89,9 @@ export function BandpassTuningSimulator({ labels }: { labels: Labels }) {
       <p className="bandpass-sim__readout" aria-live="polite">
         {labels.contrast}: {(contrast * 100).toFixed(0)}% — {labels.views[view]}
       </p>
+      <p className="bandpass-sim__note">{labels.explanation}</p>
 
-      <div className={`bandpass-sim__preview bandpass-sim__preview--${view}`} aria-hidden="true" />
+      <div className={`bandpass-sim__preview bandpass-sim__preview--${view} bandpass-sim__preview--${wing}`} aria-hidden="true" />
     </div>
   );
 }

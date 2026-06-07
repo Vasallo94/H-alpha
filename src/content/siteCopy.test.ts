@@ -34,7 +34,7 @@ describe("site copy contract", () => {
 
   it("has the same number of evergreen safety rules in both languages", () => {
     expect(siteCopy.es.safety.rules.length).toEqual(siteCopy.en.safety.rules.length);
-    expect(siteCopy.es.safety.rules.length).toBeGreaterThanOrEqual(4);
+    expect(siteCopy.es.safety.rules.length).toBe(7);
   });
 
   it("keeps the seasonal callout configurable in both languages", () => {

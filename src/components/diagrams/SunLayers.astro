@@ -1,88 +1,73 @@
 ---
 interface Props { labels: Record<string, string> }
 const { labels } = Astro.props;
-// Quarter cross-section: nested arcs centred at bottom-left. Each layer is a band; every
-// label lives in a clean column on the right with a leader line to its band. No crossings.
-const cx = 40;
-const cy = 360;
-const a0 = -2 * (Math.PI / 180);   // start angle (near horizontal)
-const a1 = -92 * (Math.PI / 180);  // end angle (near vertical)
-const arc = (r: number) => {
-  const x0 = cx + r * Math.cos(a0);
-  const y0 = cy + r * Math.sin(a0);
-  const x1 = cx + r * Math.cos(a1);
-  const y1 = cy + r * Math.sin(a1);
-  return `M ${x0.toFixed(1)} ${y0.toFixed(1)} A ${r} ${r} 0 0 0 ${x1.toFixed(1)} ${y1.toFixed(1)}`;
-};
-const at = (r: number, deg: number) => {
-  const a = deg * (Math.PI / 180);
-  return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
-};
-// Radii (px). Interior solar body, then the three named layers.
-const rPhoto = 200;   // top of photosphere
-const rChromo = 232;  // top of chromosphere (thin band, emphasised)
-const rCorona = 360;  // top of corona
-
-// Band mid-radii for leader anchor points (all at a shared angle so leaders fan out cleanly).
-const anchorDeg = -30;
-const aPhoto = at(rPhoto * 0.7, anchorDeg);
-const aChromo = at((rPhoto + rChromo) / 2, anchorDeg);
-const aCorona = at((rChromo + rCorona) / 2, anchorDeg);
-
-// Label column on the right. Each row: title + note, vertically separated.
-const colX = 430;
-const rowPhoto = 320;
-const rowChromo = 196;
-const rowCorona = 96;
 ---
-<figure class="diagram">
-  <svg viewBox="0 0 620 420" role="img" aria-label={labels.aria}>
+<figure class="diagram sun-layers">
+  <svg viewBox="0 0 680 430" role="img" aria-label={labels.aria}>
     <defs>
+      <radialGradient id="sl-photosphere" cx="43%" cy="38%" r="66%">
+        <stop offset="0%" stop-color="#fff2b8" />
+        <stop offset="46%" stop-color="#f6bd55" />
+        <stop offset="100%" stop-color="#d36d25" />
+      </radialGradient>
+      <radialGradient id="sl-core" cx="42%" cy="40%" r="68%">
+        <stop offset="0%" stop-color="#f7cf73" />
+        <stop offset="100%" stop-color="#a63f22" />
+      </radialGradient>
+      <filter id="sl-soft" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="5" />
+      </filter>
       <marker id="sl-dot" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5">
         <circle cx="3.5" cy="3.5" r="2.4" fill="currentColor" />
       </marker>
-      <marker id="sl-arrow" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
-        <path d="M0,0 L6,3 L0,6 Z" fill="currentColor" />
-      </marker>
     </defs>
 
-    <!-- Corona (faint outer band) -->
-    <path d={arc((rChromo + rCorona) / 2)} fill="none" stroke="#f0d9b5" stroke-width={rCorona - rChromo} opacity="0.4" />
-    <!-- Interior + photosphere (bright solar body) -->
-    <path d={`M ${cx} ${cy - rPhoto} A ${rPhoto} ${rPhoto} 0 0 0 ${cx - rPhoto} ${cy} L ${cx} ${cy} Z`} fill="#f3b14a" />
-    <path d={`M ${cx} ${cy - rPhoto * 0.6} A ${rPhoto * 0.6} ${rPhoto * 0.6} 0 0 0 ${cx - rPhoto * 0.6} ${cy} L ${cx} ${cy} Z`} fill="#e8902e" opacity="0.7" />
-    <!-- Chromosphere band: the H-alpha layer, in the --solar family -->
-    <path d={arc((rPhoto + rChromo) / 2)} fill="none" stroke="var(--solar)" stroke-width={rChromo - rPhoto} opacity="0.95" />
+    <rect x="18" y="18" width="644" height="394" rx="7" fill="#fffdfa" stroke="var(--line)" />
 
-    <!-- Boundary arcs -->
-    <path d={arc(rPhoto)} fill="none" stroke="var(--ink)" stroke-width="0.8" opacity="0.35" />
-    <path d={arc(rChromo)} fill="none" stroke="var(--solar-deep)" stroke-width="1" />
-    <path d={arc(rCorona)} fill="none" stroke="#d8b98a" stroke-width="0.8" opacity="0.7" />
+    <g transform="translate(210 214)">
+      <circle r="176" fill="#d8e7e8" opacity="0.48" filter="url(#sl-soft)" />
+      <circle r="152" fill="none" stroke="#b7cdd0" stroke-width="24" opacity="0.42" />
+      <circle r="124" fill="url(#sl-photosphere)" />
+      <circle r="132" fill="none" stroke="#d94432" stroke-width="11" />
+      <circle r="124" fill="none" stroke="#6e361d" stroke-width="1" opacity="0.32" />
 
-    <!-- ===== Layer labels: clean right column, leaders to each band ===== -->
+      <path
+        d="M 0 0 L 132 -78 A 153 153 0 0 1 132 78 Z"
+        fill="#fffdfa"
+        stroke="#263843"
+        stroke-width="1.4"
+        opacity="0.96"
+      />
+      <path d="M 0 0 L 111 -65 A 129 129 0 0 1 111 65 Z" fill="url(#sl-core)" opacity="0.9" />
+      <path d="M 111 -65 A 129 129 0 0 1 111 65" fill="none" stroke="#f3c96a" stroke-width="18" />
+      <path d="M 125 -73 A 145 145 0 0 1 125 73" fill="none" stroke="#d94432" stroke-width="10" />
+      <path d="M 146 -86 A 169 169 0 0 1 146 86" fill="none" stroke="#b7cdd0" stroke-width="22" opacity="0.48" />
 
-    <!-- Photosphere -->
-    <g color="#7a4a12">
-      <line x1={aPhoto.x} y1={aPhoto.y} x2={colX - 8} y2={rowPhoto - 5} stroke="currentColor" stroke-width="1" marker-start="url(#sl-dot)" />
+      <line x1="0" y1="0" x2="146" y2="-86" stroke="#263843" stroke-width="1" opacity="0.35" />
+      <line x1="0" y1="0" x2="146" y2="86" stroke="#263843" stroke-width="1" opacity="0.35" />
     </g>
-    <text x={colX} y={rowPhoto} font-size="15" fill="#7a4a12" font-weight="700">{labels.photosphere}</text>
-    <text x={colX} y={rowPhoto + 17} font-size="12" fill="var(--muted)">{labels.photosphereNote}</text>
-    <text x={colX} y={rowPhoto + 36} font-size="12.5" fill="var(--ink)" font-weight="700">{labels.whiteLightLabel}</text>
 
-    <!-- Chromosphere -->
-    <g color="var(--solar-deep)">
-      <line x1={aChromo.x} y1={aChromo.y} x2={colX - 8} y2={rowChromo - 5} stroke="currentColor" stroke-width="1" marker-start="url(#sl-dot)" />
-    </g>
-    <text x={colX} y={rowChromo} font-size="15" fill="var(--solar-deep)" font-weight="700">{labels.chromosphere}</text>
-    <text x={colX} y={rowChromo + 17} font-size="12" fill="var(--muted)">{labels.chromosphereNote}</text>
-    <text x={colX} y={rowChromo + 36} font-size="12.5" fill="var(--solar)" font-weight="700">{labels.hAlphaLabel}</text>
+    <g class="sun-layers__labels">
+      <g color="#875017">
+        <line x1="318" y1="155" x2="416" y2="110" stroke="currentColor" stroke-width="1.2" marker-start="url(#sl-dot)" />
+        <text x="430" y="102" font-size="16" fill="currentColor" font-weight="760">{labels.photosphere}</text>
+        <text x="430" y="122" font-size="12.5" fill="var(--muted)">{labels.photosphereNote}</text>
+        <text x="430" y="143" font-size="12.5" fill="var(--ink)" font-weight="700">{labels.whiteLightLabel}</text>
+      </g>
 
-    <!-- Corona -->
-    <g color="var(--muted)">
-      <line x1={aCorona.x} y1={aCorona.y} x2={colX - 8} y2={rowCorona - 5} stroke="currentColor" stroke-width="1" marker-start="url(#sl-dot)" />
+      <g color="var(--solar-deep)">
+        <line x1="337" y1="214" x2="416" y2="207" stroke="currentColor" stroke-width="1.2" marker-start="url(#sl-dot)" />
+        <text x="430" y="198" font-size="16" fill="currentColor" font-weight="760">{labels.chromosphere}</text>
+        <text x="430" y="218" font-size="12.5" fill="var(--muted)">{labels.chromosphereNote}</text>
+        <text x="430" y="239" font-size="12.5" fill="var(--solar)" font-weight="700">{labels.hAlphaLabel}</text>
+      </g>
+
+      <g color="#5b7478">
+        <line x1="360" y1="296" x2="416" y2="318" stroke="currentColor" stroke-width="1.2" marker-start="url(#sl-dot)" />
+        <text x="430" y="310" font-size="16" fill="currentColor" font-weight="760">{labels.corona}</text>
+        <text x="430" y="330" font-size="12.5" fill="var(--muted)">{labels.coronaNote}</text>
+      </g>
     </g>
-    <text x={colX} y={rowCorona} font-size="15" fill="var(--muted)" font-weight="700">{labels.corona}</text>
-    <text x={colX} y={rowCorona + 17} font-size="12" fill="var(--muted)">{labels.coronaNote}</text>
   </svg>
   <figcaption>{labels.caption}</figcaption>
 </figure>
