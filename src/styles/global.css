@@ -127,8 +127,30 @@ button, input { font: inherit; }
   top: 0;
   bottom: 0;
   width: 2px;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.55);
   transform: translateX(-50%);
+  transition: width 120ms ease, background 120ms ease, box-shadow 120ms ease;
+}
+
+/* Hydrogen lines stand out in the solar accent so the Balmer series reads clearly. */
+.spectrum-explorer__fraunhofer--hydrogen {
+  width: 3px;
+  background: var(--solar);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--solar-deep), transparent 40%);
+}
+
+/* The line nearest the cursor is highlighted regardless of element. */
+.spectrum-explorer__fraunhofer--active {
+  width: 4px;
+  background: var(--ink);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--ink), transparent 30%);
+}
+
+/* An active hydrogen line gets the strongest treatment: solar colour + glow. */
+.spectrum-explorer__fraunhofer--hydrogen.spectrum-explorer__fraunhofer--active {
+  width: 4px;
+  background: var(--solar-deep);
+  box-shadow: 0 0 0 1px var(--solar), 0 0 10px color-mix(in srgb, var(--solar), transparent 25%);
 }
 
 .spectrum-explorer__cursor {
@@ -656,37 +678,28 @@ button, input { font: inherit; }
   margin: 0;
 }
 
-.filter-comparison__preview {
-  height: 80px;
+.filter-comparison__photo {
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.filter-comparison__photo img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
   border-radius: 8px;
   border: 1px solid rgba(24, 32, 38, 0.18);
+  background: #050505;
 }
 
-/* Eclipse glasses preview: dark neutral grey */
-.filter-comparison__preview--eclipse {
-  background: linear-gradient(135deg, #555 0%, #444 100%);
+.filter-comparison__photo figcaption {
+  color: var(--muted);
+  font-size: 0.78rem;
 }
 
-/* White-light / photosphere: warm disc with sunspot hints */
-.filter-comparison__preview--whiteLight {
-  background:
-    radial-gradient(circle at 38% 45%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.55) 4%, transparent 5%),
-    radial-gradient(circle at 60% 60%, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.45) 3%, transparent 4%),
-    radial-gradient(circle at 50% 50%, #f3d87a 0%, #e8a03e 60%, #c4621a 100%);
-}
-
-/* H-alpha / chromosphere: deep red with filament texture */
-.filter-comparison__preview--halpha {
-  background:
-    repeating-linear-gradient(
-      28deg,
-      rgba(0, 0, 0, 0.18) 0 2px,
-      transparent 2px 10px
-    ),
-    repeating-linear-gradient(
-      -52deg,
-      rgba(0, 0, 0, 0.11) 0 1px,
-      transparent 1px 8px
-    ),
-    radial-gradient(circle at 50% 50%, var(--solar) 0%, var(--solar-deep) 100%);
+.filter-comparison__photo a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }

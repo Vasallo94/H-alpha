@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { SPECTRAL_LINES, nearestLine, H_ALPHA_NM } from "../../lib/physics";
+import { renderInlineMath } from "../../lib/math";
 
 type Labels = {
   aria: string;
@@ -16,6 +17,10 @@ const MAX_NM = 700;
 
 const toPercent = (nm: number) => ((nm - MIN_NM) / (MAX_NM - MIN_NM)) * 100;
 
+function MathInline({ value }: { value: string }) {
+  return <span dangerouslySetInnerHTML={{ __html: renderInlineMath(value) }} />;
+}
+
 export function SpectrumExplorer({ labels }: { labels: Labels }) {
   const [nm, setNm] = useState(H_ALPHA_NM);
   const line = nearestLine(nm);
@@ -26,10 +31,10 @@ export function SpectrumExplorer({ labels }: { labels: Labels }) {
   if (line === null) {
     readout = labels.continuum;
   } else if (line.element === "H" && line.transition) {
-    readout = `${line.label} — ${labels.hydrogenTransition}: n=${line.transition.from} → n=${line.transition.to} (${line.nm} nm)`;
+    readout = `${line.label} — ${labels.hydrogenTransition}: \\(n=${line.transition.from} \\to n=${line.transition.to}\\) (\\(${line.nm}\\,\\mathrm{nm}\\))`;
   } else {
     const elementName = labels.elements[line.element] ?? line.element;
-    readout = `${line.label} — ${elementName} — ${labels.notHydrogen} (${line.nm} nm)`;
+    readout = `${line.label} — ${elementName} — ${labels.notHydrogen} (\\(${line.nm}\\,\\mathrm{nm}\\))`;
   }
 
   return (
@@ -56,7 +61,7 @@ export function SpectrumExplorer({ labels }: { labels: Labels }) {
       {/* Implicit label association: input is nested inside label */}
       <label className="spectrum-explorer__control">
         <span>
-          {labels.control}: {Math.round(nm)} nm
+          {labels.control}: <MathInline value={`\\(${Math.round(nm)}\\,\\mathrm{nm}\\)`} />
         </span>
         <input
           aria-label={labels.control}
@@ -72,7 +77,7 @@ export function SpectrumExplorer({ labels }: { labels: Labels }) {
 
       {/* aria-live region for screen readers; no id needed */}
       <p className="spectrum-explorer__readout" aria-live="polite">
-        {labels.selected}: {Math.round(nm)} nm — {readout}
+        {labels.selected}: <MathInline value={`\\(${Math.round(nm)}\\,\\mathrm{nm}\\)`} /> — <MathInline value={readout} />
       </p>
     </div>
   );

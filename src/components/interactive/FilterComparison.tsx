@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { renderInlineMath } from "../../lib/math";
 
 type Method = {
   id: string;
@@ -6,6 +7,10 @@ type Method = {
   where: string;
   passes: string;
   layer: string;
+  image: string;
+  imageAlt: string;
+  attribution: string;
+  sourceUrl: string;
 };
 
 type Labels = {
@@ -20,7 +25,10 @@ function Field({ label, value }: { label: string; value: string }) {
   return (
     <div className="filter-comparison__field">
       <span className="filter-comparison__field-label">{label}</span>
-      <p className="filter-comparison__field-value">{value}</p>
+      <p
+        className="filter-comparison__field-value"
+        dangerouslySetInnerHTML={{ __html: renderInlineMath(value) }}
+      />
     </div>
   );
 }
@@ -63,11 +71,14 @@ export function FilterComparison({ labels }: { labels: Labels }) {
           aria-labelledby={`fc-tab-${method.id}`}
           className="filter-comparison__panel"
         >
-          {/* Visual layer preview */}
-          <div
-            className={`filter-comparison__preview filter-comparison__preview--${method.id}`}
-            aria-hidden="true"
-          />
+          <figure className="filter-comparison__photo">
+            <img src={method.image} alt={method.imageAlt} loading="lazy" decoding="async" />
+            <figcaption>
+              <a href={method.sourceUrl} target="_blank" rel="noreferrer">
+                {method.attribution}
+              </a>
+            </figcaption>
+          </figure>
 
           <div className="filter-comparison__grid">
             <Field label={labels.fieldWhere} value={method.where} />

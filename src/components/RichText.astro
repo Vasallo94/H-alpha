@@ -1,0 +1,15 @@
+---
+import { renderInlineMath } from "../lib/math";
+
+interface Props {
+  as?: "p" | "span" | "h1" | "h2" | "h3" | "strong";
+  class?: string;
+  id?: string;
+  text: string;
+}
+
+const { as = "p", class: className, id, text } = Astro.props as Props;
+const Tag = as;
+---
+
+<Tag id={id} class={className} set:html={renderInlineMath(text)} />

@@ -3,14 +3,19 @@ interface Props { labels: Record<string, string> }
 const { labels } = Astro.props;
 const levels = [1, 2, 3, 4, 5, 6];
 // E_n ∝ -1/n²: levels crowd toward the top (toward 0). Map energy to a y-coordinate.
-const yTop = 50; // n→∞ asymptote (most energy / least bound)
-const yBottom = 250; // n=1 (deepest)
+const yTop = 60; // n→∞ asymptote (most energy / least bound)
+const yBottom = 360; // n=1 (deepest)
 const e = (n: number) => -1 / (n * n); // -1 (n=1) up to ~0
 const y = (n: number) => yBottom + (yTop - yBottom) * (e(n) - e(1)) / (0 - e(1));
-const xLeft = 92;
-const xRight = 300;
-// Declutter level labels: keep physical line y, but push label y apart by >=13px.
-const minGap = 13;
+
+// Layout columns. The energy axis sits at the far left; level lines + labels live to its right.
+const axisX = 70;       // vertical energy axis
+const labelX = 86;      // right edge of the "n=…" labels (text-anchor=start would overflow, so anchor=start at labelX)
+const xLeft = 150;      // left end of every level line (clears the labels)
+const xRight = 560;     // right end of every level line
+
+// De-clutter the "n=…" labels: keep them vertically apart by >= minGap while staying near their line.
+const minGap = 18;
 const labelY: Record<number, number> = {};
 let prev = -Infinity;
 for (const n of [...levels].sort((a, b) => y(a) - y(b))) {
@@ -18,64 +23,72 @@ for (const n of [...levels].sort((a, b) => y(a) - y(b))) {
   labelY[n] = ly;
   prev = ly;
 }
-// Transitions ending at n=2 (Balmer). H-alpha (3→2) highlighted and placed first/left.
+
+// Balmer transitions (down to n=2). H-alpha (3→2) is highlighted by COLOUR only, same width as the rest.
 const transitions = [
   { from: 3, to: 2, highlight: true },
   { from: 4, to: 2, highlight: false },
   { from: 5, to: 2, highlight: false },
   { from: 6, to: 2, highlight: false },
 ];
-const tx = (i: number) => xLeft + 40 + i * 42;
+// Each transition gets its own x column inside the level lines, well spaced.
+const tx = (i: number) => 250 + i * 78;
 const hx = tx(0); // H-alpha arrow x
+const transStroke = 2; // identical width for every transition
 ---
 <figure class="diagram">
-  <svg viewBox="0 0 480 300" role="img" aria-label={labels.aria}>
+  <svg viewBox="0 0 620 440" role="img" aria-label={labels.aria}>
     <defs>
-      <marker id="hl-arrow" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <marker id="hl-arrow" markerWidth="9" markerHeight="9" refX="5.5" refY="3" orient="auto">
         <path d="M0,0 L6,3 L0,6 Z" fill="var(--solar)" />
       </marker>
-      <marker id="hl-arrow-grey" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <marker id="hl-arrow-grey" markerWidth="9" markerHeight="9" refX="5.5" refY="3" orient="auto">
         <path d="M0,0 L6,3 L0,6 Z" fill="var(--muted)" />
+      </marker>
+      <marker id="hl-axis" markerWidth="9" markerHeight="9" refX="5" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)" />
       </marker>
     </defs>
 
-    <!-- Energy axis -->
-    <line x1="58" x2="58" y1="40" y2="262" stroke="var(--ink)" stroke-width="1.2" marker-end="url(#hl-arrow-grey)" />
-    <text x="32" y="150" font-size="12" fill="var(--ink)" transform="rotate(-90 32 150)" text-anchor="middle">{labels.axisEnergy}</text>
+    <!-- Energy axis: far left, points up, never crosses the levels or their labels -->
+    <line x1={axisX} x2={axisX} y1={yBottom + 14} y2={yTop - 14} stroke="var(--ink)" stroke-width="1.3" marker-end="url(#hl-axis)" />
+    <text x={28} y={(yTop + yBottom) / 2} font-size="15" fill="var(--ink)" font-weight="600"
+          transform={`rotate(-90 28 ${(yTop + yBottom) / 2})`} text-anchor="middle">{labels.axisEnergy}</text>
 
-    <!-- Energy levels -->
+    <!-- Energy levels: lines to the right of the axis, labels between axis and lines -->
     {levels.map((n) => (
       <g>
-        <line x1={xLeft} x2={xRight} y1={y(n)} y2={y(n)} stroke="var(--line)" stroke-width="1.5" />
-        {labelY[n] !== y(n) && (
-          <line x1={xLeft - 4} x2={xLeft - 14} y1={y(n)} y2={labelY[n] - 4} stroke="var(--line)" stroke-width="0.8" />
+        <line x1={xLeft} x2={xRight} y1={y(n)} y2={y(n)} stroke="var(--line)" stroke-width="1.6" />
+        {Math.abs(labelY[n] - y(n)) > 0.5 && (
+          <line x1={xLeft - 6} x2={labelX + 28} y1={y(n)} y2={labelY[n] - 4} stroke="var(--line)" stroke-width="0.9" />
         )}
-        <text x={xLeft - 16} y={labelY[n]} font-size="12" fill="var(--ink)" text-anchor="end">{labels[`level${n}`]}</text>
+        <text x={labelX} y={labelY[n] + 1} font-size="14" fill="var(--ink)" text-anchor="start">{labels[`level${n}`]}</text>
       </g>
     ))}
 
-    <!-- Balmer transitions (down to n=2) -->
+    <!-- Balmer transitions (down to n=2). Same width for all; H-alpha differs only in colour. -->
     {transitions.map((t, i) => (
       <line
         x1={tx(i)}
         x2={tx(i)}
         y1={y(t.from)}
-        y2={y(t.to) - 1}
-        stroke={t.highlight ? "var(--solar)" : "var(--muted)"}
-        stroke-width={t.highlight ? "3" : "1.3"}
-        opacity={t.highlight ? "1" : "0.5"}
+        y2={y(t.to) - 2}
+        stroke={t.highlight ? "var(--solar)" : "var(--instrument)"}
+        stroke-width={transStroke}
+        opacity={t.highlight ? "1" : "0.45"}
         marker-end={t.highlight ? "url(#hl-arrow)" : "url(#hl-arrow-grey)"}
       />
     ))}
 
-    <!-- Balmer series label: leader from the n=2 level to text in the open lower area -->
-    <line x1={xRight} y1={y(2)} x2={xRight} y2="158" stroke="var(--muted)" stroke-width="0.8" stroke-dasharray="3 3" />
-    <text x={xRight} y="174" font-size="11" fill="var(--muted)" text-anchor="end">{labels.balmerLabel}</text>
+    <!-- Balmer series bracket: leader from the n=2 level into the open lower-right area -->
+    <line x1={xRight} y1={y(2)} x2={xRight} y2={y(2) + 70} stroke="var(--muted)" stroke-width="0.9" stroke-dasharray="3 3" />
+    <text x={xRight} y={y(2) + 86} font-size="13" fill="var(--muted)" text-anchor="end">{labels.balmerLabel}</text>
 
-    <!-- H-alpha highlight callout: leader from the highlighted arrow into the open lower area -->
-    <line x1={hx} y1={(y(3) + y(2)) / 2} x2="150" y2="214" stroke="var(--solar)" stroke-width="1" />
-    <text x="150" y="232" font-size="13" font-weight="700" fill="var(--solar-deep)">{labels.transitionLabel}</text>
-    <text x="150" y="250" font-size="11" fill="var(--muted)">{labels.transitionNote}</text>
+    <!-- H-alpha callout: leader from the red arrow into the open lower-left area -->
+    <line x1={hx} y1={(y(3) + y(2)) / 2} x2={170} y2={yBottom - 50} stroke="var(--solar)" stroke-width="1" />
+    <circle cx={hx} cy={(y(3) + y(2)) / 2} r="2.6" fill="var(--solar)" />
+    <text x={170} y={yBottom - 30} font-size="16" font-weight="700" fill="var(--solar-deep)">{labels.transitionLabel}</text>
+    <text x={170} y={yBottom - 10} font-size="13" fill="var(--muted)">{labels.transitionNote}</text>
   </svg>
   <figcaption>{labels.caption}</figcaption>
 </figure>

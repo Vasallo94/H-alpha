@@ -1,6 +1,7 @@
 ---
 import type { Locale } from "../../i18n/routes";
 import { siteCopy } from "../../content/siteCopy";
+import RichText from "../RichText.astro";
 
 interface Props {
   locale: Locale;
@@ -14,8 +15,8 @@ const fi = copy.finalImage;
 <section class="section final-image-section" id="image">
   <div class="section__inner">
     <p class="eyebrow">{fi.eyebrow}</p>
-    <h2 class="section-title">{fi.heading}</h2>
-    <p class="lead">{fi.lead}</p>
+    <RichText as="h2" class="section-title" text={fi.heading} />
+    <RichText class="lead" text={fi.lead} />
 
     <figure class="final-image-section__figure">
       <div class="hotspot-wrap">
@@ -33,8 +34,8 @@ const fi = copy.finalImage;
           >
             <span class="hotspot__dot" aria-hidden="true"></span>
             <span class="hotspot__popover" role="tooltip">
-              <strong>{a.label}</strong>
-              <span>{a.description}</span>
+              <RichText as="strong" text={a.label} />
+              <RichText as="span" text={a.description} />
             </span>
           </button>
         ))}

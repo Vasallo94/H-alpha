@@ -3,6 +3,7 @@ import type { Locale } from "../../i18n/routes";
 import { siteCopy } from "../../content/siteCopy";
 import { SpectrumExplorer } from "../interactive/SpectrumExplorer";
 import DeepDive from "../DeepDive.astro";
+import RichText from "../RichText.astro";
 
 interface Props {
   locale: Locale;
@@ -16,9 +17,9 @@ const s = copy.sections.spectrum;
 <section class="section" id="spectrum">
   <div class="section__inner">
     <p class="eyebrow">{s.eyebrow}</p>
-    <h2 class="section-title">{s.heading}</h2>
-    <p class="lead">{s.lead}</p>
-    {s.body.map((paragraph) => <p>{paragraph}</p>)}
+    <RichText as="h2" class="section-title" text={s.heading} />
+    <RichText class="lead" text={s.lead} />
+    {s.body.map((paragraph) => <RichText text={paragraph} />)}
 
     <SpectrumExplorer client:visible labels={copy.interactive.spectrumExplorer} />
 

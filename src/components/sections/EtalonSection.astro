@@ -3,6 +3,7 @@ import type { Locale } from "../../i18n/routes";
 import { siteCopy } from "../../content/siteCopy";
 import DeepDive from "../DeepDive.astro";
 import EtalonDiagram from "../diagrams/EtalonDiagram.astro";
+import RichText from "../RichText.astro";
 const { locale } = Astro.props as { locale: Locale };
 const copy = siteCopy[locale];
 const s = copy.sections.etalon;
@@ -10,9 +11,9 @@ const s = copy.sections.etalon;
 <section class="section" id="etalon">
   <div class="section__inner">
     <p class="eyebrow">{s.eyebrow}</p>
-    <h2 class="section-title">{s.heading}</h2>
-    <p class="lead">{s.lead}</p>
-    {s.body.map((p) => <p>{p}</p>)}
+    <RichText as="h2" class="section-title" text={s.heading} />
+    <RichText class="lead" text={s.lead} />
+    {s.body.map((p) => <RichText text={p} />)}
     <EtalonDiagram labels={copy.diagrams.etalon} />
     {s.deepDive && <DeepDive deepDive={s.deepDive} />}
   </div>

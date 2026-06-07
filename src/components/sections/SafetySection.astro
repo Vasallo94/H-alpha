@@ -1,6 +1,7 @@
 ---
 import type { Locale } from "../../i18n/routes";
 import { siteCopy } from "../../content/siteCopy";
+import RichText from "../RichText.astro";
 const { locale } = Astro.props as { locale: Locale };
 const copy = siteCopy[locale];
 const s = copy.safety;
@@ -14,15 +15,15 @@ const seasonalId = `seasonal-${locale}`;
     <ul class="safety-rules">
       {s.rules.map((r) => (
         <li class="safety-rules__item">
-          <strong>{r.title}</strong>
-          <p>{r.body}</p>
+          <RichText as="strong" text={r.title} />
+          <RichText text={r.body} />
         </li>
       ))}
     </ul>
     {s.seasonalCallout.enabled && (
       <aside class="warning" role="note" aria-labelledby={seasonalId}>
-        <h3 id={seasonalId}>{s.seasonalCallout.title}</h3>
-        <p>{s.seasonalCallout.body}</p>
+        <RichText as="h3" id={seasonalId} text={s.seasonalCallout.title} />
+        <RichText text={s.seasonalCallout.body} />
       </aside>
     )}
   </div>

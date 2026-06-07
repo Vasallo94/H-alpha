@@ -1,35 +1,40 @@
 ---
 interface Props { labels: Record<string, string> }
 const { labels } = Astro.props;
-// LEFT: two semi-mirrored plates and a ray that zig-zags between them, exiting in phase.
-// RIGHT: an Airy transmission inset (several peaks) annotated with FSR, FWHM and the peak.
-const plateA = 120;
-const plateB = 190;
-const topY = 64;
-const botY = 214;
+// Rebuilt from scratch with generous spacing.
+// LEFT panel: two semi-mirrored plates, an incident ray, internal zig-zag, in-phase outputs, d and θ.
+// RIGHT panel (clearly separated): Airy transmission inset with three peaks, FSR and FWHM.
+
+// ----- Left panel: etalon ray diagram -----
+const plateA = 150;
+const plateB = 230;
+const topY = 70;
+const botY = 300;
 const bounces = [
-  { x: plateA, y: 100 },
-  { x: plateB, y: 126 },
-  { x: plateA, y: 152 },
-  { x: plateB, y: 178 },
+  { x: plateA, y: 120 },
+  { x: plateB, y: 160 },
+  { x: plateA, y: 200 },
+  { x: plateB, y: 240 },
 ];
-const entry = { x: 66, y: 78 };
+const entry = { x: 60, y: 90 };
 let path = `M ${entry.x} ${entry.y} L ${bounces[0].x} ${bounces[0].y}`;
 for (let i = 1; i < bounces.length; i++) path += ` L ${bounces[i].x} ${bounces[i].y}`;
 const exits = bounces.filter((b) => b.x === plateB);
-// Airy inset (right half), kept clear of the etalon labels.
-const insetX = 296;
-const insetW = 168;
-const insetTop = 96;
-const axisY = 214;
-const peaks = [insetX + 30, insetX + 82, insetX + 134];
-const peakTop = insetTop + 4;
+
+// ----- Right panel: Airy transmission inset -----
+const insetX = 400;       // y-axis of the inset
+const insetW = 200;
+const axisY = 300;
+const insetTop = 120;
+const peaks = [insetX + 36, insetX + 100, insetX + 164];
+const peakTop = insetTop + 6;
 const halfY = (peakTop + axisY) / 2;
 const airyPath = (cx: number) =>
-  `M ${cx - 24} ${axisY} C ${cx - 10} ${axisY} ${cx - 6} ${peakTop} ${cx} ${peakTop} C ${cx + 6} ${peakTop} ${cx + 10} ${axisY} ${cx + 24} ${axisY}`;
+  `M ${cx - 28} ${axisY} C ${cx - 12} ${axisY} ${cx - 7} ${peakTop} ${cx} ${peakTop} C ${cx + 7} ${peakTop} ${cx + 12} ${axisY} ${cx + 28} ${axisY}`;
+const fwhmHalf = 9;
 ---
 <figure class="diagram">
-  <svg viewBox="0 0 480 300" role="img" aria-label={labels.aria}>
+  <svg viewBox="0 0 640 380" role="img" aria-label={labels.aria}>
     <defs>
       <marker id="et-arrow" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
         <path d="M0,0 L6,3 L0,6 Z" fill="var(--solar)" />
@@ -37,56 +42,75 @@ const airyPath = (cx: number) =>
       <marker id="et-arrow-ink" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
         <path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)" />
       </marker>
+      <marker id="et-arrow-ink-s" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto">
+        <path d="M6,0 L0,3 L6,6 Z" fill="var(--ink)" />
+      </marker>
+      <marker id="et-arrow-deep" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="var(--solar-deep)" />
+      </marker>
+      <marker id="et-arrow-deep-s" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto">
+        <path d="M6,0 L0,3 L6,6 Z" fill="var(--solar-deep)" />
+      </marker>
     </defs>
 
-    <!-- ===== Etalon ray diagram (left) ===== -->
-    <line x1={plateA} y1={topY} x2={plateA} y2={botY} stroke="var(--instrument)" stroke-width="5" />
-    <line x1={plateB} y1={topY} x2={plateB} y2={botY} stroke="var(--instrument)" stroke-width="5" />
-    <text x={(plateA + plateB) / 2} y={topY - 10} font-size="11" fill="var(--ink)" text-anchor="middle">{labels.plateLabel}</text>
+    <!-- ============ LEFT: etalon ray diagram ============ -->
+    <text x={(plateA + plateB) / 2} y={topY - 20} font-size="13" fill="var(--ink)" font-weight="600" text-anchor="middle">{labels.plateLabel}</text>
 
-    <!-- Gap d -->
-    <line x1={plateA} y1={botY + 16} x2={plateB} y2={botY + 16} stroke="var(--ink)" stroke-width="1" marker-start="url(#et-arrow-ink)" marker-end="url(#et-arrow-ink)" />
-    <text x={(plateA + plateB) / 2} y={botY + 31} font-size="11" fill="var(--ink)" text-anchor="middle">{labels.gapLabel}</text>
+    <!-- The two plates -->
+    <line x1={plateA} y1={topY} x2={plateA} y2={botY} stroke="var(--instrument)" stroke-width="6" />
+    <line x1={plateB} y1={topY} x2={plateB} y2={botY} stroke="var(--instrument)" stroke-width="6" />
 
     <!-- Incident ray -->
-    <line x1={entry.x - 4} y1={entry.y - 6} x2={bounces[0].x} y2={bounces[0].y} stroke="var(--solar)" stroke-width="2" marker-end="url(#et-arrow)" />
-    <text x={entry.x - 6} y={entry.y - 10} font-size="11" fill="var(--solar-deep)">{labels.incidentRay}</text>
+    <line x1={entry.x} y1={entry.y} x2={bounces[0].x} y2={bounces[0].y} stroke="var(--solar)" stroke-width="2.2" marker-end="url(#et-arrow)" />
+    <text x={entry.x - 4} y={entry.y - 12} font-size="13" fill="var(--solar-deep)" text-anchor="start">{labels.incidentRay}</text>
 
-    <!-- Angle θ (normal dashed) -->
-    <line x1={bounces[0].x} y1={bounces[0].y} x2={bounces[0].x + 30} y2={bounces[0].y} stroke="var(--muted)" stroke-width="0.8" stroke-dasharray="3 3" />
-    <text x={bounces[0].x + 8} y={bounces[0].y - 6} font-size="11" fill="var(--muted)">{labels.angleLabel}</text>
+    <!-- Angle θ: dashed normal at the first hit, label clear above -->
+    <line x1={bounces[0].x} y1={bounces[0].y} x2={bounces[0].x + 46} y2={bounces[0].y} stroke="var(--muted)" stroke-width="0.9" stroke-dasharray="3 3" />
+    <text x={bounces[0].x + 14} y={bounces[0].y - 10} font-size="13" fill="var(--muted)">{labels.angleLabel}</text>
 
     <!-- Internal zig-zag -->
-    <path d={path} fill="none" stroke="var(--solar)" stroke-width="2" opacity="0.85" />
-    {bounces.map((b) => <circle cx={b.x} cy={b.y} r="2.4" fill="var(--solar-deep)" />)}
+    <path d={path} fill="none" stroke="var(--solar)" stroke-width="2.2" opacity="0.85" />
+    {bounces.map((b) => <circle cx={b.x} cy={b.y} r="2.8" fill="var(--solar-deep)" />)}
 
-    <!-- Constructive outputs (in phase) -->
+    <!-- In-phase outputs (constructive) -->
     {exits.map((b) => (
-      <line x1={b.x} y1={b.y} x2={b.x + 34} y2={b.y} stroke="var(--solar)" stroke-width="2" marker-end="url(#et-arrow)" />
+      <line x1={b.x} y1={b.y} x2={b.x + 60} y2={b.y} stroke="var(--solar)" stroke-width="2.2" marker-end="url(#et-arrow)" />
     ))}
-    <text x={plateB + 6} y={topY + 2} font-size="10" fill="var(--solar-deep)">{labels.constructive}</text>
+    <text x={plateB + 6} y={topY - 4} font-size="12" fill="var(--solar-deep)" text-anchor="start">{labels.constructive}</text>
 
-    <!-- Destructive note -->
-    <text x={plateA - 30} y={botY + 50} font-size="10" fill="var(--muted)">{labels.destructive}</text>
+    <!-- Gap d, below the plates -->
+    <line x1={plateA} y1={botY + 22} x2={plateB} y2={botY + 22} stroke="var(--ink)" stroke-width="1" marker-start="url(#et-arrow-ink-s)" marker-end="url(#et-arrow-ink)" />
+    <text x={(plateA + plateB) / 2} y={botY + 40} font-size="13" fill="var(--ink)" text-anchor="middle">{labels.gapLabel}</text>
 
-    <!-- ===== Airy transmission inset (right) ===== -->
-    <text x={insetX} y={insetTop - 12} font-size="11" fill="var(--ink)" font-weight="700">{labels.airyTitle}</text>
+    <!-- Destructive note, well below everything -->
+    <text x={entry.x} y={botY + 62} font-size="12" fill="var(--muted)" text-anchor="start">{labels.destructive}</text>
+
+    <!-- ============ RIGHT: Airy transmission inset (clearly separated) ============ -->
+    <line x1={insetX - 30} y1={topY - 30} x2={insetX - 30} y2={axisY + 10} stroke="var(--line)" stroke-width="1" />
+
+    <text x={insetX} y={topY - 20} font-size="13" fill="var(--ink)" font-weight="700" text-anchor="start">{labels.airyTitle}</text>
+
+    <!-- Inset axes -->
     <line x1={insetX} y1={axisY} x2={insetX + insetW} y2={axisY} stroke="var(--ink)" stroke-width="1" />
-    <line x1={insetX} y1={axisY} x2={insetX} y2={insetTop} stroke="var(--ink)" stroke-width="1" />
+    <line x1={insetX} y1={axisY} x2={insetX} y2={insetTop - 4} stroke="var(--ink)" stroke-width="1" />
+
+    <!-- Airy peaks; centre one highlighted -->
     {peaks.map((cx, i) => (
-      <path d={airyPath(cx)} fill="none" stroke={i === 1 ? "var(--solar)" : "var(--muted)"} stroke-width={i === 1 ? "2.4" : "1.4"} />
+      <path d={airyPath(cx)} fill="none" stroke={i === 1 ? "var(--solar)" : "var(--muted)"} stroke-width={i === 1 ? "2.6" : "1.5"} opacity={i === 1 ? "1" : "0.7"} />
     ))}
 
-    <!-- FSR between consecutive peaks — arrow at insetTop+2, label at insetTop-14 to clear the peak label -->
-    <line x1={peaks[0]} y1={insetTop + 2} x2={peaks[1]} y2={insetTop + 2} stroke="var(--ink)" stroke-width="0.9" marker-start="url(#et-arrow-ink)" marker-end="url(#et-arrow-ink)" />
-    <text x={(peaks[0] + peaks[1]) / 2} y={insetTop - 14} font-size="10.5" fill="var(--ink)" text-anchor="middle">{labels.fsrLabel}</text>
+    <!-- FSR between two consecutive peaks, arrow up near the top, label above it -->
+    <line x1={peaks[0]} y1={peakTop - 8} x2={peaks[1]} y2={peakTop - 8} stroke="var(--ink)" stroke-width="1" marker-start="url(#et-arrow-ink-s)" marker-end="url(#et-arrow-ink)" />
+    <text x={(peaks[0] + peaks[1]) / 2} y={peakTop - 14} font-size="12" fill="var(--ink)" text-anchor="middle">{labels.fsrLabel}</text>
 
-    <!-- FWHM at half height of the highlighted peak -->
-    <line x1={peaks[1] - 8} y1={halfY} x2={peaks[1] + 8} y2={halfY} stroke="var(--solar-deep)" stroke-width="1" marker-start="url(#et-arrow)" marker-end="url(#et-arrow)" />
-    <text x={peaks[1] + 14} y={halfY + 4} font-size="10.5" fill="var(--solar-deep)">{labels.fwhmLabel}</text>
+    <!-- FWHM at half height of the highlighted peak, label to the right -->
+    <line x1={peaks[1] - fwhmHalf} y1={halfY} x2={peaks[1] + fwhmHalf} y2={halfY} stroke="var(--solar-deep)" stroke-width="1.1" marker-start="url(#et-arrow-deep-s)" marker-end="url(#et-arrow-deep)" />
+    <line x1={peaks[1] + fwhmHalf} y1={halfY} x2={peaks[1] + 34} y2={halfY} stroke="var(--solar-deep)" stroke-width="0.8" />
+    <text x={peaks[1] + 38} y={halfY + 4} font-size="12" fill="var(--solar-deep)" text-anchor="start">{labels.fwhmLabel}</text>
 
-    <!-- Peak label — placed just above the peak, clear of the FSR label -->
-    <text x={peaks[1]} y={peakTop - 16} font-size="10" fill="var(--solar-deep)" text-anchor="middle">{labels.peakLabel}</text>
+    <!-- Transmission-peak label, below the inset axis, clear of everything -->
+    <line x1={peaks[1]} y1={axisY} x2={peaks[1]} y2={axisY + 16} stroke="var(--solar)" stroke-width="0.8" stroke-dasharray="3 3" />
+    <text x={peaks[1]} y={axisY + 30} font-size="12" fill="var(--solar-deep)" text-anchor="middle">{labels.peakLabel}</text>
   </svg>
   <figcaption>{labels.caption}</figcaption>
 </figure>

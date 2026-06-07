@@ -16,12 +16,14 @@
   "dependencies": {
     "@astrojs/react": "^5.0.7",
     "astro": "^6.4.4",
+    "katex": "^0.17.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@playwright/test": "^1.60.0",
+    "@types/katex": "^0.16.8",
     "@types/node": "^22.19.20",
     "typescript": "^6.0.3",
     "vitest": "^4.1.8"

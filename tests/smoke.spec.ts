@@ -15,6 +15,7 @@ test("a deep-dive discloses extra physics", async ({ page }) => {
   const dd = page.locator("details.deep-dive").first();
   await dd.locator("summary").click();
   await expect(dd).toHaveJSProperty("open", true);
+  await expect(dd.locator(".katex").first()).toBeVisible();
 });
 
 test("spectrum explorer maps wavelength to transition", async ({ page }) => {
@@ -24,13 +25,12 @@ test("spectrum explorer maps wavelength to transition", async ({ page }) => {
   await slider.scrollIntoViewIfNeeded();
   // Wait for the React island to hydrate.
   await expect(page.locator("#spectrum .spectrum-explorer__readout")).toBeVisible();
-  // Move to min (400 nm) then advance 3 × PageUp (each step = 30 nm) → ~490 nm,
-  // which falls in the 460–599 range that maps to the n=4 → n=2 Balmer transition.
-  // (fill() sets the DOM value but doesn't fire React synthetic events; PageUp does.)
-  await slider.press("Home");
-  await slider.press("PageUp");
-  await slider.press("PageUp");
-  await slider.press("PageUp");
+  await slider.evaluate((input) => {
+    const range = input as HTMLInputElement;
+    range.value = "486";
+    range.dispatchEvent(new Event("input", { bubbles: true }));
+    range.dispatchEvent(new Event("change", { bubbles: true }));
+  });
   await expect(page.locator("#spectrum")).toContainText("n=4");
 });
 
@@ -42,6 +42,17 @@ test("tuning simulator reacts to controls", async ({ page }) => {
   const width = page.locator("#tuning input[type=range]").first();
   await width.fill("1.2");
   await expect(readout).toBeVisible();
+});
+
+test("filter comparison uses real images with attribution", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("#filters").scrollIntoViewIfNeeded();
+  const image = page.locator("#filters .filter-comparison__photo img");
+  await expect(image).toBeVisible();
+  await expect(image).toHaveAttribute("src", "/images/filter-eclipse-glasses.jpg");
+  await expect(page.locator("#filters .filter-comparison__photo figcaption")).toContainText(
+    "Wikimedia Commons",
+  );
 });
 
 test("final image has annotations", async ({ page }) => {

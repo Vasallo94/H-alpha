@@ -1,60 +1,69 @@
 ---
 interface Props { labels: Record<string, string> }
 const { labels } = Astro.props;
-// A line profile (emission bump) drawn three times: rest, blue-shifted, red-shifted.
-// A fixed etalon transmission window sits on one wing; the shifted copy that overlaps it "lights up".
+// The H-alpha line profile drawn three times: rest (centre), blue-shifted (approaching),
+// red-shifted (receding). A fixed etalon window sits on the blue wing: the approaching copy
+// lit up inside it. Labels are spread across separate rows with leaders — no overlaps.
 const x0 = 60;
-const x1 = 440;
-const baseY = 210;
-const peakH = 110;
-const rest = 250; // centre x of the rest line
-const shift = 70; // doppler shift in px
+const x1 = 600;
+const baseY = 250;
+const peakH = 130;
+const rest = 330;   // centre x of the rest line
+const shift = 110;  // doppler shift in px (generous so curves are distinct)
 const blue = rest - shift;
 const red = rest + shift;
 // Gaussian-ish bump path centred at cx.
-const bump = (cx: number, h: number, w = 46) =>
+const bump = (cx: number, h: number, w = 52) =>
   `M ${cx - w * 2} ${baseY} C ${cx - w} ${baseY} ${cx - w * 0.5} ${baseY - h} ${cx} ${baseY - h} C ${cx + w * 0.5} ${baseY - h} ${cx + w} ${baseY} ${cx + w * 2} ${baseY}`;
-// Etalon window centred on the blue wing (so approaching gas lights up).
+const blueCol = "#2f6fd0";
+// Etalon window centred on the blue wing.
 const winC = blue;
-const winW = 30;
+const winW = 34;
+const winTop = baseY - peakH - 30;
 ---
 <figure class="diagram">
-  <svg viewBox="0 0 480 290" role="img" aria-label={labels.aria}>
+  <svg viewBox="0 0 640 380" role="img" aria-label={labels.aria}>
     <defs>
-      <marker id="dt-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <marker id="dt-arrow" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
         <path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)" />
       </marker>
     </defs>
 
-    <!-- Etalon transmission window (fixed) -->
-    <rect x={winC - winW} y={baseY - peakH - 18} width={winW * 2} height={peakH + 18} fill="var(--accent)" opacity="0.12" />
-    <line x1={winC - winW} y1={baseY - peakH - 18} x2={winC - winW} y2={baseY} stroke="var(--accent)" stroke-width="1" stroke-dasharray="4 3" />
-    <line x1={winC + winW} y1={baseY - peakH - 18} x2={winC + winW} y2={baseY} stroke="var(--accent)" stroke-width="1" stroke-dasharray="4 3" />
-    <text x={winC} y={baseY - peakH - 24} font-size="11" font-weight="700" fill="var(--accent)" text-anchor="middle">{labels.windowLabel}</text>
+    <!-- Etalon transmission window (fixed) over the blue wing -->
+    <rect x={winC - winW} y={winTop} width={winW * 2} height={baseY - winTop} fill="var(--accent)" opacity="0.12" />
+    <line x1={winC - winW} y1={winTop} x2={winC - winW} y2={baseY} stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 3" />
+    <line x1={winC + winW} y1={winTop} x2={winC + winW} y2={baseY} stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 3" />
+    <text x={winC} y={winTop - 10} font-size="13" font-weight="700" fill="var(--accent)" text-anchor="middle">{labels.windowLabel}</text>
 
-    <!-- Axes -->
-    <line x1={x0} y1={baseY} x2={x1} y2={baseY} stroke="var(--ink)" stroke-width="1.2" marker-end="url(#dt-arrow)" />
-    <text x={x1} y={baseY + 18} font-size="11" fill="var(--ink)" text-anchor="end">{labels.wavelengthAxis}</text>
+    <!-- Wavelength axis -->
+    <line x1={x0} y1={baseY} x2={x1} y2={baseY} stroke="var(--ink)" stroke-width="1.3" marker-end="url(#dt-arrow)" />
+    <text x={x1 - 4} y={baseY + 24} font-size="12.5" fill="var(--ink)" text-anchor="end">{labels.wavelengthAxis}</text>
 
-    <!-- Blue-shifted copy (approaching) — overlaps the window, so it "lights up" -->
-    <path d={bump(blue, peakH * 0.92)} fill="none" stroke="#2f6fd0" stroke-width="2.4" />
+    <!-- Red-shifted copy (receding) — drawn first so others sit above it -->
+    <path d={bump(red, peakH * 0.92)} fill="none" stroke="var(--solar-deep)" stroke-width="2.6" opacity="0.85" />
+    <!-- Blue-shifted copy (approaching) — overlaps the window, "lit up" -->
+    <path d={bump(blue, peakH * 0.92)} fill="none" stroke={blueCol} stroke-width="2.8" />
     <!-- Rest line (centred: best for the disk) -->
-    <path d={bump(rest, peakH)} fill="none" stroke="var(--solar)" stroke-width="2.6" />
-    <!-- Red-shifted copy (receding) -->
-    <path d={bump(red, peakH * 0.92)} fill="none" stroke="var(--solar-deep)" stroke-width="2.4" opacity="0.85" />
+    <path d={bump(rest, peakH)} fill="none" stroke="var(--solar)" stroke-width="2.8" />
 
-    <!-- Rest line tick + label -->
-    <line x1={rest} y1={baseY} x2={rest} y2={baseY + 6} stroke="var(--solar)" stroke-width="1.4" />
-    <text x={rest} y={baseY - peakH - 6} font-size="11" font-weight="700" fill="var(--solar-deep)" text-anchor="middle">{labels.lineLabel}</text>
+    <!-- Rest-line title above its own peak -->
+    <text x={rest} y={baseY - peakH - 14} font-size="14" font-weight="700" fill="var(--solar-deep)" text-anchor="middle">{labels.lineLabel}</text>
 
-    <!-- Blueshift label -->
-    <text x={blue} y={baseY + 18} font-size="10.5" fill="#2f6fd0" text-anchor="middle">{labels.blueshift}</text>
-    <!-- Redshift label -->
-    <text x={red} y={baseY + 18} font-size="10.5" fill="var(--solar-deep)" text-anchor="middle">{labels.redshift}</text>
+    <!-- Peak ticks so each shifted copy reads against the axis -->
+    <line x1={blue} y1={baseY} x2={blue} y2={baseY + 7} stroke={blueCol} stroke-width="1.4" />
+    <line x1={rest} y1={baseY} x2={rest} y2={baseY + 7} stroke="var(--solar)" stroke-width="1.4" />
+    <line x1={red} y1={baseY} x2={red} y2={baseY + 7} stroke="var(--solar-deep)" stroke-width="1.4" />
 
-    <!-- Tuning notes: centred = disk; on the wing = prominences -->
-    <text x={x0} y={baseY + 36} font-size="10.5" fill="var(--muted)" text-anchor="start">{labels.centerLabel}</text>
-    <text x={x1} y={baseY + 36} font-size="10.5" fill="var(--accent)" font-weight="700" text-anchor="end">{labels.wingLabel}</text>
+    <!-- Row 1 of labels: blueshift (left) and redshift (right), separated with leaders -->
+    <line x1={blue} y1={baseY + 7} x2={blue} y2={baseY + 40} stroke={blueCol} stroke-width="0.8" />
+    <text x={blue} y={baseY + 56} font-size="12.5" fill={blueCol} text-anchor="middle">{labels.blueshift}</text>
+
+    <line x1={red} y1={baseY + 7} x2={red} y2={baseY + 40} stroke="var(--solar-deep)" stroke-width="0.8" />
+    <text x={red} y={baseY + 56} font-size="12.5" fill="var(--solar-deep)" text-anchor="middle">{labels.redshift}</text>
+
+    <!-- Row 2 of labels: tuning outcomes, far apart at the bottom -->
+    <text x={x0} y={baseY + 86} font-size="12.5" fill="var(--muted)" text-anchor="start">{labels.centerLabel}</text>
+    <text x={x1} y={baseY + 86} font-size="12.5" fill="var(--accent)" font-weight="700" text-anchor="end">{labels.wingLabel}</text>
   </svg>
   <figcaption>{labels.caption}</figcaption>
 </figure>

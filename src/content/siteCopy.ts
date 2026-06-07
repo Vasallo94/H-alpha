@@ -98,7 +98,17 @@ type SiteCopy = {
       fieldWhere: string;
       fieldPasses: string;
       fieldLayer: string;
-      methods: { id: string; name: string; where: string; passes: string; layer: string }[];
+      methods: {
+        id: string;
+        name: string;
+        where: string;
+        passes: string;
+        layer: string;
+        image: string;
+        imageAlt: string;
+        attribution: string;
+        sourceUrl: string;
+      }[];
     };
   };
 };
@@ -139,12 +149,12 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         deepDive: {
           title: "La física: el modelo de Bohr y la serie de Balmer",
           paragraphs: [
-            "En el modelo de Bohr, el electrón del hidrógeno solo puede ocupar orbitales con energías concretas, etiquetados por un número entero n = 1, 2, 3... Cuanto mayor es n, más arriba y más débilmente ligado está el electrón. La energía no es continua: está cuantizada, lo que significa que el átomo solo puede ganar o perder energía en saltos discretos entre esos niveles de energía.",
-            "Cuando un electrón cae de un nivel alto a uno más bajo, el átomo emite un fotón cuya energía es exactamente la diferencia entre ambos niveles. La línea H‑alpha corresponde a la transición n=3 → n=2. Las transiciones que terminan en n=2 forman la llamada serie de Balmer, que cae en el visible; H‑alpha es la primera y más intensa de esa serie.",
-            "La energía del salto fija el color de la luz mediante la relación de Planck-Einstein: a mayor energía, menor longitud de onda. Para la transición n=3 → n=2 esa energía corresponde a λ = 656,28 nm, el rojo profundo de H‑alpha.",
+            "En el modelo de Bohr, el electrón del hidrógeno solo puede ocupar orbitales con energías concretas, etiquetados por un número entero \\(n = 1, 2, 3\\ldots\\). Cuanto mayor es \\(n\\), más arriba y más débilmente ligado está el electrón. La energía no es continua: está cuantizada, lo que significa que el átomo solo puede ganar o perder energía en saltos discretos entre esos niveles de energía.",
+            "Cuando un electrón cae de un nivel alto a uno más bajo, el átomo emite un fotón cuya energía es exactamente la diferencia entre ambos niveles. La línea H‑alpha corresponde a la transición \\(n=3 \\to n=2\\). Las transiciones que terminan en \\(n=2\\) forman la llamada serie de Balmer, que cae en el visible; H‑alpha es la primera y más intensa de esa serie.",
+            "La energía del salto fija el color de la luz mediante la relación de Planck-Einstein: a mayor energía, menor longitud de onda. Para la transición \\(n=3 \\to n=2\\) esa energía corresponde a \\(\\lambda = 656{,}28\\,\\mathrm{nm}\\), el rojo profundo de H‑alpha.",
             "El mismo nivel de energía explica dos cosas opuestas que vemos en el Sol. Sobre el disco, el hidrógeno frío de la cromosfera absorbe la luz blanca que viene de abajo y crea una línea oscura: es una de las líneas de Fraunhofer, una raya negra sobre el espectro continuo. En el limbo y en las protuberancias, en cambio, no hay fondo brillante detrás, y ese mismo hidrógeno emite su luz H‑alpha contra el cielo negro: lo vemos en emisión, brillante.",
           ],
-          formula: "E = h·c / λ",
+          formula: "E = \\frac{h c}{\\lambda}",
         },
       },
       spectrum: {
@@ -153,36 +163,36 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         lead: "Si descomponemos la luz del Sol con cuidado, el arcoíris aparece cruzado por finas rayas oscuras. H‑alpha es una de ellas.",
         body: [
           "Cuando separamos la luz solar en sus colores esperamos un arcoíris continuo, pero al mirarlo de cerca aparece interrumpido por cientos de líneas oscuras muy estrechas. Son las líneas de Fraunhofer, y cada una marca un color que ha sido absorbido por un elemento concreto presente en el Sol antes de que su luz llegara hasta nosotros.",
-          "Cada línea oscura es la firma de un átomo: el sodio, el calcio, el magnesio, el hierro y, por supuesto, el hidrógeno tienen las suyas. Las líneas del hidrógeno visible forman la serie de Balmer: todas son transiciones electrónicas que terminan en el nivel n=2. H‑alpha (n=3→2, 656,28 nm) es la primera y más intensa; le siguen H‑beta (n=4→2, 486,1 nm), H‑gamma (n=5→2, 434,0 nm) y H‑delta (n=6→2, 410,2 nm). Otras líneas oscuras del mismo espectro —como las de sodio (Na D, 589 nm) o magnesio (Mg b, 517 nm)— pertenecen a elementos distintos y no son transiciones del hidrógeno.",
+          "Cada línea oscura es la firma de un átomo: el sodio, el calcio, el magnesio, el hierro y, por supuesto, el hidrógeno tienen las suyas. Las líneas del hidrógeno visible forman la serie de Balmer: todas son transiciones electrónicas que terminan en el nivel \\(n=2\\). H‑alpha (\\(n=3\\to2\\), \\(656{,}28\\,\\mathrm{nm}\\)) es la primera y más intensa; le siguen H‑beta (\\(n=4\\to2\\), \\(486{,}1\\,\\mathrm{nm}\\)), H‑gamma (\\(n=5\\to2\\), \\(434{,}0\\,\\mathrm{nm}\\)) y H‑delta (\\(n=6\\to2\\), \\(410{,}2\\,\\mathrm{nm}\\)). Otras líneas oscuras del mismo espectro —como las de sodio (Na D, \\(589\\,\\mathrm{nm}\\)) o magnesio (Mg b, \\(517\\,\\mathrm{nm}\\))— pertenecen a elementos distintos y no son transiciones del hidrógeno.",
           "Un telescopio solar de H‑alpha está diseñado para hacer exactamente lo contrario que el resto del espectro: en lugar de descartar la rendija de H‑alpha, se queda solo con ella y rechaza todo lo demás.",
         ],
         deepDive: {
           title: "Línea oscura en el disco, línea brillante en el limbo",
           paragraphs: [
-            "Sobre el disco solar, la luz blanca brillante de la fotosfera atraviesa la cromosfera por encima. El hidrógeno de esa capa absorbe selectivamente los fotones de 656,28 nm, restándolos del fondo continuo. Por eso, en el espectro del disco, H‑alpha aparece como una línea de absorción: una muesca oscura sobre un fondo intenso.",
+            "Sobre el disco solar, la luz blanca brillante de la fotosfera atraviesa la cromosfera por encima. El hidrógeno de esa capa absorbe selectivamente los fotones de \\(656{,}28\\,\\mathrm{nm}\\), restándolos del fondo continuo. Por eso, en el espectro del disco, H‑alpha aparece como una línea de absorción: una muesca oscura sobre un fondo intenso.",
             "En el limbo del Sol y en las protuberancias que se elevan sobre él no hay fotosfera brillante detrás, sino el cielo oscuro. Ese mismo hidrógeno, en lugar de absorber, emite sus propios fotones H‑alpha. El resultado es una línea de emisión brillante. Es el motivo de que las protuberancias se vean encendidas en el borde mientras los filamentos (el mismo gas, pero proyectado sobre el disco) se vean oscuros: son el anverso y el reverso del mismo fenómeno.",
-            "La serie de Balmer completa las transiciones al nivel n=2 del hidrógeno. Solo H‑alpha, H‑beta, H‑gamma y H‑delta caen en el visible; las de n más alto caen en el ultravioleta. Las demás líneas oscuras del espectro solar (sodio, magnesio, calcio, hierro…) corresponden a transiciones electrónicas de esos otros elementos y no tienen relación con la serie de Balmer.",
+            "La serie de Balmer completa las transiciones al nivel \\(n=2\\) del hidrógeno. Solo H‑alpha, H‑beta, H‑gamma y H‑delta caen en el visible; las de \\(n\\) más alto caen en el ultravioleta. Las demás líneas oscuras del espectro solar (sodio, magnesio, calcio, hierro…) corresponden a transiciones electrónicas de esos otros elementos y no tienen relación con la serie de Balmer.",
           ],
         },
       },
       etalon: {
         eyebrow: "El corazón del instrumento",
         heading: "El etalon: cómo se aísla un solo color",
-        lead: "Quedarse solo con una rendija de 0,5 ångström en pleno rojo es un reto óptico extremo. La solución es la interferencia de la luz.",
+        lead: "Quedarse solo con una rendija de \\(0{,}5\\,\\text{Å}\\) en pleno rojo es un reto óptico extremo. La solución es la interferencia de la luz.",
         body: [
           "El componente clave de un telescopio H‑alpha es el etalon, también llamado interferómetro de Fabry-Pérot. En esencia son dos superficies de vidrio planísimas, casi como espejos, muy paralelas entre sí y separadas por una distancia diminuta y controlada con enorme precisión. Cada superficie refleja parte de la luz y deja pasar otra parte.",
           "Cuando la luz entra en ese hueco, rebota muchas veces de un lado a otro antes de salir. En cada viaje, las ondas que salen se superponen con las que ya habían salido. Para la mayoría de los colores esas ondas quedan desfasadas y se cancelan unas a otras (interferencia destructiva). Pero para unos pocos colores muy concretos, las ondas salen perfectamente sincronizadas y se refuerzan (interferencia constructiva).",
-          "El resultado es que el etalon solo deja pasar una rendija de color extremadamente estrecha. Ajustando la separación entre las placas, esa rendija se sitúa justo sobre H‑alpha. Es como un coro de miles de reflexiones que solo cantan al unísono en una única nota: la del rojo a 656,28 nm.",
+          "El resultado es que el etalon solo deja pasar una rendija de color extremadamente estrecha. Ajustando la separación entre las placas, esa rendija se sitúa justo sobre H‑alpha. Es como un coro de miles de reflexiones que solo cantan al unísono en una única nota: la del rojo a \\(656{,}28\\,\\mathrm{nm}\\).",
         ],
         deepDive: {
           title: "Fabry-Pérot: picos de Airy, FSR, finesse y FWHM",
           paragraphs: [
-            "La condición de interferencia constructiva es 2·n·d·cosθ = m·λ, donde d es la separación entre placas, n el índice del medio entre ellas, θ el ángulo del rayo respecto a la normal y m un número entero (el orden). Para cada orden m hay una longitud de onda que cumple la condición y sale reforzada.",
-            "Por eso la curva de transmisión del etalon no es una sola caja limpia, sino una serie de picos muy finos y regulares: los picos de Airy. La distancia espectral entre dos picos consecutivos se llama rango espectral libre (FSR). Como hay muchos picos, el etalon por sí solo no basta: hace falta un prefiltro (el ERF y a veces un filtro de banda más ancha) que deje pasar la zona alrededor de H‑alpha y elimine los demás órdenes.",
-            "La anchura de cada pico se mide por su FWHM (anchura a media altura). La finesse del etalon es la relación entre el FSR y la FWHM, y depende sobre todo de la reflectividad de las superficies: cuanta más reflectividad, más reflexiones efectivas y más estrechos los picos.",
-            "Para que la cromosfera destaque sobre el disco, el bandpass (la FWHM) debe ser muy estrecho, típicamente por debajo de 0,5 ångström. Si la ventana es más ancha, deja entrar demasiada luz del continuo fotosférico y el contraste de los filamentos se pierde: el disco vuelve a verse liso.",
+            "La condición de interferencia constructiva es \\(2 n d \\cos\\theta = m\\lambda\\), donde \\(d\\) es la separación entre placas, \\(n\\) el índice del medio entre ellas, \\(\\theta\\) el ángulo del rayo respecto a la normal y \\(m\\) un número entero (el orden). Para cada orden \\(m\\) hay una longitud de onda que cumple la condición y sale reforzada.",
+            "Por eso la curva de transmisión del etalon no es una sola caja limpia, sino una serie de picos muy finos y regulares: los picos de Airy. La distancia espectral entre dos picos consecutivos se llama rango espectral libre (\\(\\mathrm{FSR}\\)). Como hay muchos picos, el etalon por sí solo no basta: hace falta un prefiltro (el ERF y a veces un filtro de banda más ancha) que deje pasar la zona alrededor de H‑alpha y elimine los demás órdenes.",
+            "La anchura de cada pico se mide por su \\(\\mathrm{FWHM}\\) (anchura a media altura). La finesse del etalon es la relación entre \\(\\mathrm{FSR}\\) y \\(\\mathrm{FWHM}\\), y depende sobre todo de la reflectividad de las superficies: cuanta más reflectividad, más reflexiones efectivas y más estrechos los picos.",
+            "Para que la cromosfera destaque sobre el disco, el bandpass (la \\(\\mathrm{FWHM}\\)) debe ser muy estrecho, típicamente por debajo de \\(0{,}5\\,\\text{Å}\\). Si la ventana es más ancha, deja entrar demasiada luz del continuo fotosférico y el contraste de los filamentos se pierde: el disco vuelve a verse liso.",
           ],
-          formula: "2·n·d·cosθ = m·λ",
+          formula: "2 n d \\cos\\theta = m\\lambda",
         },
       },
       tuning: {
@@ -197,7 +207,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         deepDive: {
           title: "Pressure tuning, tilt tuning y el efecto Doppler",
           paragraphs: [
-            "Hay dos formas habituales de afinar un etalon. El pressure tuning cambia la presión —y por tanto el índice de refracción n— del gas encerrado entre las placas, lo que desplaza la condición 2·n·d·cosθ = m·λ y mueve el pico de transmisión. El tilt tuning inclina el etalon un pequeño ángulo θ: como en la ecuación aparece cosθ, inclinarlo desplaza el pico hacia el azul.",
+            "Hay dos formas habituales de afinar un etalon. El pressure tuning cambia la presión —y por tanto el índice de refracción \\(n\\)— del gas encerrado entre las placas, lo que desplaza la condición \\(2 n d \\cos\\theta = m\\lambda\\) y mueve el pico de transmisión. El tilt tuning inclina el etalon un pequeño ángulo \\(\\theta\\): como en la ecuación aparece \\(\\cos\\theta\\), inclinarlo desplaza el pico hacia el azul.",
             "El material en movimiento entra en juego por el efecto Doppler: el gas que se acerca a nosotros emite H‑alpha corrido hacia el azul, y el que se aleja, hacia el rojo. Al desplazar la ventana del etalon hacia un ala, la sintonizamos con ese gas Doppler-corrido y lo hacemos visible, mientras el gas en reposo se atenúa.",
             "Todo esto implica un compromiso permanente entre contraste y luz. Una ventana más estrecha y bien centrada da más contraste cromosférico, pero deja pasar menos luz y exige exposiciones más largas o una imagen más oscura. Afinar bien es encontrar el equilibrio para el detalle concreto que se quiere observar.",
           ],
@@ -472,6 +482,11 @@ export const siteCopy: Record<Locale, SiteCopy> = {
             where: "Delante de los ojos, sin ningún instrumento óptico.",
             passes: "Todo el espectro visible muy atenuado de forma neutra (filtro de densidad).",
             layer: "Solo sirven a simple vista. No revelan ninguna capa solar en detalle.",
+            image: "/images/filter-eclipse-glasses.jpg",
+            imageAlt: "Eclipse parcial visto a través de gafas de eclipse.",
+            attribution: "Aaron Lucas, CC BY-SA 4.0, Wikimedia Commons",
+            sourceUrl:
+              "https://commons.wikimedia.org/wiki/File:Solar_eclipse_viewed_through_eclipse_glasses.jpg",
           },
           {
             id: "whiteLight",
@@ -479,13 +494,21 @@ export const siteCopy: Record<Locale, SiteCopy> = {
             where: "En la apertura frontal del telescopio o prismáticos, antes de que la luz entre en la óptica.",
             passes: "Todo el espectro visible atenuado de forma pareja. Muestra la fotosfera con manchas y granulación.",
             layer: "Fotosfera: la superficie brillante y visible del Sol.",
+            image: "/images/filter-white-light.jpg",
+            imageAlt: "Disco solar en luz blanca con manchas solares visibles.",
+            attribution: "Matúš Motlo, CC BY-SA 4.0, Wikimedia Commons",
+            sourceUrl: "https://commons.wikimedia.org/wiki/File:The_Sun_in_white_light.jpg",
           },
           {
             id: "halpha",
             name: "Telescopio H‑alpha",
             where: "Sistema interno completo: ERF frontal + etalon + blocking filter antes del ojo o cámara.",
-            passes: "Solo una rendija de 0,5 Å centrada en 656,28 nm. Todo lo demás queda bloqueado.",
+            passes: "Solo una rendija de \\(0{,}5\\,\\text{Å}\\) centrada en \\(656{,}28\\,\\mathrm{nm}\\). Todo lo demás queda bloqueado.",
             layer: "Cromosfera: filamentos, plages, protuberancias y textura cromosférica.",
+            image: "/images/sun-h-alpha.png",
+            imageAlt: "Disco solar real en H‑alpha con filamentos y protuberancias.",
+            attribution: "Imagen propia de Enrique, 2026",
+            sourceUrl: "/images/sun-h-alpha.png",
           },
         ],
       },
@@ -526,12 +549,12 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         deepDive: {
           title: "The physics: the Bohr model and the Balmer series",
           paragraphs: [
-            "In the Bohr model, the electron of hydrogen can only occupy orbitals with specific energies, labeled by an integer n = 1, 2, 3... The larger n is, the higher and more loosely bound the electron. Energy is not continuous: it is quantized, which means the atom can only gain or lose energy in discrete jumps between those energy levels.",
-            "When an electron falls from a high level to a lower one, the atom emits a photon whose energy is exactly the difference between the two levels. The H‑alpha line corresponds to the transition n=3 → n=2. Transitions ending at n=2 form the so-called Balmer series, which falls in the visible; H‑alpha is the first and most intense of that series.",
-            "The energy of the jump sets the color of the light through the Planck-Einstein relation: the higher the energy, the shorter the wavelength. For the n=3 → n=2 transition that energy corresponds to λ = 656.28 nm, the deep red of H‑alpha.",
+            "In the Bohr model, the electron of hydrogen can only occupy orbitals with specific energies, labeled by an integer \\(n = 1, 2, 3\\ldots\\). The larger \\(n\\) is, the higher and more loosely bound the electron. Energy is not continuous: it is quantized, which means the atom can only gain or lose energy in discrete jumps between those energy levels.",
+            "When an electron falls from a high level to a lower one, the atom emits a photon whose energy is exactly the difference between the two levels. The H‑alpha line corresponds to the transition \\(n=3 \\to n=2\\). Transitions ending at \\(n=2\\) form the so-called Balmer series, which falls in the visible; H‑alpha is the first and most intense of that series.",
+            "The energy of the jump sets the color of the light through the Planck-Einstein relation: the higher the energy, the shorter the wavelength. For the transition \\(n=3 \\to n=2\\) that energy corresponds to \\(\\lambda = 656.28\\,\\mathrm{nm}\\), the deep red of H‑alpha.",
             "The same energy level explains two opposite things we see on the Sun. Over the disk, the cooler hydrogen of the chromosphere absorbs the white light coming from below and creates a dark line: it is one of the Fraunhofer lines, a black stripe across the continuous spectrum. At the limb and in prominences, by contrast, there is no bright background behind, and that same hydrogen emits its H‑alpha light against the black sky: we see it in emission, bright.",
           ],
-          formula: "E = h·c / λ",
+          formula: "E = \\frac{h c}{\\lambda}",
         },
       },
       spectrum: {
@@ -540,36 +563,36 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         lead: "If we carefully break up the Sun's light, the rainbow appears crossed by thin dark lines. H‑alpha is one of them.",
         body: [
           "When we split sunlight into its colors we expect a continuous rainbow, but on closer inspection it is interrupted by hundreds of very narrow dark lines. These are the Fraunhofer lines, and each one marks a color that was absorbed by a specific element present in the Sun before its light reached us.",
-          "Each dark line is the signature of an atom: sodium, calcium, magnesium, iron, and, of course, hydrogen each have their own. The hydrogen lines in the visible range form the Balmer series: all are electron transitions ending at level n=2. H‑alpha (n=3→2, 656.28 nm) is the first and most intense; it is followed by H‑beta (n=4→2, 486.1 nm), H‑gamma (n=5→2, 434.0 nm), and H‑delta (n=6→2, 410.2 nm). Other dark lines in the same spectrum — such as sodium (Na D, 589 nm) or magnesium (Mg b, 517 nm) — belong to different elements and are not hydrogen transitions.",
+          "Each dark line is the signature of an atom: sodium, calcium, magnesium, iron, and, of course, hydrogen each have their own. The hydrogen lines in the visible range form the Balmer series: all are electron transitions ending at level \\(n=2\\). H‑alpha (\\(n=3\\to2\\), \\(656.28\\,\\mathrm{nm}\\)) is the first and most intense; it is followed by H‑beta (\\(n=4\\to2\\), \\(486.1\\,\\mathrm{nm}\\)), H‑gamma (\\(n=5\\to2\\), \\(434.0\\,\\mathrm{nm}\\)), and H‑delta (\\(n=6\\to2\\), \\(410.2\\,\\mathrm{nm}\\)). Other dark lines in the same spectrum — such as sodium (Na D, \\(589\\,\\mathrm{nm}\\)) or magnesium (Mg b, \\(517\\,\\mathrm{nm}\\)) — belong to different elements and are not hydrogen transitions.",
           "An H‑alpha solar telescope is designed to do exactly the opposite of the rest of the spectrum: instead of discarding the H‑alpha slit, it keeps only that one and rejects everything else.",
         ],
         deepDive: {
           title: "Dark line on the disk, bright line at the limb",
           paragraphs: [
-            "Over the solar disk, the bright white light of the photosphere travels through the chromosphere above it. The hydrogen in that layer selectively absorbs the 656.28 nm photons, subtracting them from the continuous background. That is why, in the disk spectrum, H‑alpha appears as an absorption line: a dark notch on an intense background.",
+            "Over the solar disk, the bright white light of the photosphere travels through the chromosphere above it. The hydrogen in that layer selectively absorbs the \\(656.28\\,\\mathrm{nm}\\) photons, subtracting them from the continuous background. That is why, in the disk spectrum, H‑alpha appears as an absorption line: a dark notch on an intense background.",
             "At the Sun's limb and in the prominences that rise above it there is no bright photosphere behind, only the dark sky. That same hydrogen, instead of absorbing, emits its own H‑alpha photons. The result is a bright emission line. This is why prominences appear lit up at the edge while filaments (the same gas, but projected onto the disk) appear dark: they are two sides of the same phenomenon.",
-            "The full Balmer series covers all transitions to n=2 in hydrogen. Only H‑alpha, H‑beta, H‑gamma, and H‑delta fall in the visible range; those for higher n fall in the ultraviolet. The other dark lines in the solar spectrum (sodium, magnesium, calcium, iron…) correspond to electron transitions in those other elements and have no connection to the Balmer series.",
+            "The full Balmer series covers all transitions to \\(n=2\\) in hydrogen. Only H‑alpha, H‑beta, H‑gamma, and H‑delta fall in the visible range; those for higher \\(n\\) fall in the ultraviolet. The other dark lines in the solar spectrum (sodium, magnesium, calcium, iron…) correspond to electron transitions in those other elements and have no connection to the Balmer series.",
           ],
         },
       },
       etalon: {
         eyebrow: "The heart of the instrument",
         heading: "The etalon: how a single color is isolated",
-        lead: "Keeping only a 0.5-ångström slit in the deep red is an extreme optical challenge. The solution is the interference of light.",
+        lead: "Keeping only a \\(0.5\\,\\text{Å}\\) slit in the deep red is an extreme optical challenge. The solution is the interference of light.",
         body: [
           "The key component of an H‑alpha telescope is the etalon, also called a Fabry-Pérot interferometer. In essence it is two ultra-flat glass surfaces, almost like mirrors, very parallel to each other and separated by a tiny, exquisitely controlled distance. Each surface reflects part of the light and lets another part through.",
           "When light enters that gap, it bounces back and forth many times before leaving. On each pass, the waves coming out overlap with those that left earlier. For most colors those waves end up out of phase and cancel each other (destructive interference). But for a few very specific colors, the waves come out perfectly in step and reinforce one another (constructive interference).",
-          "The result is that the etalon lets through only an extremely narrow slit of color. By adjusting the spacing between the plates, that slit is placed right on top of H‑alpha. It is like a choir of thousands of reflections that only sing in unison on a single note: the red at 656.28 nm.",
+          "The result is that the etalon lets through only an extremely narrow slit of color. By adjusting the spacing between the plates, that slit is placed right on top of H‑alpha. It is like a choir of thousands of reflections that only sing in unison on a single note: the red at \\(656.28\\,\\mathrm{nm}\\).",
         ],
         deepDive: {
           title: "Fabry-Pérot: Airy peaks, FSR, finesse, and FWHM",
           paragraphs: [
-            "The condition for constructive interference is 2·n·d·cosθ = m·λ, where d is the spacing between plates, n the index of the medium between them, θ the ray angle relative to the normal, and m an integer (the order). For each order m there is a wavelength that satisfies the condition and emerges reinforced.",
-            "That is why the etalon's transmission curve is not a single clean box, but a series of very thin, regular peaks: the Airy peaks. The spectral distance between two consecutive peaks is called the free spectral range (FSR). Because there are many peaks, the etalon alone is not enough: a prefilter is needed (the ERF and sometimes a broader-band filter) to pass the region around H‑alpha and remove the other orders.",
-            "The width of each peak is measured by its FWHM (full width at half maximum). The finesse of the etalon is the ratio of the FSR to the FWHM, and it depends above all on the reflectivity of the surfaces: the higher the reflectivity, the more effective reflections and the narrower the peaks.",
-            "For the chromosphere to stand out over the disk, the bandpass (the FWHM) must be very narrow, typically below 0.5 ångström. If the window is wider, it lets in too much light from the photospheric continuum and the contrast of the filaments is lost: the disk looks smooth again.",
+            "The condition for constructive interference is \\(2 n d \\cos\\theta = m\\lambda\\), where \\(d\\) is the spacing between plates, \\(n\\) the index of the medium between them, \\(\\theta\\) the ray angle relative to the normal, and \\(m\\) an integer (the order). For each order \\(m\\) there is a wavelength that satisfies the condition and emerges reinforced.",
+            "That is why the etalon's transmission curve is not a single clean box, but a series of very thin, regular peaks: the Airy peaks. The spectral distance between two consecutive peaks is called the free spectral range (\\(\\mathrm{FSR}\\)). Because there are many peaks, the etalon alone is not enough: a prefilter is needed (the ERF and sometimes a broader-band filter) to pass the region around H‑alpha and remove the other orders.",
+            "The width of each peak is measured by its \\(\\mathrm{FWHM}\\) (full width at half maximum). The finesse of the etalon is the ratio of \\(\\mathrm{FSR}\\) to \\(\\mathrm{FWHM}\\), and it depends above all on the reflectivity of the surfaces: the higher the reflectivity, the more effective reflections and the narrower the peaks.",
+            "For the chromosphere to stand out over the disk, the bandpass (the \\(\\mathrm{FWHM}\\)) must be very narrow, typically below \\(0.5\\,\\text{Å}\\). If the window is wider, it lets in too much light from the photospheric continuum and the contrast of the filaments is lost: the disk looks smooth again.",
           ],
-          formula: "2·n·d·cosθ = m·λ",
+          formula: "2 n d \\cos\\theta = m\\lambda",
         },
       },
       tuning: {
@@ -584,7 +607,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         deepDive: {
           title: "Pressure tuning, tilt tuning, and the Doppler effect",
           paragraphs: [
-            "There are two common ways to tune an etalon. Pressure tuning changes the pressure —and therefore the refractive index n— of the gas sealed between the plates, which shifts the condition 2·n·d·cosθ = m·λ and moves the transmission peak. Tilt tuning tips the etalon by a small angle θ: since cosθ appears in the equation, tilting it shifts the peak toward the blue.",
+            "There are two common ways to tune an etalon. Pressure tuning changes the pressure —and therefore the refractive index \\(n\\)— of the gas sealed between the plates, which shifts the condition \\(2 n d \\cos\\theta = m\\lambda\\) and moves the transmission peak. Tilt tuning tips the etalon by a small angle \\(\\theta\\): since \\(\\cos\\theta\\) appears in the equation, tilting it shifts the peak toward the blue.",
             "Moving material comes into play through the Doppler effect: gas approaching us emits H‑alpha shifted toward the blue, and gas moving away, toward the red. By shifting the etalon's window toward a wing, we tune it to that Doppler-shifted gas and make it visible, while gas at rest is dimmed.",
             "All of this implies a constant trade-off between contrast and light. A narrower, well-centered window gives more chromospheric contrast, but lets through less light and requires longer exposures or a darker image. Tuning well means finding the balance for the specific detail you want to observe.",
           ],
@@ -859,6 +882,11 @@ export const siteCopy: Record<Locale, SiteCopy> = {
             where: "In front of the eyes, without any optical instrument.",
             passes: "The entire visible spectrum, heavily and neutrally attenuated (density filter).",
             layer: "For naked-eye use only. They reveal no solar layer in detail.",
+            image: "/images/filter-eclipse-glasses.jpg",
+            imageAlt: "Partial eclipse seen through eclipse glasses.",
+            attribution: "Aaron Lucas, CC BY-SA 4.0, Wikimedia Commons",
+            sourceUrl:
+              "https://commons.wikimedia.org/wiki/File:Solar_eclipse_viewed_through_eclipse_glasses.jpg",
           },
           {
             id: "whiteLight",
@@ -866,13 +894,21 @@ export const siteCopy: Record<Locale, SiteCopy> = {
             where: "At the front aperture of the telescope or binoculars, before light enters the optics.",
             passes: "The whole visible spectrum evenly attenuated. Shows the photosphere with sunspots and granulation.",
             layer: "Photosphere: the bright, visible surface of the Sun.",
+            image: "/images/filter-white-light.jpg",
+            imageAlt: "Solar disk in white light with visible sunspots.",
+            attribution: "Matúš Motlo, CC BY-SA 4.0, Wikimedia Commons",
+            sourceUrl: "https://commons.wikimedia.org/wiki/File:The_Sun_in_white_light.jpg",
           },
           {
             id: "halpha",
             name: "H‑alpha telescope",
             where: "Complete internal system: front ERF + etalon + blocking filter before the eye or camera.",
-            passes: "Only a 0.5 Å slit centered at 656.28 nm. Everything else is blocked.",
+            passes: "Only a \\(0.5\\,\\text{Å}\\) slit centered at \\(656.28\\,\\mathrm{nm}\\). Everything else is blocked.",
             layer: "Chromosphere: filaments, plages, prominences, and chromospheric texture.",
+            image: "/images/sun-h-alpha.png",
+            imageAlt: "Real full solar disk in H‑alpha with filaments and prominences.",
+            attribution: "Enrique's own image, 2026",
+            sourceUrl: "/images/sun-h-alpha.png",
           },
         ],
       },
