@@ -26,6 +26,16 @@ const fi = copy.finalImage;
           loading="lazy"
           decoding="async"
         />
+        <a
+          class="sun-easter-egg sr-only"
+          href={fi.instagramUrl}
+          target="_blank"
+          rel="noreferrer"
+          tabindex="-1"
+          aria-hidden="true"
+        >
+          {fi.instagramLabel}
+        </a>
         {fi.annotations.map((a) => (
           <button
             class="hotspot"

@@ -34,14 +34,12 @@ test("spectrum explorer maps wavelength to transition", async ({ page }) => {
   await expect(page.locator("#spectrum")).toContainText("n=4");
 });
 
-test("tuning simulator reacts to controls", async ({ page }) => {
+test("tuning section keeps the diagram without the interactive simulator", async ({ page }) => {
   await page.goto("/");
-  const readout = page.locator(".bandpass-sim__readout");
-  await readout.scrollIntoViewIfNeeded();
-  await expect(readout).toBeVisible();
-  const width = page.locator("#tuning input[type=range]").first();
-  await width.fill("1.2");
-  await expect(readout).toBeVisible();
+  await page.locator("#tuning").scrollIntoViewIfNeeded();
+  await expect(page.locator("#tuning .diagram svg").first()).toBeVisible();
+  await expect(page.locator("#tuning .bandpass-sim")).toHaveCount(0);
+  await expect(page.locator("#tuning input[type=range]")).toHaveCount(0);
 });
 
 test("filter comparison uses real images with attribution", async ({ page }) => {
@@ -59,6 +57,9 @@ test("final image has annotations", async ({ page }) => {
   await page.goto("/");
   await page.locator("#image").scrollIntoViewIfNeeded();
   await expect(page.locator("#image .hotspot").first()).toBeVisible();
+  await expect(
+    page.locator("#image a[href='https://www.instagram.com/p/DY6jdP7jEMb/?img_index=1']"),
+  ).toHaveClass(/sun-easter-egg/);
 });
 
 test("safety shows seven evergreen rules", async ({ page }) => {
@@ -67,15 +68,21 @@ test("safety shows seven evergreen rules", async ({ page }) => {
   await expect(items).toHaveCount(7);
 });
 
-test("tuning explains the single Doppler-shifted limb cue", async ({ page }) => {
+test("sun layer leaders target named layers", async ({ page }) => {
   await page.goto("/");
-  await page.locator("#tuning").scrollIntoViewIfNeeded();
-  await expect(page.locator(".bandpass-sim__note")).toContainText("Doppler");
-  await expect(page.locator(".bandpass-sim__preview")).toBeVisible();
+  await page.locator(".sun-layers").scrollIntoViewIfNeeded();
+  await expect(page.locator(".sun-layers [data-layer='photosphere']")).toHaveCount(1);
+  await expect(page.locator(".sun-layers [data-layer='chromosphere']")).toHaveCount(1);
+  await expect(page.locator(".sun-layers [data-layer='corona']")).toHaveCount(1);
 });
 
-test("footer links to Enrique's social profiles", async ({ page }) => {
+test("footer uses icon-only social profile links", async ({ page }) => {
   await page.goto("/");
-  await expect(page.locator(".site-footer__links a[href='https://github.com/enriquebook']")).toBeVisible();
-  await expect(page.locator(".site-footer__links a[href='https://www.linkedin.com/in/enrique-vasallo/']")).toBeVisible();
+  const github = page.locator(".site-footer__links a[href='https://github.com/enriquebook']");
+  const linkedin = page.locator(".site-footer__links a[href='https://www.linkedin.com/in/enrique-vasallo/']");
+  await expect(github).toHaveAttribute("aria-label", "GitHub");
+  await expect(linkedin).toHaveAttribute("aria-label", "LinkedIn");
+  await expect(github.locator("svg")).toBeVisible();
+  await expect(linkedin.locator("svg")).toBeVisible();
+  await expect(page.locator(".site-footer__inner p")).toHaveCount(0);
 });

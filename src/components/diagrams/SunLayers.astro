@@ -17,9 +17,6 @@ const { labels } = Astro.props;
       <filter id="sl-soft" x="-20%" y="-20%" width="140%" height="140%">
         <feGaussianBlur stdDeviation="5" />
       </filter>
-      <marker id="sl-dot" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5">
-        <circle cx="3.5" cy="3.5" r="2.4" fill="currentColor" />
-      </marker>
     </defs>
 
     <rect x="18" y="18" width="644" height="394" rx="7" fill="#fffdfa" stroke="var(--line)" />
@@ -49,21 +46,24 @@ const { labels } = Astro.props;
 
     <g class="sun-layers__labels">
       <g color="#875017">
-        <line x1="318" y1="155" x2="416" y2="110" stroke="currentColor" stroke-width="1.2" marker-start="url(#sl-dot)" />
+        <line data-layer="photosphere" x1="286" y1="174" x2="416" y2="110" stroke="currentColor" stroke-width="1.2" />
+        <circle cx="286" cy="174" r="4" fill="currentColor" />
         <text x="430" y="102" font-size="16" fill="currentColor" font-weight="760">{labels.photosphere}</text>
         <text x="430" y="122" font-size="12.5" fill="var(--muted)">{labels.photosphereNote}</text>
         <text x="430" y="143" font-size="12.5" fill="var(--ink)" font-weight="700">{labels.whiteLightLabel}</text>
       </g>
 
       <g color="var(--solar-deep)">
-        <line x1="337" y1="214" x2="416" y2="207" stroke="currentColor" stroke-width="1.2" marker-start="url(#sl-dot)" />
+        <line data-layer="chromosphere" x1="321" y1="143" x2="416" y2="207" stroke="currentColor" stroke-width="1.2" />
+        <circle cx="321" cy="143" r="4" fill="currentColor" />
         <text x="430" y="198" font-size="16" fill="currentColor" font-weight="760">{labels.chromosphere}</text>
         <text x="430" y="218" font-size="12.5" fill="var(--muted)">{labels.chromosphereNote}</text>
         <text x="430" y="239" font-size="12.5" fill="var(--solar)" font-weight="700">{labels.hAlphaLabel}</text>
       </g>
 
       <g color="#5b7478">
-        <line x1="360" y1="296" x2="416" y2="318" stroke="currentColor" stroke-width="1.2" marker-start="url(#sl-dot)" />
+        <line data-layer="corona" x1="366" y1="286" x2="416" y2="318" stroke="currentColor" stroke-width="1.2" />
+        <circle cx="366" cy="286" r="4" fill="currentColor" />
         <text x="430" y="310" font-size="16" fill="currentColor" font-weight="760">{labels.corona}</text>
         <text x="430" y="330" font-size="12.5" fill="var(--muted)">{labels.coronaNote}</text>
       </g>

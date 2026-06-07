@@ -39,7 +39,7 @@ type SiteCopy = {
   meta: { title: string; description: string };
   nav: { origin: string; etalon: string; tuning: string; safety: string; image: string };
   languageLabel: string;
-  social: { byline: string; github: string; linkedin: string; githubUrl: string; linkedinUrl: string };
+  social: { github: string; linkedin: string; githubUrl: string; linkedinUrl: string };
   hero: { eyebrow: string; title: string; intro: string; imageAlt: string };
   sections: {
     origin: Section;
@@ -61,6 +61,8 @@ type SiteCopy = {
     lead: string;
     caption: string;
     imageAlt: string;
+    instagramUrl: string;
+    instagramLabel: string;
     annotations: ImageAnnotation[];
   };
   glossary: Record<string, GlossaryEntry>;
@@ -86,14 +88,6 @@ type SiteCopy = {
         Na: string;
         Ca: string;
       };
-    };
-    tuningSimulator: {
-      aria: string;
-      width: string;
-      offset: string;
-      contrast: string;
-      explanation: string;
-      views: { disk: string; prominence: string; washed: string };
     };
     filterComparison: {
       aria: string;
@@ -131,7 +125,6 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     languageLabel: "English",
     social: {
-      byline: "Hecho por Enrique con fotografía solar, código y bastante respeto al Sol.",
       github: "GitHub",
       linkedin: "LinkedIn",
       githubUrl: "https://github.com/enriquebook",
@@ -304,6 +297,8 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       caption: "Disco solar completo en H‑alpha. Pasa el cursor o toca los puntos para identificar cada estructura.",
       imageAlt:
         "Disco solar en H‑alpha con filamentos oscuros, protuberancias en el limbo, plages brillantes y textura cromosférica.",
+      instagramUrl: "https://www.instagram.com/p/DY6jdP7jEMb/?img_index=1",
+      instagramLabel: "Publicación original en Instagram",
       annotations: [
         {
           id: "filaments",
@@ -476,19 +471,6 @@ export const siteCopy: Record<Locale, SiteCopy> = {
           Ca: "Calcio",
         },
       },
-      tuningSimulator: {
-        aria: "Simulador de tuning: ajusta la anchura y el desplazamiento de la ventana del etalon sobre la línea H‑alpha y observa cómo cambia la vista.",
-        width: "Anchura de banda (FWHM)",
-        offset: "Desplazamiento del centro",
-        contrast: "Contraste del disco",
-        explanation:
-          "La curva roja es la ventana de transmisión del etalon. Si la desplazas hacia un ala de H‑alpha, solo el gas cuya línea se ha corrido por efecto Doppler cae dentro de esa ventana: por eso aparece un limbo/protuberancia concreto, no dos puntos simétricos.",
-        views: {
-          disk: "Disco: filamentos y plages",
-          prominence: "Protuberancias en el limbo",
-          washed: "Lavado: poco contraste",
-        },
-      },
       filterComparison: {
         aria: "Comparador de métodos de filtrado solar: selecciona un método para ver dónde actúa y qué revela.",
         fieldWhere: "Posición del filtro",
@@ -548,7 +530,6 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     },
     languageLabel: "Español",
     social: {
-      byline: "Made by Enrique with solar imaging, code, and a healthy respect for the Sun.",
       github: "GitHub",
       linkedin: "LinkedIn",
       githubUrl: "https://github.com/enriquebook",
@@ -721,6 +702,8 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       caption: "Full solar disk in H‑alpha. Hover or tap the points to identify each structure.",
       imageAlt:
         "Solar disk in H‑alpha with dark filaments, prominences at the limb, bright plages, and chromospheric texture.",
+      instagramUrl: "https://www.instagram.com/p/DY6jdP7jEMb/?img_index=1",
+      instagramLabel: "Original Instagram post",
       annotations: [
         {
           id: "filaments",
@@ -891,19 +874,6 @@ export const siteCopy: Record<Locale, SiteCopy> = {
           Mg: "Magnesium",
           Na: "Sodium",
           Ca: "Calcium",
-        },
-      },
-      tuningSimulator: {
-        aria: "Tuning simulator: adjust the width and offset of the etalon window over the H‑alpha line and watch how the view changes.",
-        width: "Bandpass width (FWHM)",
-        offset: "Center offset",
-        contrast: "Disk contrast",
-        explanation:
-          "The red curve is the etalon transmission window. Shift it into one wing of H‑alpha and only gas whose line has been Doppler-shifted into that window stands out: that is why one limb/prominence appears, not two symmetric red spots.",
-        views: {
-          disk: "Disk: filaments and plages",
-          prominence: "Prominences at the limb",
-          washed: "Washed out: low contrast",
         },
       },
       filterComparison: {

@@ -2,7 +2,6 @@
 import type { Locale } from "../../i18n/routes";
 import { siteCopy } from "../../content/siteCopy";
 import DopplerTuning from "../diagrams/DopplerTuning.astro";
-import { BandpassTuningSimulator } from "../interactive/BandpassTuningSimulator";
 import DeepDive from "../DeepDive.astro";
 import RichText from "../RichText.astro";
 
@@ -23,8 +22,6 @@ const s = copy.sections.tuning;
     {s.body.map((paragraph) => <RichText text={paragraph} />)}
 
     <DopplerTuning labels={copy.diagrams.dopplerTuning} />
-
-    <BandpassTuningSimulator client:visible labels={copy.interactive.tuningSimulator} />
 
     {s.deepDive && <DeepDive deepDive={s.deepDive} />}
   </div>
