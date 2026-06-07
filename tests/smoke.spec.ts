@@ -68,3 +68,21 @@ test("renders English bandpass controls and readout", async ({ page }) => {
   await expect(simulator.getByRole("slider", { name: "Tuning offset" })).toBeVisible();
   await expect(readout).toContainText("Result: Narrow band");
 });
+
+test("renders the Spanish final H-alpha image and caption", async ({ page }) => {
+  await page.goto("/");
+
+  await expect(
+    page.getByRole("img", { name: "Disco solar real en H-alpha con filamentos y textura cromosférica" }),
+  ).toBeVisible();
+  await expect(page.getByText("Imagen H-alpha del Sol capturada y procesada el 28 de mayo de 2026.")).toBeVisible();
+});
+
+test("renders the English final H-alpha image and caption", async ({ page }) => {
+  await page.goto("/en/");
+
+  await expect(
+    page.getByRole("img", { name: "Real H-alpha solar disk with filaments and chromospheric texture" }),
+  ).toBeVisible();
+  await expect(page.getByText("H-alpha image of the Sun captured and processed on May 28, 2026.")).toBeVisible();
+});

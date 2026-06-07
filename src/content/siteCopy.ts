@@ -77,6 +77,13 @@ type SectionCopy = {
     eyebrow: string;
     heading: string;
   };
+  finalImage: {
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    alt: string;
+    caption: string;
+  };
 };
 
 type SiteCopy = {
@@ -171,6 +178,13 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       safety: {
         eyebrow: "Seguridad solar",
         heading: "Los filtros solares no son intercambiables",
+      },
+      finalImage: {
+        eyebrow: "Imagen real",
+        heading: "El Sol real en H-alpha",
+        lead: "Una captura procesada del disco solar muestra cómo la línea H-alpha convierte la cromosfera en detalle visible.",
+        alt: "Disco solar real en H-alpha con filamentos y textura cromosférica",
+        caption: "Imagen H-alpha del Sol capturada y procesada el 28 de mayo de 2026.",
       },
     },
     glossary: {
@@ -283,6 +297,13 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       safety: {
         eyebrow: "Solar safety",
         heading: "Solar filters are not interchangeable",
+      },
+      finalImage: {
+        eyebrow: "Real image",
+        heading: "The real Sun in H-alpha",
+        lead: "A processed solar-disk capture shows how the H-alpha line turns the chromosphere into visible detail.",
+        alt: "Real H-alpha solar disk with filaments and chromospheric texture",
+        caption: "H-alpha image of the Sun captured and processed on May 28, 2026.",
       },
     },
     glossary: {

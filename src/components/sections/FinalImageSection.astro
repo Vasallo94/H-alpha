@@ -1,0 +1,23 @@
+---
+import type { Locale } from "../../i18n/routes";
+import { siteCopy } from "../../content/siteCopy";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const finalImage = siteCopy[locale].sections.finalImage;
+---
+
+<section class="section final-image-section" id="image">
+  <div class="section__inner">
+    <p class="eyebrow">{finalImage.eyebrow}</p>
+    <h2 class="section-title">{finalImage.heading}</h2>
+    <p class="lead">{finalImage.lead}</p>
+    <figure class="final-image-section__figure">
+      <img src="/images/sun-h-alpha.png" alt={finalImage.alt} width="1608" height="905" loading="lazy" decoding="async" />
+      <figcaption>{finalImage.caption}</figcaption>
+    </figure>
+  </div>
+</section>

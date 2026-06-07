@@ -321,6 +321,31 @@ button, input { font: inherit; }
   margin: 0;
 }
 
+.final-image-section {
+  background: linear-gradient(180deg, transparent 0, rgba(157, 36, 28, 0.08) 100%);
+}
+
+.final-image-section__figure {
+  display: grid;
+  gap: 12px;
+  margin: 34px 0 0;
+}
+
+.final-image-section__figure img {
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(24, 32, 38, 0.18);
+  border-radius: 8px;
+  background: var(--instrument);
+  box-shadow: var(--shadow);
+}
+
+.final-image-section__figure figcaption {
+  max-width: 760px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
 @media (max-width: 720px) {
   .section {
     padding: 44px 18px;
