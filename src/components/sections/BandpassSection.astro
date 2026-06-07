@@ -1,0 +1,22 @@
+---
+import type { Locale } from "../../i18n/routes";
+import { siteCopy } from "../../content/siteCopy";
+import BandpassTuningSimulator from "../interactive/BandpassTuningSimulator";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = siteCopy[locale];
+const bandpass = copy.sections.bandpass;
+const simulator = bandpass.simulator;
+---
+
+<section class="section" id="bandpass">
+  <div class="section__inner">
+    <h2 class="section-title">{bandpass.heading}</h2>
+    <p class="lead">{bandpass.lead}</p>
+    <BandpassTuningSimulator copy={simulator} client:load />
+  </div>
+</section>

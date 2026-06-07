@@ -23,6 +23,23 @@ type SpectrumExplorerCopy = {
   selectedLabel: string;
 };
 
+type BandpassSimulatorCopy = {
+  ariaLabel: string;
+  widthLabel: string;
+  offsetLabel: string;
+  widthReadoutLabel: string;
+  offsetReadoutLabel: string;
+  resultReadoutLabel: string;
+  centerLabel: string;
+  windowLabel: string;
+  helpText: string;
+  results: {
+    offBand: string;
+    narrow: string;
+    wide: string;
+  };
+};
+
 type FilterCardCopy = {
   title: string;
   tag: string;
@@ -50,6 +67,11 @@ type SectionCopy = {
     leadStart: string;
     leadMiddle: string;
     leadEnd: string;
+  };
+  bandpass: {
+    heading: string;
+    lead: string;
+    simulator: BandpassSimulatorCopy;
   };
   safety: {
     eyebrow: string;
@@ -125,6 +147,26 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         leadStart: "El ",
         leadMiddle: " selecciona la línea espectral, mientras que el ",
         leadEnd: " mantiene la luz residual peligrosa fuera del recorrido final de la imagen.",
+      },
+      bandpass: {
+        heading: "Pequeños ajustes espectrales cambian el detalle visible",
+        lead: "El tuning desplaza ligeramente la ventana de paso. Por eso el disco solar y las protuberancias pueden tener puntos óptimos distintos.",
+        simulator: {
+          ariaLabel: "Simulador de la ventana espectral H-alpha",
+          widthLabel: "Anchura de bandpass",
+          offsetLabel: "Desplazamiento de tuning",
+          widthReadoutLabel: "Anchura",
+          offsetReadoutLabel: "Desplazamiento",
+          resultReadoutLabel: "Resultado",
+          centerLabel: "Centro H-alpha",
+          windowLabel: "Ventana de paso",
+          helpText: "Ajusta la anchura y el desplazamiento para ver cómo cambia la ventana alrededor del centro H-alpha.",
+          results: {
+            offBand: "Fuera de banda",
+            narrow: "Banda estrecha",
+            wide: "Banda ancha",
+          },
+        },
       },
       safety: {
         eyebrow: "Seguridad solar",
@@ -217,6 +259,26 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         leadStart: "The ",
         leadMiddle: " selects the spectral line, while the ",
         leadEnd: " keeps dangerous residual light out of the final image path.",
+      },
+      bandpass: {
+        heading: "Tiny spectral adjustments change visible detail",
+        lead: "Tuning shifts the passband slightly. That is why disk detail and prominences can have different sweet spots.",
+        simulator: {
+          ariaLabel: "Simulator for the H-alpha spectral window",
+          widthLabel: "Bandpass width",
+          offsetLabel: "Tuning offset",
+          widthReadoutLabel: "Width",
+          offsetReadoutLabel: "Offset",
+          resultReadoutLabel: "Result",
+          centerLabel: "H-alpha center",
+          windowLabel: "Passband window",
+          helpText: "Adjust width and offset to see how the passband window changes around the H-alpha center.",
+          results: {
+            offBand: "Off-band",
+            narrow: "Narrow band",
+            wide: "Wide band",
+          },
+        },
       },
       safety: {
         eyebrow: "Solar safety",

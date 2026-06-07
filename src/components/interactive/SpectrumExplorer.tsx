@@ -1,4 +1,4 @@
-import { type ChangeEvent, useId, useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 
 type SpectrumExplorerCopy = {
   ariaLabel: string;
@@ -21,6 +21,10 @@ const H_ALPHA_WAVELENGTH = 656.28;
 const getPosition = (wavelength: number) =>
   ((wavelength - MIN_WAVELENGTH) / (MAX_WAVELENGTH - MIN_WAVELENGTH)) * 100;
 
+type RangeInputEvent = {
+  currentTarget: HTMLInputElement;
+};
+
 export default function SpectrumExplorer({ copy }: SpectrumExplorerProps) {
   const baseId = useId();
   const inputId = `${baseId}-wavelength`;
@@ -29,7 +33,7 @@ export default function SpectrumExplorer({ copy }: SpectrumExplorerProps) {
   const [selectedWavelength, setSelectedWavelength] = useState(H_ALPHA_WAVELENGTH);
   const selectedPosition = useMemo(() => getPosition(selectedWavelength), [selectedWavelength]);
   const hAlphaPosition = getPosition(H_ALPHA_WAVELENGTH);
-  const updateSelectedWavelength = (event: ChangeEvent<HTMLInputElement>) => {
+  const updateSelectedWavelength = (event: RangeInputEvent) => {
     setSelectedWavelength(Number(event.currentTarget.value));
   };
 
@@ -82,6 +86,7 @@ export default function SpectrumExplorer({ copy }: SpectrumExplorerProps) {
           type="range"
           value={Math.round(selectedWavelength)}
           onChange={updateSelectedWavelength}
+          onInput={updateSelectedWavelength}
         />
       </label>
     </div>

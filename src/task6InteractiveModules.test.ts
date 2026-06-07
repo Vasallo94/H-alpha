@@ -50,7 +50,7 @@ describe("Task 6 interactive spectrum and filter modules", () => {
     expect(spectrumExplorer).toContain("id={markerDescriptionId}");
     expect(spectrumExplorer).toContain("copy.markerDescription");
     expect(spectrumExplorer).not.toContain('id="spectrum-wavelength"');
-    expect(spectrumExplorer).not.toContain("onInput=");
+    expect(spectrumExplorer).toContain("onInput={updateSelectedWavelength}");
   });
 
   it("wires the filter section between spectrum and optics on both localized pages", () => {

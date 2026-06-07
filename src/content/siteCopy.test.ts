@@ -68,6 +68,32 @@ describe("site copy", () => {
     expect(siteCopy.en.sections.filters.cards).toHaveLength(3);
   });
 
+  it("keeps bandpass tuning simulator copy centralized in both languages", () => {
+    for (const copy of [siteCopy.es.sections.bandpass, siteCopy.en.sections.bandpass]) {
+      expect(copy).toEqual(
+        expect.objectContaining({
+          heading: expect.any(String),
+          lead: expect.any(String),
+          simulator: expect.objectContaining({
+            ariaLabel: expect.any(String),
+            widthLabel: expect.any(String),
+            offsetLabel: expect.any(String),
+            widthReadoutLabel: expect.any(String),
+            offsetReadoutLabel: expect.any(String),
+            resultReadoutLabel: expect.any(String),
+            centerLabel: expect.any(String),
+            windowLabel: expect.any(String),
+            results: expect.objectContaining({
+              offBand: expect.any(String),
+              narrow: expect.any(String),
+              wide: expect.any(String),
+            }),
+          }),
+        }),
+      );
+    }
+  });
+
   it("keeps seasonal callout configurable in both languages", () => {
     expect(siteCopy.es.seasonalSafetyCallout.enabled).toBe(true);
     expect(siteCopy.en.seasonalSafetyCallout.enabled).toBe(true);

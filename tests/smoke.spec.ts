@@ -39,3 +39,18 @@ test("renders the Spanish filter comparison as three safety-focused cards", asyn
   await expect(filterComparison).toContainText("blocking filter");
   await expect(filterComparison).toContainText("seguridad");
 });
+
+test("updates the Spanish bandpass tuning explanation", async ({ page }) => {
+  await page.goto("/");
+
+  const simulator = page.getByRole("group", { name: "Simulador de la ventana espectral H-alpha" });
+  const readout = simulator.locator(".bandpass-sim__readout");
+
+  await expect(readout.getByText("Banda estrecha")).toBeVisible();
+
+  await simulator.getByRole("slider", { name: "Anchura de bandpass" }).press("End");
+  await expect(readout.getByText("Banda ancha")).toBeVisible();
+
+  await simulator.getByRole("slider", { name: "Desplazamiento de tuning" }).press("End");
+  await expect(readout.getByText("Fuera de banda")).toBeVisible();
+});

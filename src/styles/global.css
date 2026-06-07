@@ -220,6 +220,91 @@ button, input { font: inherit; }
   text-transform: uppercase;
 }
 
+.bandpass-sim {
+  display: grid;
+  gap: 18px;
+  margin-top: 30px;
+  padding: clamp(18px, 3vw, 28px);
+}
+
+.bandpass-sim__plot {
+  position: relative;
+  min-height: 160px;
+  overflow: hidden;
+  border-left: 2px solid var(--instrument);
+  border-bottom: 2px solid var(--instrument);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, transparent 64%, rgba(217, 67, 50, 0.16) 64% 66%, transparent 66%),
+    linear-gradient(90deg, rgba(217, 67, 50, 0.03), rgba(217, 67, 50, 0.12), rgba(217, 67, 50, 0.03));
+}
+
+.bandpass-sim__center {
+  position: absolute;
+  left: 50%;
+  top: 18px;
+  bottom: 0;
+  width: 2px;
+  background: var(--solar);
+  box-shadow: 0 0 18px rgba(217, 67, 50, 0.34);
+  transform: translateX(-50%);
+}
+
+.bandpass-sim__window {
+  position: absolute;
+  top: 22px;
+  bottom: 14px;
+  min-width: 42px;
+  border-left: 3px solid var(--solar);
+  border-right: 3px solid var(--solar);
+  background: rgba(217, 67, 50, 0.2);
+  transform: translateX(-50%);
+  transition: left 140ms ease, width 140ms ease;
+}
+
+.bandpass-sim__labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.bandpass-sim__labels span:first-child {
+  color: var(--solar-deep);
+  font-weight: 760;
+}
+
+.bandpass-sim__readout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  align-items: center;
+  color: var(--muted);
+}
+
+.bandpass-sim__readout strong {
+  color: var(--instrument);
+}
+
+.bandpass-sim__controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.bandpass-sim__controls label {
+  display: grid;
+  gap: 8px;
+  color: var(--instrument);
+  font-weight: 700;
+}
+
+.bandpass-sim__controls input {
+  width: 100%;
+  accent-color: var(--solar);
+}
+
 .warning {
   border-left: 5px solid var(--solar);
   background: #fff7f3;
@@ -245,6 +330,10 @@ button, input { font: inherit; }
 
 @media (max-width: 860px) {
   .filter-comparison {
+    grid-template-columns: 1fr;
+  }
+
+  .bandpass-sim__controls {
     grid-template-columns: 1fr;
   }
 }
