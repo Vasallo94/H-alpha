@@ -1,30 +1,48 @@
 ---
 import type { Locale } from "../../i18n/routes";
 import { siteCopy } from "../../content/siteCopy";
+import { BeforeAfter } from "../interactive/BeforeAfter";
 
 interface Props {
   locale: Locale;
 }
 
-const { locale } = Astro.props;
-const finalImage = siteCopy[locale].finalImage;
+const { locale } = Astro.props as { locale: Locale };
+const copy = siteCopy[locale];
+const fi = copy.finalImage;
 ---
 
 <section class="section final-image-section" id="image">
   <div class="section__inner">
-    <p class="eyebrow">{finalImage.eyebrow}</p>
-    <h2 class="section-title">{finalImage.heading}</h2>
-    <p class="lead">{finalImage.lead}</p>
+    <p class="eyebrow">{fi.eyebrow}</p>
+    <h2 class="section-title">{fi.heading}</h2>
+    <p class="lead">{fi.lead}</p>
+
     <figure class="final-image-section__figure">
-      <img
-        src="/images/sun-h-alpha.png"
-        alt={finalImage.imageAlt}
-        width="1608"
-        height="905"
-        loading="lazy"
-        decoding="async"
-      />
-      <figcaption>{finalImage.caption}</figcaption>
+      <div class="hotspot-wrap">
+        <img
+          src="/images/sun-h-alpha.png"
+          alt={fi.imageAlt}
+          loading="lazy"
+          decoding="async"
+        />
+        {fi.annotations.map((a) => (
+          <button
+            class="hotspot"
+            style={`left:${a.x}%; top:${a.y}%`}
+            aria-label={a.label}
+          >
+            <span class="hotspot__dot" aria-hidden="true"></span>
+            <span class="hotspot__popover" role="tooltip">
+              <strong>{a.label}</strong>
+              <span>{a.description}</span>
+            </span>
+          </button>
+        ))}
+      </div>
+      <figcaption>{fi.caption}</figcaption>
     </figure>
+
+    <BeforeAfter client:visible labels={fi.beforeAfter} />
   </div>
 </section>

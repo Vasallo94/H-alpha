@@ -346,7 +346,9 @@ button, input { font: inherit; }
   margin: 34px 0 0;
 }
 
-.final-image-section__figure img {
+/* Legacy rule for bare img inside figure — kept for backward compat but
+   hotspot-wrap now owns the image display */
+.final-image-section__figure > img {
   width: 100%;
   height: auto;
   border: 1px solid rgba(24, 32, 38, 0.18);
@@ -359,6 +361,200 @@ button, input { font: inherit; }
   max-width: 760px;
   color: var(--muted);
   font-size: 0.95rem;
+}
+
+/* ── Hotspot annotations ──────────────────────────────────────────────── */
+.hotspot-wrap {
+  position: relative;
+}
+
+.hotspot-wrap > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(24, 32, 38, 0.18);
+  background: var(--instrument);
+  box-shadow: var(--shadow);
+}
+
+.hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.hotspot__dot {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--solar);
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px var(--solar);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: hotspot-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes hotspot-pulse {
+  0%, 100% { box-shadow: 0 0 0 2px var(--solar), 0 0 0 4px color-mix(in srgb, var(--solar), transparent 60%); }
+  50% { box-shadow: 0 0 0 2px var(--solar), 0 0 0 9px color-mix(in srgb, var(--solar), transparent 85%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hotspot__dot { animation: none; }
+}
+
+.hotspot__popover {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  display: grid;
+  gap: 4px;
+  width: min(240px, calc(100vw - 36px));
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  text-align: left;
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 160ms ease, visibility 160ms ease;
+}
+
+.hotspot:hover .hotspot__popover,
+.hotspot:focus-within .hotspot__popover {
+  opacity: 1;
+  visibility: visible;
+}
+
+.hotspot__popover strong {
+  display: block;
+  color: var(--solar-deep);
+  font-size: 0.82rem;
+  font-weight: 760;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 620px) {
+  .hotspot__popover {
+    position: fixed;
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+    width: auto;
+    transform: none;
+  }
+}
+
+/* ── Before/After comparator ────────────────────────────────────────── */
+.before-after {
+  display: grid;
+  gap: 0;
+  margin-top: 34px;
+  padding: clamp(18px, 3vw, 28px);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.before-after__stage {
+  position: relative;
+  user-select: none;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.before-after__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.before-after__img--bw {
+  filter: grayscale(1) contrast(1.1) brightness(1.05);
+}
+
+.before-after__before {
+  position: absolute;
+  inset: 0;
+}
+
+.before-after__before .before-after__img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.before-after__tag {
+  position: absolute;
+  top: 12px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(24, 32, 38, 0.65);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 760;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.before-after__tag--before {
+  left: 12px;
+}
+
+.before-after__tag--after {
+  right: 12px;
+}
+
+.before-after__handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(24, 32, 38, 0.4), 0 0 12px rgba(255, 255, 255, 0.8);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.before-after__handle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid rgba(24, 32, 38, 0.25);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  transform: translate(-50%, -50%);
+}
+
+.before-after__range {
+  width: 100%;
+  margin-top: 14px;
+  accent-color: var(--solar);
+  cursor: ew-resize;
 }
 
 @media (max-width: 720px) {
