@@ -77,5 +77,5 @@ test("tuning explains the single Doppler-shifted limb cue", async ({ page }) => 
 test("footer links to Enrique's social profiles", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator(".site-footer__links a[href='https://github.com/enriquebook']")).toBeVisible();
-  await expect(page.locator(".site-footer__links a[href='https://www.linkedin.com/in/enriquebook/']")).toBeVisible();
+  await expect(page.locator(".site-footer__links a[href='https://www.linkedin.com/in/enrique-vasallo/']")).toBeVisible();
 });

@@ -135,7 +135,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       github: "GitHub",
       linkedin: "LinkedIn",
       githubUrl: "https://github.com/enriquebook",
-      linkedinUrl: "https://www.linkedin.com/in/enriquebook/",
+      linkedinUrl: "https://www.linkedin.com/in/enrique-vasallo/",
     },
     hero: {
       eyebrow: "El Sol en una sola línea de color",
@@ -552,7 +552,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       github: "GitHub",
       linkedin: "LinkedIn",
       githubUrl: "https://github.com/enriquebook",
-      linkedinUrl: "https://www.linkedin.com/in/enriquebook/",
+      linkedinUrl: "https://www.linkedin.com/in/enrique-vasallo/",
     },
     hero: {
       eyebrow: "The Sun in a single color of light",
