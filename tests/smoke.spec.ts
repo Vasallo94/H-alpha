@@ -45,6 +45,11 @@ test("tuning section keeps the diagram without the interactive simulator", async
   await page.goto("/");
   await page.locator("#tuning").scrollIntoViewIfNeeded();
   await expect(page.locator("#tuning .diagram svg").first()).toBeVisible();
+  await expect(page.locator("#tuning")).toContainText("Centro Hα");
+  await expect(page.locator("#tuning")).toContainText("Ala azul");
+  await expect(page.locator("#tuning")).toContainText("Ala roja");
+  await expect(page.locator("#tuning")).toContainText("Gas que se acerca");
+  await expect(page.locator("#tuning")).toContainText("Gas que se aleja");
   await expect(page.locator("#tuning .bandpass-sim")).toHaveCount(0);
   await expect(page.locator("#tuning input[type=range]")).toHaveCount(0);
 });
@@ -85,7 +90,7 @@ test("sun layer leaders target named layers", async ({ page }) => {
 
 test("footer uses icon-only social profile links", async ({ page }) => {
   await page.goto("/");
-  const github = page.locator(".site-footer__links a[href='https://github.com/enriquebook']");
+  const github = page.locator(".site-footer__links a[href='https://github.com/Vasallo94']");
   const linkedin = page.locator(".site-footer__links a[href='https://www.linkedin.com/in/enrique-vasallo/']");
   await expect(github).toHaveAttribute("aria-label", "GitHub");
   await expect(linkedin).toHaveAttribute("aria-label", "LinkedIn");
