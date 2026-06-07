@@ -95,6 +95,9 @@ type SiteCopy = {
     };
     filterComparison: {
       aria: string;
+      fieldWhere: string;
+      fieldPasses: string;
+      fieldLayer: string;
       methods: { id: string; name: string; where: string; passes: string; layer: string }[];
     };
   };
@@ -474,6 +477,9 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       },
       filterComparison: {
         aria: "Comparador de métodos de filtrado solar: selecciona un método para ver dónde actúa y qué revela.",
+        fieldWhere: "Posición del filtro",
+        fieldPasses: "Espectro que deja pasar",
+        fieldLayer: "Capa solar que revela",
         methods: [
           {
             id: "eclipse",
@@ -873,6 +879,9 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       },
       filterComparison: {
         aria: "Solar filter method comparator: select a method to see where it acts and what it reveals.",
+        fieldWhere: "Filter position",
+        fieldPasses: "Spectrum it passes",
+        fieldLayer: "Solar layer it reveals",
         methods: [
           {
             id: "eclipse",
