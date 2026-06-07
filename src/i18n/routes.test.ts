@@ -26,4 +26,14 @@ describe("i18n routes", () => {
     expect(getLocalizedPath("es")).toBe("/");
     expect(getLocalizedPath("en")).toBe("/en/");
   });
+
+  it("builds localized paths under a GitHub Pages base path", () => {
+    expect(getLocalizedPath("es", "/H-alpha/")).toBe("/H-alpha/");
+    expect(getLocalizedPath("en", "/H-alpha/")).toBe("/H-alpha/en/");
+  });
+
+  it("detects English under a GitHub Pages base path", () => {
+    expect(getLocaleFromPath("/H-alpha/en/", "/H-alpha/")).toBe("en");
+    expect(getLocaleFromPath("/H-alpha/", "/H-alpha/")).toBe("es");
+  });
 });

@@ -28,3 +28,4 @@ pnpm-debug.log*
 # repo-local workspace files
 .superpowers/
 .worktrees/
+docs/superpowers/

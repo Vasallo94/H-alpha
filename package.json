@@ -2,6 +2,13 @@
   "name": "h-alpha-educational-site",
   "type": "module",
   "version": "0.0.1",
+  "private": true,
+  "description": "Bilingual educational site explaining H-alpha solar telescopes, etalons, Doppler tuning, and solar safety.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vasallo94/H-alpha.git"
+  },
+  "homepage": "https://vasallo94.github.io/H-alpha/",
   "engines": {
     "node": ">=22.12.0"
   },

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { withBasePath } from "../../lib/basePath";
 import { renderInlineMath } from "../../lib/math";
 
 type Method = {
@@ -72,9 +73,9 @@ export function FilterComparison({ labels }: { labels: Labels }) {
           className="filter-comparison__panel"
         >
           <figure className="filter-comparison__photo">
-            <img src={method.image} alt={method.imageAlt} loading="lazy" decoding="async" />
+            <img src={withBasePath(method.image)} alt={method.imageAlt} loading="lazy" decoding="async" />
             <figcaption>
-              <a href={method.sourceUrl} target="_blank" rel="noreferrer">
+              <a href={withBasePath(method.sourceUrl)} target="_blank" rel="noreferrer">
                 {method.attribution}
               </a>
             </figcaption>

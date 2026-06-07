@@ -1,6 +1,7 @@
 ---
 import type { Locale } from "../../i18n/routes";
 import { siteCopy } from "../../content/siteCopy";
+import { withBasePath } from "../../lib/basePath";
 import RichText from "../RichText.astro";
 
 interface Props {
@@ -21,7 +22,7 @@ const fi = copy.finalImage;
     <figure class="final-image-section__figure">
       <div class="hotspot-wrap">
         <img
-          src="/images/sun-h-alpha.png"
+          src={withBasePath("/images/sun-h-alpha.png")}
           alt={fi.imageAlt}
           loading="lazy"
           decoding="async"
