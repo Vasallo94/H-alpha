@@ -1,0 +1,70 @@
+---
+interface Props { labels: Record<string, string> }
+const { labels } = Astro.props;
+// Cross-section: nested arcs centred at bottom-left, layers fan out toward upper right.
+const cx = 60;
+const cy = 252;
+const arc = (r: number) => {
+  const a0 = -4 * (Math.PI / 180);
+  const a1 = -94 * (Math.PI / 180);
+  const x0 = cx + r * Math.cos(a0);
+  const y0 = cy + r * Math.sin(a0);
+  const x1 = cx + r * Math.cos(a1);
+  const y1 = cy + r * Math.sin(a1);
+  return `M ${x0.toFixed(1)} ${y0.toFixed(1)} A ${r} ${r} 0 0 0 ${x1.toFixed(1)} ${y1.toFixed(1)}`;
+};
+const at = (r: number, deg: number) => {
+  const a = deg * (Math.PI / 180);
+  return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
+};
+const rPhoto = 112;
+const rChromo = 134;
+const rCorona = 216;
+const pPhoto = at(rPhoto * 0.62, -48); // inside the photosphere body
+const pChromo = at((rPhoto + rChromo) / 2, -34); // on the chromosphere band
+const pCorona = at((rChromo + rCorona) / 2, -60);
+---
+<figure class="diagram">
+  <svg viewBox="0 0 420 300" role="img" aria-label={labels.aria}>
+    <defs>
+      <marker id="sl-arrow" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="currentColor" />
+      </marker>
+    </defs>
+
+    <!-- Corona (faint outer band) -->
+    <path d={arc((rChromo + rCorona) / 2)} fill="none" stroke="#f0d9b5" stroke-width={rCorona - rChromo} opacity="0.4" />
+    <!-- Photosphere + interior (bright solar body) -->
+    <path d={`M ${cx} ${cy - rPhoto} A ${rPhoto} ${rPhoto} 0 0 0 ${cx - rPhoto} ${cy} L ${cx} ${cy} Z`} fill="#f3b14a" />
+    <path d={`M ${cx} ${cy - rPhoto * 0.55} A ${rPhoto * 0.55} ${rPhoto * 0.55} 0 0 0 ${cx - rPhoto * 0.55} ${cy} L ${cx} ${cy} Z`} fill="#e8902e" opacity="0.7" />
+    <!-- Chromosphere band (H-alpha layer, solar tones) -->
+    <path d={arc((rPhoto + rChromo) / 2)} fill="none" stroke="var(--solar)" stroke-width={rChromo - rPhoto} opacity="0.95" />
+
+    <!-- Boundary arcs -->
+    <path d={arc(rPhoto)} fill="none" stroke="var(--ink)" stroke-width="0.8" opacity="0.4" />
+    <path d={arc(rChromo)} fill="none" stroke="var(--solar-deep)" stroke-width="1" />
+    <path d={arc(rCorona)} fill="none" stroke="#d8b98a" stroke-width="0.8" opacity="0.7" />
+
+    <!-- Photosphere label + note (inline) -->
+    <text x={pPhoto.x} y={pPhoto.y} font-size="12" fill="#5a3408" font-weight="600" text-anchor="middle">{labels.photosphere}</text>
+    <text x={pPhoto.x} y={pPhoto.y + 14} font-size="9.5" fill="#6b4a1e" text-anchor="middle">{labels.photosphereNote}</text>
+
+    <!-- Corona label + note (inline) -->
+    <text x={pCorona.x} y={pCorona.y} font-size="11.5" fill="var(--muted)" text-anchor="middle">{labels.corona}</text>
+    <text x={pCorona.x} y={pCorona.y + 13} font-size="9.5" fill="var(--muted)" text-anchor="middle">{labels.coronaNote}</text>
+
+    <!-- Chromosphere leader to its label + note -->
+    <line x1={pChromo.x} y1={pChromo.y} x2="216" y2="56" stroke="var(--solar-deep)" stroke-width="1" />
+    <text x="220" y="54" font-size="12" fill="var(--solar-deep)" font-weight="700">{labels.chromosphere}</text>
+    <text x="220" y="69" font-size="10" fill="var(--muted)">{labels.chromosphereNote}</text>
+
+    <!-- White-light callout: sees the photosphere surface -->
+    <line x1="224" y1="186" x2={at(rPhoto, -22).x} y2={at(rPhoto, -22).y} stroke="var(--ink)" stroke-width="1.1" color="var(--ink)" marker-end="url(#sl-arrow)" />
+    <text x="410" y="182" font-size="11.5" fill="var(--ink)" font-weight="700" text-anchor="end">{labels.whiteLightLabel}</text>
+
+    <!-- H-alpha callout: sees the chromosphere band -->
+    <line x1="224" y1="236" x2={at((rPhoto + rChromo) / 2, -18).x} y2={at((rPhoto + rChromo) / 2, -18).y} stroke="var(--solar)" stroke-width="1.4" color="var(--solar)" marker-end="url(#sl-arrow)" />
+    <text x="410" y="232" font-size="11.5" fill="var(--solar)" font-weight="700" text-anchor="end">{labels.hAlphaLabel}</text>
+  </svg>
+  <figcaption>{labels.caption}</figcaption>
+</figure>
