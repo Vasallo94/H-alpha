@@ -1,30 +1,20 @@
 ---
 import type { Locale } from "../../i18n/routes";
 import { siteCopy } from "../../content/siteCopy";
-import GlossaryTerm from "../GlossaryTerm.astro";
 
 interface Props {
   locale: Locale;
 }
 
 const { locale } = Astro.props;
-const copy = siteCopy[locale];
-const opticalSystem = copy.sections.opticalSystem;
-const etalon = copy.glossary.etalon;
-const blockingFilter = copy.glossary.blockingFilter;
+const section = siteCopy[locale].sections.opticalSystem;
 ---
 
 <section class="section" id="optics">
   <div class="section__inner">
-    <p class="eyebrow">{opticalSystem.eyebrow}</p>
-    <h2 class="section-title">{opticalSystem.heading}</h2>
-    <p class="lead">
-      {opticalSystem.leadStart}<GlossaryTerm {...etalon} id="etalon-optical-system">{etalon.term}</GlossaryTerm>{opticalSystem.leadMiddle}<GlossaryTerm
-        {...blockingFilter}
-        id="blocking-filter-optical-system"
-      >
-        {blockingFilter.term}
-      </GlossaryTerm>{opticalSystem.leadEnd}
-    </p>
+    <p class="eyebrow">{section.eyebrow}</p>
+    <h2 class="section-title">{section.heading}</h2>
+    <p class="lead">{section.lead}</p>
+    {section.body.map((paragraph) => <p>{paragraph}</p>)}
   </div>
 </section>

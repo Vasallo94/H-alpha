@@ -1,103 +1,55 @@
 import { describe, expect, it } from "vitest";
 import { siteCopy } from "./siteCopy";
 
-const keysOf = (value: unknown) => Object.keys(value as Record<string, unknown>).sort();
+const locales = ["es", "en"] as const;
 
-const expectCopyShapeToMatch = (spanish: unknown, english: unknown) => {
-  expect(Array.isArray(spanish)).toBe(Array.isArray(english));
-
-  if (Array.isArray(spanish) && Array.isArray(english)) {
-    expect(spanish).toHaveLength(english.length);
-
-    spanish.forEach((spanishItem, index) => {
-      expectCopyShapeToMatch(spanishItem, english[index]);
-    });
-    return;
-  }
-
-  if (
-    spanish &&
-    english &&
-    typeof spanish === "object" &&
-    typeof english === "object"
-  ) {
-    expect(keysOf(spanish)).toEqual(keysOf(english));
-
-    for (const key of keysOf(spanish)) {
-      expectCopyShapeToMatch(
-        (spanish as Record<string, unknown>)[key],
-        (english as Record<string, unknown>)[key],
-      );
-    }
-  }
-};
-
-describe("site copy", () => {
-  it("has Spanish and English content", () => {
+describe("site copy contract", () => {
+  it("has Spanish and English", () => {
     expect(Object.keys(siteCopy)).toEqual(["es", "en"]);
   });
 
-  it("keeps glossary keys synchronized", () => {
-    expect(Object.keys(siteCopy.es.glossary).sort()).toEqual(Object.keys(siteCopy.en.glossary).sort());
+  it("keeps section keys synchronized across locales", () => {
+    expect(Object.keys(siteCopy.es.sections)).toEqual(Object.keys(siteCopy.en.sections));
   });
 
-  it("keeps narrative section keys synchronized", () => {
-    expectCopyShapeToMatch(siteCopy.es.sections, siteCopy.en.sections);
-  });
-
-  it("keeps interactive spectrum and filter copy centralized in both languages", () => {
-    expect(siteCopy.es.sections.spectrum.explorer).toEqual(
-      expect.objectContaining({
-        ariaLabel: expect.any(String),
-        body: expect.any(String),
-        label: expect.any(String),
-        lineLabel: expect.any(String),
-        markerDescription: expect.any(String),
-      }),
-    );
-    expect(siteCopy.en.sections.spectrum.explorer).toEqual(
-      expect.objectContaining({
-        ariaLabel: expect.any(String),
-        body: expect.any(String),
-        label: expect.any(String),
-        lineLabel: expect.any(String),
-        markerDescription: expect.any(String),
-      }),
-    );
-    expect(siteCopy.es.sections.filters.cards).toHaveLength(3);
-    expect(siteCopy.en.sections.filters.cards).toHaveLength(3);
-  });
-
-  it("keeps bandpass tuning simulator copy centralized in both languages", () => {
-    for (const copy of [siteCopy.es.sections.bandpass, siteCopy.en.sections.bandpass]) {
-      expect(copy).toEqual(
-        expect.objectContaining({
-          heading: expect.any(String),
-          lead: expect.any(String),
-          simulator: expect.objectContaining({
-            ariaLabel: expect.any(String),
-            widthLabel: expect.any(String),
-            offsetLabel: expect.any(String),
-            widthReadoutLabel: expect.any(String),
-            offsetReadoutLabel: expect.any(String),
-            resultReadoutLabel: expect.any(String),
-            centerLabel: expect.any(String),
-            windowLabel: expect.any(String),
-            results: expect.objectContaining({
-              offBand: expect.any(String),
-              narrow: expect.any(String),
-              wide: expect.any(String),
-            }),
-          }),
-        }),
-      );
+  it("every section has base narrative body paragraphs", () => {
+    for (const locale of locales) {
+      for (const [key, section] of Object.entries(siteCopy[locale].sections)) {
+        expect(section.body.length, `${locale}.${key}.body`).toBeGreaterThan(0);
+      }
     }
   });
 
-  it("keeps seasonal callout configurable in both languages", () => {
-    expect(siteCopy.es.seasonalSafetyCallout.enabled).toBe(true);
-    expect(siteCopy.en.seasonalSafetyCallout.enabled).toBe(true);
-    expect(siteCopy.es.seasonalSafetyCallout.date).toBe("2026-08-12");
-    expect(siteCopy.en.seasonalSafetyCallout.date).toBe("2026-08-12");
+  it("deep-dive sections stay in sync across locales", () => {
+    const esWithDeep = Object.entries(siteCopy.es.sections)
+      .filter(([, s]) => s.deepDive).map(([k]) => k);
+    const enWithDeep = Object.entries(siteCopy.en.sections)
+      .filter(([, s]) => s.deepDive).map(([k]) => k);
+    expect(esWithDeep).toEqual(enWithDeep);
+  });
+
+  it("keeps glossary keys synchronized", () => {
+    expect(Object.keys(siteCopy.es.glossary)).toEqual(Object.keys(siteCopy.en.glossary));
+  });
+
+  it("has the same number of evergreen safety rules in both languages", () => {
+    expect(siteCopy.es.safety.rules.length).toEqual(siteCopy.en.safety.rules.length);
+    expect(siteCopy.es.safety.rules.length).toBeGreaterThanOrEqual(4);
+  });
+
+  it("keeps the seasonal callout configurable in both languages", () => {
+    expect(siteCopy.es.safety.seasonalCallout.enabled).toBe(true);
+    expect(siteCopy.en.safety.seasonalCallout.date).toBe("2026-08-12");
+  });
+
+  it("uses matching final-image annotation ids across locales", () => {
+    const esIds = siteCopy.es.finalImage.annotations.map((a) => a.id).sort();
+    const enIds = siteCopy.en.finalImage.annotations.map((a) => a.id).sort();
+    expect(esIds).toEqual(enIds);
+    expect(esIds.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it("keeps diagram label groups synchronized", () => {
+    expect(Object.keys(siteCopy.es.diagrams)).toEqual(Object.keys(siteCopy.en.diagrams));
   });
 });

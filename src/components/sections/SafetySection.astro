@@ -7,8 +7,8 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const copy = siteCopy[locale];
-const safety = copy.sections.safety;
+const safety = siteCopy[locale].safety;
+const seasonal = safety.seasonalCallout;
 const seasonalSafetyTitleId = `seasonal-safety-title-${locale}`;
 ---
 
@@ -16,11 +16,21 @@ const seasonalSafetyTitleId = `seasonal-safety-title-${locale}`;
   <div class="section__inner">
     <p class="eyebrow">{safety.eyebrow}</p>
     <h2 class="section-title">{safety.heading}</h2>
+    <ul class="safety-rules">
+      {
+        safety.rules.map((rule) => (
+          <li class="safety-rules__item">
+            <h3>{rule.title}</h3>
+            <p>{rule.body}</p>
+          </li>
+        ))
+      }
+    </ul>
     {
-      copy.seasonalSafetyCallout.enabled && (
+      seasonal.enabled && (
         <aside class="warning" role="note" aria-labelledby={seasonalSafetyTitleId}>
-          <h3 id={seasonalSafetyTitleId}>{copy.seasonalSafetyCallout.title}</h3>
-          <p>{copy.seasonalSafetyCallout.body}</p>
+          <h3 id={seasonalSafetyTitleId}>{seasonal.title}</h3>
+          <p>{seasonal.body}</p>
         </aside>
       )
     }

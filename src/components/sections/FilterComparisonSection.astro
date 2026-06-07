@@ -1,22 +1,20 @@
 ---
 import type { Locale } from "../../i18n/routes";
 import { siteCopy } from "../../content/siteCopy";
-import FilterComparison from "../interactive/FilterComparison";
 
 interface Props {
   locale: Locale;
 }
 
 const { locale } = Astro.props;
-const copy = siteCopy[locale];
-const filters = copy.sections.filters;
+const section = siteCopy[locale].sections.filters;
 ---
 
 <section class="section" id="filters">
   <div class="section__inner">
-    <p class="eyebrow">{filters.eyebrow}</p>
-    <h2 class="section-title">{filters.heading}</h2>
-    <p class="lead">{filters.lead}</p>
-    <FilterComparison ariaLabel={filters.ariaLabel} cards={filters.cards} />
+    <p class="eyebrow">{section.eyebrow}</p>
+    <h2 class="section-title">{section.heading}</h2>
+    <p class="lead">{section.lead}</p>
+    {section.body.map((paragraph) => <p>{paragraph}</p>)}
   </div>
 </section>
