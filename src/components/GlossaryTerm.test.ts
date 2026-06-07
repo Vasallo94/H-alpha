@@ -30,4 +30,10 @@ describe("GlossaryTerm", () => {
     expect(css).toMatch(/\.glossary-term__trigger:hover \+ \.glossary-term__popover,\s*\.glossary-term__trigger:focus \+ \.glossary-term__popover\s*\{[^}]*opacity:\s*1;[^}]*visibility:\s*visible;/s);
     expect(css).toMatch(/@media\s*\(max-width:\s*620px\)\s*\{[\s\S]*\.glossary-term\s*\{[^}]*position:\s*static;[^}]*\}[\s\S]*\.glossary-term__popover\s*\{[^}]*position:\s*fixed;[^}]*left:\s*18px;[^}]*right:\s*18px;[^}]*bottom:\s*18px;[^}]*width:\s*auto;[^}]*transform:\s*none;/);
   });
+
+  it("uses the KaTeX text face as the global site typography", () => {
+    expect(css).toMatch(/--font-body:\s*"KaTeX_Main"/);
+    expect(css).toMatch(/--font-display:\s*"KaTeX_Main"/);
+    expect(css).toMatch(/\.katex\s*\{[^}]*font-size:\s*1em;/s);
+  });
 });

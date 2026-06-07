@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("hero leads with the real H-alpha image (ES)", async ({ page }) => {
+test("hero leads with the real Hα image (ES)", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator(".hero-section__figure img")).toBeVisible();
 });
@@ -16,6 +16,13 @@ test("a deep-dive discloses extra physics", async ({ page }) => {
   await dd.locator("summary").click();
   await expect(dd).toHaveJSProperty("open", true);
   await expect(dd.locator(".katex").first()).toBeVisible();
+});
+
+test("etalon diagram names orders and the prefilter window", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("#etalon").scrollIntoViewIfNeeded();
+  await expect(page.locator("#etalon")).toContainText("órdenes");
+  await expect(page.locator("#etalon")).toContainText("Prefiltro");
 });
 
 test("spectrum explorer maps wavelength to transition", async ({ page }) => {

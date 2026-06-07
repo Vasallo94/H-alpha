@@ -1,7 +1,7 @@
 ---
 interface Props { labels: Record<string, string> }
 const { labels } = Astro.props;
-// Three parallel mini-schematics: eclipse glasses, white-light filter, H-alpha system.
+// Three parallel mini-schematics: eclipse glasses, white-light filter, Hα system.
 // Each column shows where the filter sits and which solar layer it reveals.
 const colW = 160;
 const cx = (i: number) => 8 + i * colW + colW / 2;
@@ -28,7 +28,7 @@ const revealY = 262;
       const titleKey = ["eclipseGlasses", "whiteLight", "hAlpha"][i];
       const placeKey = ["eclipsePlacement", "whiteLightPlacement", "hAlphaPlacement"][i];
       const revealKey = ["eclipseReveals", "whiteLightReveals", "hAlphaReveals"][i];
-      // The Sun for column 2 (white light) shows photosphere; column 3 (H-alpha) shows chromosphere ring.
+      // The Sun for column 2 (white light) shows photosphere; column 3 (Hα) shows chromosphere ring.
       const sunFill = "#f3b14a";
       return (
         <g>
@@ -60,7 +60,7 @@ const revealY = 262;
           )}
           {i === 2 && (
             <g>
-              {/* H-alpha: internal system = ERF + etalon + blocking stacked inside the path */}
+              {/* Hα: internal system = ERF + etalon + blocking stacked inside the path */}
               <rect x={cx(i) - 22} y={sunY + 30} width="44" height="7" rx="3" fill="var(--instrument)" />
               <rect x={cx(i) - 22} y={sunY + 70} width="44" height="7" rx="3" fill="var(--solar)" />
               <rect x={cx(i) - 22} y={eyeY - 30} width="44" height="7" rx="3" fill="var(--instrument)" />

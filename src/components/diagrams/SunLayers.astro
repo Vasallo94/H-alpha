@@ -7,12 +7,8 @@ const { labels } = Astro.props;
     <defs>
       <radialGradient id="sl-photosphere" cx="43%" cy="38%" r="66%">
         <stop offset="0%" stop-color="#fff2b8" />
-        <stop offset="46%" stop-color="#f6bd55" />
-        <stop offset="100%" stop-color="#d36d25" />
-      </radialGradient>
-      <radialGradient id="sl-core" cx="42%" cy="40%" r="68%">
-        <stop offset="0%" stop-color="#f7cf73" />
-        <stop offset="100%" stop-color="#a63f22" />
+        <stop offset="54%" stop-color="#f6bd55" />
+        <stop offset="100%" stop-color="#e4812a" />
       </radialGradient>
       <filter id="sl-soft" x="-20%" y="-20%" width="140%" height="140%">
         <feGaussianBlur stdDeviation="5" />
@@ -21,49 +17,48 @@ const { labels } = Astro.props;
 
     <rect x="18" y="18" width="644" height="394" rx="7" fill="#fffdfa" stroke="var(--line)" />
 
-    <g transform="translate(210 214)">
+    <!-- Full schematic disk: exactly the same three layers named in the zoom. -->
+    <g transform="translate(204 214)">
       <circle r="176" fill="#d8e7e8" opacity="0.48" filter="url(#sl-soft)" />
       <circle r="152" fill="none" stroke="#b7cdd0" stroke-width="24" opacity="0.42" />
       <circle r="124" fill="url(#sl-photosphere)" />
       <circle r="132" fill="none" stroke="#d94432" stroke-width="11" />
-      <circle r="124" fill="none" stroke="#6e361d" stroke-width="1" opacity="0.32" />
+      <circle r="124" fill="none" stroke="#6e361d" stroke-width="1" opacity="0.28" />
 
-      <path
-        d="M 0 0 L 132 -78 A 153 153 0 0 1 132 78 Z"
-        fill="#fffdfa"
-        stroke="#263843"
-        stroke-width="1.4"
-        opacity="0.96"
-      />
-      <path d="M 0 0 L 111 -65 A 129 129 0 0 1 111 65 Z" fill="url(#sl-core)" opacity="0.9" />
-      <path d="M 111 -65 A 129 129 0 0 1 111 65" fill="none" stroke="#f3c96a" stroke-width="18" />
-      <path d="M 125 -73 A 145 145 0 0 1 125 73" fill="none" stroke="#d94432" stroke-width="10" />
-      <path d="M 146 -86 A 169 169 0 0 1 146 86" fill="none" stroke="#b7cdd0" stroke-width="22" opacity="0.48" />
+      <rect x="124" y="-86" width="42" height="172" rx="4" fill="#fffdfa" stroke="#263843" stroke-width="1" opacity="0.94" />
+      <line x1="124" y1="-86" x2="166" y2="-112" stroke="#263843" stroke-width="1" opacity="0.35" />
+      <line x1="124" y1="86" x2="166" y2="112" stroke="#263843" stroke-width="1" opacity="0.35" />
+    </g>
 
-      <line x1="0" y1="0" x2="146" y2="-86" stroke="#263843" stroke-width="1" opacity="0.35" />
-      <line x1="0" y1="0" x2="146" y2="86" stroke="#263843" stroke-width="1" opacity="0.35" />
+    <!-- Magnified limb slice: photosphere, chromosphere and corona only. -->
+    <g transform="translate(350 100)">
+      <rect x="0" y="0" width="80" height="230" rx="6" fill="#fffdfa" stroke="var(--line)" />
+      <rect x="12" y="26" width="30" height="178" rx="4" fill="url(#sl-photosphere)" />
+      <rect x="42" y="26" width="10" height="178" fill="#d94432" />
+      <rect x="52" y="26" width="18" height="178" fill="#b7cdd0" opacity="0.5" />
+      <rect x="70" y="26" width="22" height="178" fill="#d8e7e8" opacity="0.28" />
     </g>
 
     <g class="sun-layers__labels">
       <g color="#875017">
-        <line data-layer="photosphere" x1="286" y1="174" x2="416" y2="110" stroke="currentColor" stroke-width="1.2" />
-        <circle cx="286" cy="174" r="4" fill="currentColor" />
+        <line data-layer="photosphere" x1="380" y1="164" x2="416" y2="110" stroke="currentColor" stroke-width="1.2" />
+        <circle cx="380" cy="164" r="4" fill="currentColor" />
         <text x="430" y="102" font-size="16" fill="currentColor" font-weight="760">{labels.photosphere}</text>
         <text x="430" y="122" font-size="12.5" fill="var(--muted)">{labels.photosphereNote}</text>
         <text x="430" y="143" font-size="12.5" fill="var(--ink)" font-weight="700">{labels.whiteLightLabel}</text>
       </g>
 
       <g color="var(--solar-deep)">
-        <line data-layer="chromosphere" x1="321" y1="143" x2="416" y2="207" stroke="currentColor" stroke-width="1.2" />
-        <circle cx="321" cy="143" r="4" fill="currentColor" />
+        <line data-layer="chromosphere" x1="397" y1="214" x2="416" y2="207" stroke="currentColor" stroke-width="1.2" />
+        <circle cx="397" cy="214" r="4" fill="currentColor" />
         <text x="430" y="198" font-size="16" fill="currentColor" font-weight="760">{labels.chromosphere}</text>
         <text x="430" y="218" font-size="12.5" fill="var(--muted)">{labels.chromosphereNote}</text>
         <text x="430" y="239" font-size="12.5" fill="var(--solar)" font-weight="700">{labels.hAlphaLabel}</text>
       </g>
 
       <g color="#5b7478">
-        <line data-layer="corona" x1="366" y1="286" x2="416" y2="318" stroke="currentColor" stroke-width="1.2" />
-        <circle cx="366" cy="286" r="4" fill="currentColor" />
+        <line data-layer="corona" x1="410" y1="288" x2="416" y2="318" stroke="currentColor" stroke-width="1.2" />
+        <circle cx="410" cy="288" r="4" fill="currentColor" />
         <text x="430" y="310" font-size="16" fill="currentColor" font-weight="760">{labels.corona}</text>
         <text x="430" y="330" font-size="12.5" fill="var(--muted)">{labels.coronaNote}</text>
       </g>

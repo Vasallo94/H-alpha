@@ -24,7 +24,7 @@ for (const n of [...levels].sort((a, b) => y(a) - y(b))) {
   prev = ly;
 }
 
-// Balmer transitions (down to n=2). H-alpha (3→2) is highlighted by COLOUR only, same width as the rest.
+// Balmer transitions (down to n=2). Hα (3→2) is highlighted by COLOUR only, same width as the rest.
 const transitions = [
   { from: 3, to: 2, highlight: true },
   { from: 4, to: 2, highlight: false },
@@ -33,7 +33,7 @@ const transitions = [
 ];
 // Each transition gets its own x column inside the level lines, well spaced.
 const tx = (i: number) => 250 + i * 78;
-const hx = tx(0); // H-alpha arrow x
+const hx = tx(0); // Hα arrow x
 const transStroke = 2; // identical width for every transition
 ---
 <figure class="diagram">
@@ -66,7 +66,7 @@ const transStroke = 2; // identical width for every transition
       </g>
     ))}
 
-    <!-- Balmer transitions (down to n=2). Same width for all; H-alpha differs only in colour. -->
+    <!-- Balmer transitions (down to n=2). Same width for all; Hα differs only in colour. -->
     {transitions.map((t, i) => (
       <line
         x1={tx(i)}
@@ -84,7 +84,7 @@ const transStroke = 2; // identical width for every transition
     <line x1={xRight} y1={y(2)} x2={xRight} y2={y(2) + 70} stroke="var(--muted)" stroke-width="0.9" stroke-dasharray="3 3" />
     <text x={xRight} y={y(2) + 86} font-size="13" fill="var(--muted)" text-anchor="end">{labels.balmerLabel}</text>
 
-    <!-- H-alpha callout: leader from the red arrow into the open lower-left area -->
+    <!-- Hα callout: leader from the red arrow into the open lower-left area -->
     <line x1={hx} y1={(y(3) + y(2)) / 2} x2={170} y2={yBottom - 50} stroke="var(--solar)" stroke-width="1" />
     <circle cx={hx} cy={(y(3) + y(2)) / 2} r="2.6" fill="var(--solar)" />
     <text x={170} y={yBottom - 30} font-size="16" font-weight="700" fill="var(--solar-deep)">{labels.transitionLabel}</text>

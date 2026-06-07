@@ -3,6 +3,22 @@ import { siteCopy } from "./siteCopy";
 
 const locales = ["es", "en"] as const;
 
+const collectVisibleStrings = (value: unknown, parentKey = ""): string[] => {
+  if (typeof value === "string") {
+    return parentKey === "image" || parentKey === "sourceUrl" || parentKey.endsWith("Url") ? [] : [value];
+  }
+
+  if (Array.isArray(value)) {
+    return value.flatMap((item) => collectVisibleStrings(item, parentKey));
+  }
+
+  if (value && typeof value === "object") {
+    return Object.entries(value).flatMap(([key, item]) => collectVisibleStrings(item, key));
+  }
+
+  return [];
+};
+
 describe("site copy contract", () => {
   it("has Spanish and English", () => {
     expect(Object.keys(siteCopy)).toEqual(["es", "en"]);
@@ -51,5 +67,18 @@ describe("site copy contract", () => {
 
   it("keeps diagram label groups synchronized", () => {
     expect(Object.keys(siteCopy.es.diagrams)).toEqual(Object.keys(siteCopy.en.diagrams));
+  });
+
+  it("uses Greek spectral notation instead of spelled hydrogen-line labels", () => {
+    const copyJson = collectVisibleStrings(siteCopy).join("\n");
+    expect(copyJson).not.toMatch(/H[‑-](alpha|beta|gamma|delta)/i);
+    expect(copyJson).toContain("Hα");
+  });
+
+  it("labels the etalon transmission orders and prefilter in both languages", () => {
+    expect(siteCopy.es.diagrams.etalon.ordersLabel).toContain("órdenes");
+    expect(siteCopy.es.diagrams.etalon.prefilterLabel).toContain("Prefiltro");
+    expect(siteCopy.en.diagrams.etalon.ordersLabel).toContain("orders");
+    expect(siteCopy.en.diagrams.etalon.prefilterLabel).toMatch(/prefilter/i);
   });
 });

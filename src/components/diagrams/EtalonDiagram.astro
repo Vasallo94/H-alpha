@@ -29,6 +29,8 @@ const insetTop = 120;
 const peaks = [insetX + 36, insetX + 100, insetX + 164];
 const peakTop = insetTop + 6;
 const halfY = (peakTop + axisY) / 2;
+const prefilterX = peaks[1] - 36;
+const prefilterW = 72;
 const airyPath = (cx: number) =>
   `M ${cx - 28} ${axisY} C ${cx - 12} ${axisY} ${cx - 7} ${peakTop} ${cx} ${peakTop} C ${cx + 7} ${peakTop} ${cx + 12} ${axisY} ${cx + 28} ${axisY}`;
 const fwhmHalf = 9;
@@ -89,10 +91,17 @@ const fwhmHalf = 9;
     <line x1={insetX - 30} y1={topY - 30} x2={insetX - 30} y2={axisY + 10} stroke="var(--line)" stroke-width="1" />
 
     <text x={insetX} y={topY - 20} font-size="13" fill="var(--ink)" font-weight="700" text-anchor="start">{labels.airyTitle}</text>
+    <text x={insetX + insetW} y={topY - 20} font-size="11.5" fill="var(--muted)" text-anchor="end">{labels.ordersLabel}</text>
 
     <!-- Inset axes -->
     <line x1={insetX} y1={axisY} x2={insetX + insetW} y2={axisY} stroke="var(--ink)" stroke-width="1" />
     <line x1={insetX} y1={axisY} x2={insetX} y2={insetTop - 4} stroke="var(--ink)" stroke-width="1" />
+
+    <!-- A broader prefilter/window keeps one Airy order and rejects the neighboring peaks. -->
+    <rect x={prefilterX} y={insetTop - 4} width={prefilterW} height={axisY - insetTop + 4} fill="var(--accent)" opacity="0.11" />
+    <line x1={prefilterX} y1={insetTop - 4} x2={prefilterX} y2={axisY} stroke="var(--accent)" stroke-width="1" stroke-dasharray="4 3" />
+    <line x1={prefilterX + prefilterW} y1={insetTop - 4} x2={prefilterX + prefilterW} y2={axisY} stroke="var(--accent)" stroke-width="1" stroke-dasharray="4 3" />
+    <text x={peaks[1]} y={insetTop - 30} font-size="11.5" fill="var(--accent)" font-weight="700" text-anchor="middle">{labels.prefilterLabel}</text>
 
     <!-- Airy peaks; centre one highlighted -->
     {peaks.map((cx, i) => (

@@ -9,7 +9,7 @@ import {
 } from "./physics";
 
 describe("physics helpers", () => {
-  it("knows the H-alpha wavelength", () => {
+  it("knows the Hα wavelength", () => {
     expect(H_ALPHA_NM).toBeCloseTo(656.28, 2);
   });
 

@@ -11,8 +11,8 @@
   --accent: #2c7782;
   --atlas-grid: rgba(20, 49, 63, 0.055);
   --shadow: 0 14px 34px rgba(22, 31, 38, 0.09);
-  --font-body: "Avenir Next", "Helvetica Neue", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-display: Georgia, "Times New Roman", ui-serif, serif;
+  --font-body: "KaTeX_Main", "Times New Roman", ui-serif, serif;
+  --font-display: "KaTeX_Main", "Times New Roman", ui-serif, serif;
   font-family: var(--font-body);
 }
 
@@ -34,6 +34,10 @@ body {
 a { color: inherit; }
 
 button, input { font: inherit; }
+
+.katex {
+  font-size: 1em;
+}
 
 .sr-only {
   position: absolute;
