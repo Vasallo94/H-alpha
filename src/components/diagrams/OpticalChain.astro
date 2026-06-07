@@ -1,0 +1,59 @@
+---
+interface Props { labels: Record<string, string> }
+const { labels } = Astro.props;
+// Six stages left → right. ERF & Blocking carry a "what happens if it is missing"
+// warning, and the rejected energy is shown leaving after the ERF.
+const blocks = [
+  { key: "sunlight", warn: null, accent: "solar" },
+  { key: "objective", warn: null, accent: "ink" },
+  { key: "erf", warn: "erfMissing", accent: "ink" },
+  { key: "etalon", warn: null, accent: "accent" },
+  { key: "blocking", warn: "blockingMissing", accent: "ink" },
+  { key: "camera", warn: null, accent: "ink" },
+] as const;
+const VW = 560;
+const n = blocks.length;
+const bw = 80;
+const gap = (VW - 24 - n * bw) / (n - 1);
+const x = (i: number) => 12 + i * (bw + gap);
+const by = 92;
+const bh = 48;
+const cy = by + bh / 2;
+const strokeFor = (a: string) =>
+  a === "solar" ? "var(--solar)" : a === "accent" ? "var(--accent)" : "var(--instrument)";
+---
+<figure class="diagram">
+  <svg viewBox={`0 0 ${VW} 230`} role="img" aria-label={labels.aria}>
+    <defs>
+      <marker id="oc-flow" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)" />
+      </marker>
+      <marker id="oc-waste" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="var(--solar)" />
+      </marker>
+    </defs>
+
+    <!-- Flow arrows between blocks -->
+    {blocks.slice(0, -1).map((_, i) => (
+      <line x1={x(i) + bw} y1={cy} x2={x(i + 1)} y2={cy} stroke="var(--ink)" stroke-width="1.4" marker-end="url(#oc-flow)" />
+    ))}
+
+    <!-- Blocks -->
+    {blocks.map((b, i) => (
+      <g>
+        <rect x={x(i)} y={by} width={bw} height={bh} rx="8" fill="var(--surface)" stroke={strokeFor(b.accent)} stroke-width={b.accent === "accent" ? "2.2" : "1.4"} />
+        <text x={x(i) + bw / 2} y={cy + 4} font-size="11" font-weight="600" fill="var(--ink)" text-anchor="middle">{labels[b.key]}</text>
+        {b.warn && (
+          <text x={x(i) + bw / 2} y={by + bh + 16} font-size="9.5" font-weight="700" fill="var(--solar-deep)" text-anchor="middle">{labels[b.warn]}</text>
+        )}
+      </g>
+    ))}
+
+    <!-- Energy discarded after the ERF (block index 2) -->
+    {[-24, -14, -4].map((dx) => (
+      <line x1={x(2) + bw / 2 + dx} y1={by} x2={x(2) + bw / 2 + dx - 12} y2={by - 30} stroke="var(--solar)" stroke-width="1.6" marker-end="url(#oc-waste)" opacity="0.85" />
+    ))}
+    <text x={x(2) + bw / 2 - 12} y={by - 36} font-size="11" fill="var(--solar-deep)" font-weight="700" text-anchor="middle">{labels.energyDiscarded}</text>
+  </svg>
+  <figcaption>{labels.caption}</figcaption>
+</figure>

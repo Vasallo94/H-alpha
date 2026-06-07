@@ -362,6 +362,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       opticalChain: {
         caption: "La cadena óptica completa de un telescopio H-alpha.",
         aria: "Diagrama de la cadena óptica: objetivo, ERF, etalon, blocking filter y cámara u ojo.",
+        sunlight: "Luz solar",
         objective: "Objetivo",
         erf: "ERF",
         etalon: "Etalon",
@@ -371,6 +372,8 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         etalonNote: "Selecciona el color H-alpha.",
         blockingNote: "Elimina la luz residual peligrosa.",
         energyDiscarded: "Energía descartada",
+        erfMissing: "Sin él: se quema el etalon",
+        blockingMissing: "Sin él: luz peligrosa al ojo",
       },
       threeMethods: {
         caption: "Tres métodos para mirar el Sol con seguridad.",
@@ -685,6 +688,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       opticalChain: {
         caption: "The full optical chain of an H-alpha telescope.",
         aria: "Diagram of the optical chain: objective, ERF, etalon, blocking filter, and camera or eye.",
+        sunlight: "Sunlight",
         objective: "Objective",
         erf: "ERF",
         etalon: "Etalon",
@@ -694,6 +698,8 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         etalonNote: "Selects the H-alpha color.",
         blockingNote: "Removes dangerous residual light.",
         energyDiscarded: "Energy discarded",
+        erfMissing: "Missing: the etalon burns",
+        blockingMissing: "Missing: unsafe light to the eye",
       },
       threeMethods: {
         caption: "Three methods for viewing the Sun safely.",
