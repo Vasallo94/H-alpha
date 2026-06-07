@@ -559,3 +559,299 @@ button, input { font: inherit; }
 .safety-rules { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 .safety-rules__item { border: 1px solid var(--line); border-left: 4px solid var(--solar); border-radius: 8px; background: var(--surface); padding: 16px 18px; }
 .safety-rules__item p { margin: 6px 0 0; color: var(--muted); }
+
+/* ── Light-path animation ──────────────────────────────────────────── */
+.light-path {
+  display: grid;
+  gap: 20px;
+  margin-top: 30px;
+  padding: clamp(18px, 3vw, 28px);
+}
+
+.light-path__track {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0;
+}
+
+/* Beam lines sit behind the nodes */
+.light-path__beams {
+  position: absolute;
+  top: 22px;
+  left: 40px;
+  right: 40px;
+  display: flex;
+  pointer-events: none;
+}
+
+.light-path__beam {
+  flex: 1;
+  height: 3px;
+  background: var(--line);
+  transition: background 300ms ease;
+}
+
+.light-path__beam--active {
+  background: var(--solar);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .light-path__beam {
+    transition: none;
+  }
+}
+
+.light-path__node {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  min-width: 60px;
+}
+
+.light-path__node-index {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 700;
+  transition: border-color 260ms ease, background 260ms ease, color 260ms ease, box-shadow 260ms ease;
+}
+
+.light-path__node-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-align: center;
+  max-width: 68px;
+  line-height: 1.2;
+  transition: color 260ms ease;
+}
+
+.light-path__node--passed .light-path__node-index {
+  border-color: var(--solar);
+  background: color-mix(in srgb, var(--solar), transparent 80%);
+  color: var(--solar-deep);
+}
+
+.light-path__node--active .light-path__node-index {
+  border-color: var(--solar);
+  background: var(--solar);
+  color: #fff;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--solar), transparent 70%);
+}
+
+.light-path__node--active .light-path__node-label {
+  color: var(--solar-deep);
+  font-weight: 760;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .light-path__node-index,
+  .light-path__node-label {
+    transition: none;
+  }
+}
+
+.light-path__description {
+  min-height: 72px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--solar);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--solar), transparent 94%);
+}
+
+.light-path__stage-name {
+  margin: 0 0 4px;
+  font-weight: 760;
+  color: var(--solar-deep);
+  font-size: 0.95rem;
+}
+
+.light-path__stage-discards {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.light-path__controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.light-path__btn {
+  padding: 9px 20px;
+  border-radius: 6px;
+  border: 1.5px solid var(--solar);
+  background: var(--solar);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: background 160ms ease, opacity 160ms ease;
+}
+
+.light-path__btn:hover {
+  background: var(--solar-deep);
+  border-color: var(--solar-deep);
+}
+
+.light-path__btn--secondary {
+  background: transparent;
+  color: var(--instrument);
+  border-color: var(--line);
+}
+
+.light-path__btn--secondary:hover {
+  background: var(--line);
+}
+
+.light-path__btn:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .light-path__node-label {
+    display: none;
+  }
+
+  .light-path__node-index {
+    width: 36px;
+    height: 36px;
+    font-size: 0.88rem;
+  }
+
+  .light-path__beams {
+    top: 18px;
+    left: 30px;
+    right: 30px;
+  }
+}
+
+/* ── Filter comparison selector ───────────────────────────────────── */
+.filter-comparison {
+  display: grid;
+  gap: 18px;
+  margin-top: 34px;
+}
+
+.filter-comparison__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.filter-comparison__tab-btn {
+  padding: 9px 18px;
+  border-radius: 6px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  color: var(--instrument);
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.filter-comparison__tab-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.filter-comparison__tab-btn[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.filter-comparison__panel {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  padding: clamp(18px, 3vw, 28px);
+  display: grid;
+  gap: 18px;
+}
+
+.filter-comparison__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.filter-comparison__field {
+  display: grid;
+  gap: 4px;
+}
+
+.filter-comparison__field-label {
+  font-size: 0.75rem;
+  font-weight: 820;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.filter-comparison__field-value {
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.filter-comparison__preview {
+  height: 80px;
+  border-radius: 8px;
+  border: 1px solid rgba(24, 32, 38, 0.18);
+}
+
+/* Eclipse glasses preview: dark neutral grey */
+.filter-comparison__preview--eclipse {
+  background: linear-gradient(135deg, #555 0%, #444 100%);
+}
+
+/* White-light / photosphere: warm disc with sunspot hints */
+.filter-comparison__preview--whiteLight {
+  background:
+    radial-gradient(circle at 38% 45%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.55) 4%, transparent 5%),
+    radial-gradient(circle at 60% 60%, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.45) 3%, transparent 4%),
+    radial-gradient(circle at 50% 50%, #f3d87a 0%, #e8a03e 60%, #c4621a 100%);
+}
+
+/* H-alpha / chromosphere: deep red with filament texture */
+.filter-comparison__preview--halpha {
+  background:
+    repeating-linear-gradient(
+      28deg,
+      rgba(0, 0, 0, 0.18) 0 2px,
+      transparent 2px 10px
+    ),
+    repeating-linear-gradient(
+      -52deg,
+      rgba(0, 0, 0, 0.11) 0 1px,
+      transparent 1px 8px
+    ),
+    radial-gradient(circle at 50% 50%, var(--solar) 0%, var(--solar-deep) 100%);
+}

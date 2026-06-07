@@ -86,6 +86,17 @@ type SiteCopy = {
       contrast: string;
       views: { disk: string; prominence: string; washed: string };
     };
+    lightPath: {
+      aria: string;
+      play: string;
+      pause: string;
+      reset: string;
+      stages: { name: string; discards: string }[];
+    };
+    filterComparison: {
+      aria: string;
+      methods: { id: string; name: string; where: string; passes: string; layer: string }[];
+    };
   };
 };
 
@@ -433,6 +444,60 @@ export const siteCopy: Record<Locale, SiteCopy> = {
           washed: "Lavado: poco contraste",
         },
       },
+      lightPath: {
+        aria: "Animación del recorrido de la luz por la cadena óptica del telescopio H-alpha.",
+        play: "Reproducir",
+        pause: "Pausar",
+        reset: "Reiniciar",
+        stages: [
+          {
+            name: "Objetivo",
+            discards: "Recoge toda la luz solar. La concentra hacia el interior del instrumento.",
+          },
+          {
+            name: "ERF",
+            discards: "Descarta la mayor parte de la energía: infrarrojo, ultravioleta y calor. Solo pasa la banda roja alrededor de H-alpha.",
+          },
+          {
+            name: "Etalon",
+            discards: "Selecciona la rendija de H-alpha mediante interferencia. El resto de colores queda cancelado.",
+          },
+          {
+            name: "Blocking filter",
+            discards: "Elimina la luz residual fuera de banda y los órdenes secundarios del etalon. Protege al observador.",
+          },
+          {
+            name: "Ojo / Cámara",
+            discards: "Solo llega la luz H-alpha de la cromosfera: filamentos, plages y protuberancias con pleno contraste.",
+          },
+        ],
+      },
+      filterComparison: {
+        aria: "Comparador de métodos de filtrado solar: selecciona un método para ver dónde actúa y qué revela.",
+        methods: [
+          {
+            id: "eclipse",
+            name: "Gafas de eclipse",
+            where: "Delante de los ojos, sin ningún instrumento óptico.",
+            passes: "Todo el espectro visible muy atenuado de forma neutra (filtro de densidad).",
+            layer: "Solo sirven a simple vista. No revelan ninguna capa solar en detalle.",
+          },
+          {
+            id: "whiteLight",
+            name: "Filtro de luz blanca",
+            where: "En la apertura frontal del telescopio o prismáticos, antes de que la luz entre en la óptica.",
+            passes: "Todo el espectro visible atenuado de forma pareja. Muestra la fotosfera con manchas y granulación.",
+            layer: "Fotosfera: la superficie brillante y visible del Sol.",
+          },
+          {
+            id: "halpha",
+            name: "Telescopio H-alpha",
+            where: "Sistema interno completo: ERF frontal + etalon + blocking filter antes del ojo o cámara.",
+            passes: "Solo una rendija de 0,5 Å centrada en 656,28 nm. Todo lo demás queda bloqueado.",
+            layer: "Cromosfera: filamentos, plages, protuberancias y textura cromosférica.",
+          },
+        ],
+      },
     },
   },
   en: {
@@ -777,6 +842,60 @@ export const siteCopy: Record<Locale, SiteCopy> = {
           prominence: "Prominences at the limb",
           washed: "Washed out: low contrast",
         },
+      },
+      lightPath: {
+        aria: "Animation of the light path through the optical chain of an H-alpha telescope.",
+        play: "Play",
+        pause: "Pause",
+        reset: "Reset",
+        stages: [
+          {
+            name: "Objective",
+            discards: "Collects all solar light and concentrates it into the instrument.",
+          },
+          {
+            name: "ERF",
+            discards: "Rejects most of the energy: infrared, ultraviolet, and heat. Only the red band around H-alpha passes through.",
+          },
+          {
+            name: "Etalon",
+            discards: "Selects the H-alpha slit via interference. All other colors are cancelled out.",
+          },
+          {
+            name: "Blocking filter",
+            discards: "Removes residual out-of-band light and the etalon's secondary orders. Protects the observer.",
+          },
+          {
+            name: "Eye / Camera",
+            discards: "Only H-alpha light from the chromosphere arrives: filaments, plages, and prominences at full contrast.",
+          },
+        ],
+      },
+      filterComparison: {
+        aria: "Solar filter method comparator: select a method to see where it acts and what it reveals.",
+        methods: [
+          {
+            id: "eclipse",
+            name: "Eclipse glasses",
+            where: "In front of the eyes, without any optical instrument.",
+            passes: "The entire visible spectrum, heavily and neutrally attenuated (density filter).",
+            layer: "For naked-eye use only. They reveal no solar layer in detail.",
+          },
+          {
+            id: "whiteLight",
+            name: "White-light filter",
+            where: "At the front aperture of the telescope or binoculars, before light enters the optics.",
+            passes: "The whole visible spectrum evenly attenuated. Shows the photosphere with sunspots and granulation.",
+            layer: "Photosphere: the bright, visible surface of the Sun.",
+          },
+          {
+            id: "halpha",
+            name: "H-alpha telescope",
+            where: "Complete internal system: front ERF + etalon + blocking filter before the eye or camera.",
+            passes: "Only a 0.5 Å slit centered at 656.28 nm. Everything else is blocked.",
+            layer: "Chromosphere: filaments, plages, prominences, and chromospheric texture.",
+          },
+        ],
       },
     },
   },
