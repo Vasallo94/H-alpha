@@ -2,7 +2,6 @@
 import type { Locale } from "../../i18n/routes";
 import { siteCopy } from "../../content/siteCopy";
 import OpticalChain from "../diagrams/OpticalChain.astro";
-import { LightPathAnimation } from "../interactive/LightPathAnimation";
 import DeepDive from "../DeepDive.astro";
 
 interface Props {
@@ -22,8 +21,6 @@ const s = copy.sections.opticalSystem;
     {s.body.map((paragraph) => <p>{paragraph}</p>)}
 
     <OpticalChain labels={copy.diagrams.opticalChain} />
-
-    <LightPathAnimation client:visible labels={copy.interactive.lightPath} />
 
     {s.deepDive && <DeepDive deepDive={s.deepDive} />}
   </div>

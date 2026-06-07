@@ -44,11 +44,10 @@ test("tuning simulator reacts to controls", async ({ page }) => {
   await expect(readout).toBeVisible();
 });
 
-test("final image has annotations and before/after", async ({ page }) => {
+test("final image has annotations", async ({ page }) => {
   await page.goto("/");
   await page.locator("#image").scrollIntoViewIfNeeded();
   await expect(page.locator("#image .hotspot").first()).toBeVisible();
-  await expect(page.locator("#image .before-after input[type=range]")).toBeVisible();
 });
 
 test("safety shows at least four evergreen rules", async ({ page }) => {

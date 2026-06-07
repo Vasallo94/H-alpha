@@ -1,7 +1,6 @@
 ---
 import type { Locale } from "../../i18n/routes";
 import { siteCopy } from "../../content/siteCopy";
-import { BeforeAfter } from "../interactive/BeforeAfter";
 
 interface Props {
   locale: Locale;
@@ -42,7 +41,5 @@ const fi = copy.finalImage;
       </div>
       <figcaption>{fi.caption}</figcaption>
     </figure>
-
-    <BeforeAfter client:visible labels={fi.beforeAfter} />
   </div>
 </section>

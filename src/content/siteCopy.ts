@@ -61,7 +61,6 @@ type SiteCopy = {
     caption: string;
     imageAlt: string;
     annotations: ImageAnnotation[];
-    beforeAfter: { beforeLabel: string; afterLabel: string; instruction: string };
   };
   glossary: Record<string, GlossaryEntry>;
   diagrams: {
@@ -86,13 +85,6 @@ type SiteCopy = {
       contrast: string;
       views: { disk: string; prominence: string; washed: string };
     };
-    lightPath: {
-      aria: string;
-      play: string;
-      pause: string;
-      reset: string;
-      stages: { name: string; discards: string }[];
-    };
     filterComparison: {
       aria: string;
       fieldWhere: string;
@@ -106,9 +98,9 @@ type SiteCopy = {
 export const siteCopy: Record<Locale, SiteCopy> = {
   es: {
     meta: {
-      title: "Cómo funciona un telescopio H-alpha",
+      title: "Cómo funciona un telescopio H‑alpha",
       description:
-        "Material didáctico bilingüe sobre la física de la línea H-alpha, los etalones Fabry-Pérot, el tuning, la cadena óptica solar y la seguridad.",
+        "Material didáctico bilingüe sobre la física de la línea H‑alpha, los etalones Fabry-Pérot, el tuning, la cadena óptica solar y la seguridad.",
     },
     nav: {
       origin: "El origen",
@@ -120,29 +112,29 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     languageLabel: "English",
     hero: {
       eyebrow: "El Sol en una sola línea de color",
-      title: "¿Por qué el Sol se ve tan distinto en H-alpha?",
+      title: "¿Por qué el Sol se ve tan distinto en H‑alpha?",
       intro:
-        "A simple vista el Sol es un disco liso y amarillento. En la luz de la línea H-alpha, en cambio, se cubre de filamentos oscuros, plages brillantes y enormes protuberancias en el borde. No es otro Sol: es la misma estrella vista en un único color. Aquí explicamos, paso a paso, qué hace ese color especial, cómo un instrumento lo aísla y por qué se hace de forma segura.",
+        "A simple vista el Sol es un disco liso y amarillento. En la luz de la línea H‑alpha, en cambio, se cubre de filamentos oscuros, plages brillantes y enormes protuberancias en el borde. No es otro Sol: es la misma estrella vista en un único color. Aquí explicamos, paso a paso, qué hace ese color especial, cómo un instrumento lo aísla y por qué se hace de forma segura.",
       imageAlt:
-        "Disco solar completo fotografiado en la línea H-alpha, mostrando filamentos oscuros, regiones brillantes y protuberancias en el limbo.",
+        "Disco solar completo fotografiado en la línea H‑alpha, mostrando filamentos oscuros, regiones brillantes y protuberancias en el limbo.",
     },
     sections: {
       origin: {
         eyebrow: "El origen de la línea · 656,28 nm",
-        heading: "¿Por qué el Sol brilla en H-alpha?",
+        heading: "¿Por qué el Sol brilla en H‑alpha?",
         lead: "Todo empieza por el átomo más simple del universo: el hidrógeno, del que está hecho casi todo el Sol.",
         body: [
-          "El Sol es, en su inmensa mayoría, hidrógeno. Y cada elemento químico tiene una especie de huella dactilar: solo absorbe y emite luz en colores muy concretos, no en cualquiera. El hidrógeno tiene varios de esos colores característicos, y uno de ellos cae en el rojo profundo, en una longitud de onda de 656,28 nanómetros. A esa línea la llamamos hidrógeno-alfa, o H-alpha.",
-          "Ese color lo produce el hidrógeno cuando uno de sus electrones cambia de órbita y libera exactamente esa cantidad de energía en forma de luz roja. Como todos los átomos de hidrógeno son idénticos, todos emiten y absorben justo en esa misma longitud de onda: por eso la línea es tan nítida y tan fiable como referencia.",
-          "Sobre la superficie visible del Sol hay una capa fina y tenue llamada cromosfera, hecha sobre todo de hidrógeno. Esa capa brilla precisamente en H-alpha. El problema es que su luz queda completamente ahogada por el resplandor blanco y deslumbrante de la superficie. Un filtro que solo deje pasar el color H-alpha apaga ese resplandor y deja ver, por fin, la cromosfera encendida: filamentos, plages y protuberancias.",
+          "El Sol es, en su inmensa mayoría, hidrógeno. Y cada elemento químico tiene una especie de huella dactilar: solo absorbe y emite luz en colores muy concretos, no en cualquiera. El hidrógeno tiene varios de esos colores característicos, y uno de ellos cae en el rojo profundo, en una longitud de onda de 656,28 nanómetros. A esa línea la llamamos hidrógeno-alfa, o H‑alpha.",
+          "Ese color lo produce el hidrógeno cuando uno de sus electrones salta a un orbital de menor energía y libera exactamente esa cantidad de energía en forma de luz roja. Como todos los átomos de hidrógeno son idénticos, todos emiten y absorben justo en esa misma longitud de onda: por eso la línea es tan nítida y tan fiable como referencia.",
+          "Sobre la superficie visible del Sol hay una capa fina y tenue llamada cromosfera, hecha sobre todo de hidrógeno. Esa capa brilla precisamente en H‑alpha. El problema es que su luz queda completamente ahogada por el resplandor blanco y deslumbrante de la superficie. Un filtro que solo deje pasar el color H‑alpha apaga ese resplandor y deja ver, por fin, la cromosfera encendida: filamentos, plages y protuberancias.",
         ],
         deepDive: {
           title: "La física: el modelo de Bohr y la serie de Balmer",
           paragraphs: [
-            "En el modelo de Bohr, el electrón del hidrógeno solo puede ocupar órbitas con energías concretas, etiquetadas por un número entero n = 1, 2, 3... Cuanto mayor es n, más arriba y más débilmente ligado está el electrón. La energía no es continua: está cuantizada, lo que significa que el átomo solo puede ganar o perder energía en saltos discretos entre esos niveles.",
-            "Cuando un electrón cae de un nivel alto a uno más bajo, el átomo emite un fotón cuya energía es exactamente la diferencia entre ambos niveles. La línea H-alpha corresponde a la transición n=3 → n=2. Las transiciones que terminan en n=2 forman la llamada serie de Balmer, que cae en el visible; H-alpha es la primera y más intensa de esa serie.",
-            "La energía del salto fija el color de la luz mediante la relación de Planck-Einstein: a mayor energía, menor longitud de onda. Para la transición n=3 → n=2 esa energía corresponde a λ = 656,28 nm, el rojo profundo de H-alpha.",
-            "El mismo nivel de energía explica dos cosas opuestas que vemos en el Sol. Sobre el disco, el hidrógeno frío de la cromosfera absorbe la luz blanca que viene de abajo y crea una línea oscura: es una de las líneas de Fraunhofer, una raya negra sobre el espectro continuo. En el limbo y en las protuberancias, en cambio, no hay fondo brillante detrás, y ese mismo hidrógeno emite su luz H-alpha contra el cielo negro: lo vemos en emisión, brillante.",
+            "En el modelo de Bohr, el electrón del hidrógeno solo puede ocupar orbitales con energías concretas, etiquetados por un número entero n = 1, 2, 3... Cuanto mayor es n, más arriba y más débilmente ligado está el electrón. La energía no es continua: está cuantizada, lo que significa que el átomo solo puede ganar o perder energía en saltos discretos entre esos niveles de energía.",
+            "Cuando un electrón cae de un nivel alto a uno más bajo, el átomo emite un fotón cuya energía es exactamente la diferencia entre ambos niveles. La línea H‑alpha corresponde a la transición n=3 → n=2. Las transiciones que terminan en n=2 forman la llamada serie de Balmer, que cae en el visible; H‑alpha es la primera y más intensa de esa serie.",
+            "La energía del salto fija el color de la luz mediante la relación de Planck-Einstein: a mayor energía, menor longitud de onda. Para la transición n=3 → n=2 esa energía corresponde a λ = 656,28 nm, el rojo profundo de H‑alpha.",
+            "El mismo nivel de energía explica dos cosas opuestas que vemos en el Sol. Sobre el disco, el hidrógeno frío de la cromosfera absorbe la luz blanca que viene de abajo y crea una línea oscura: es una de las líneas de Fraunhofer, una raya negra sobre el espectro continuo. En el limbo y en las protuberancias, en cambio, no hay fondo brillante detrás, y ese mismo hidrógeno emite su luz H‑alpha contra el cielo negro: lo vemos en emisión, brillante.",
           ],
           formula: "E = h·c / λ",
         },
@@ -150,16 +142,16 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       spectrum: {
         eyebrow: "El espectro solar",
         heading: "El espectro no es un arcoíris liso",
-        lead: "Si descomponemos la luz del Sol con cuidado, el arcoíris aparece cruzado por finas rayas oscuras. H-alpha es una de ellas.",
+        lead: "Si descomponemos la luz del Sol con cuidado, el arcoíris aparece cruzado por finas rayas oscuras. H‑alpha es una de ellas.",
         body: [
           "Cuando separamos la luz solar en sus colores esperamos un arcoíris continuo, pero al mirarlo de cerca aparece interrumpido por cientos de líneas oscuras muy estrechas. Son las líneas de Fraunhofer, y cada una marca un color que ha sido absorbido por un elemento concreto presente en el Sol antes de que su luz llegara hasta nosotros.",
-          "Cada línea oscura es la firma de un átomo: el sodio, el calcio, el magnesio, el hierro y, por supuesto, el hidrógeno tienen las suyas. La línea H-alpha es una de las más conocidas, una raya oscura situada en el rojo profundo, en 656,28 nm. Un telescopio solar de H-alpha está diseñado para hacer exactamente lo contrario que el resto del espectro: en lugar de descartar esa rendija, se queda solo con ella y rechaza todo lo demás.",
+          "Cada línea oscura es la firma de un átomo: el sodio, el calcio, el magnesio, el hierro y, por supuesto, el hidrógeno tienen las suyas. La línea H‑alpha es una de las más conocidas, una raya oscura situada en el rojo profundo, en 656,28 nm. Un telescopio solar de H‑alpha está diseñado para hacer exactamente lo contrario que el resto del espectro: en lugar de descartar esa rendija, se queda solo con ella y rechaza todo lo demás.",
         ],
         deepDive: {
           title: "Línea oscura en el disco, línea brillante en el limbo",
           paragraphs: [
-            "Sobre el disco solar, la luz blanca brillante de la fotosfera atraviesa la cromosfera por encima. El hidrógeno de esa capa absorbe selectivamente los fotones de 656,28 nm, restándolos del fondo continuo. Por eso, en el espectro del disco, H-alpha aparece como una línea de absorción: una muesca oscura sobre un fondo intenso.",
-            "En el limbo del Sol y en las protuberancias que se elevan sobre él no hay fotosfera brillante detrás, sino el cielo oscuro. Ese mismo hidrógeno, en lugar de absorber, emite sus propios fotones H-alpha. El resultado es una línea de emisión brillante. Es el motivo de que las protuberancias se vean encendidas en el borde mientras los filamentos (el mismo gas, pero proyectado sobre el disco) se vean oscuros: son el anverso y el reverso del mismo fenómeno.",
+            "Sobre el disco solar, la luz blanca brillante de la fotosfera atraviesa la cromosfera por encima. El hidrógeno de esa capa absorbe selectivamente los fotones de 656,28 nm, restándolos del fondo continuo. Por eso, en el espectro del disco, H‑alpha aparece como una línea de absorción: una muesca oscura sobre un fondo intenso.",
+            "En el limbo del Sol y en las protuberancias que se elevan sobre él no hay fotosfera brillante detrás, sino el cielo oscuro. Ese mismo hidrógeno, en lugar de absorber, emite sus propios fotones H‑alpha. El resultado es una línea de emisión brillante. Es el motivo de que las protuberancias se vean encendidas en el borde mientras los filamentos (el mismo gas, pero proyectado sobre el disco) se vean oscuros: son el anverso y el reverso del mismo fenómeno.",
           ],
         },
       },
@@ -168,15 +160,15 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         heading: "El etalon: cómo se aísla un solo color",
         lead: "Quedarse solo con una rendija de 0,5 ångström en pleno rojo es un reto óptico extremo. La solución es la interferencia de la luz.",
         body: [
-          "El componente clave de un telescopio H-alpha es el etalon, también llamado interferómetro de Fabry-Pérot. En esencia son dos superficies de vidrio planísimas, casi como espejos, muy paralelas entre sí y separadas por una distancia diminuta y controlada con enorme precisión. Cada superficie refleja parte de la luz y deja pasar otra parte.",
+          "El componente clave de un telescopio H‑alpha es el etalon, también llamado interferómetro de Fabry-Pérot. En esencia son dos superficies de vidrio planísimas, casi como espejos, muy paralelas entre sí y separadas por una distancia diminuta y controlada con enorme precisión. Cada superficie refleja parte de la luz y deja pasar otra parte.",
           "Cuando la luz entra en ese hueco, rebota muchas veces de un lado a otro antes de salir. En cada viaje, las ondas que salen se superponen con las que ya habían salido. Para la mayoría de los colores esas ondas quedan desfasadas y se cancelan unas a otras (interferencia destructiva). Pero para unos pocos colores muy concretos, las ondas salen perfectamente sincronizadas y se refuerzan (interferencia constructiva).",
-          "El resultado es que el etalon solo deja pasar una rendija de color extremadamente estrecha. Ajustando la separación entre las placas, esa rendija se sitúa justo sobre H-alpha. Es como un coro de miles de reflexiones que solo cantan al unísono en una única nota: la del rojo a 656,28 nm.",
+          "El resultado es que el etalon solo deja pasar una rendija de color extremadamente estrecha. Ajustando la separación entre las placas, esa rendija se sitúa justo sobre H‑alpha. Es como un coro de miles de reflexiones que solo cantan al unísono en una única nota: la del rojo a 656,28 nm.",
         ],
         deepDive: {
           title: "Fabry-Pérot: picos de Airy, FSR, finesse y FWHM",
           paragraphs: [
             "La condición de interferencia constructiva es 2·n·d·cosθ = m·λ, donde d es la separación entre placas, n el índice del medio entre ellas, θ el ángulo del rayo respecto a la normal y m un número entero (el orden). Para cada orden m hay una longitud de onda que cumple la condición y sale reforzada.",
-            "Por eso la curva de transmisión del etalon no es una sola caja limpia, sino una serie de picos muy finos y regulares: los picos de Airy. La distancia espectral entre dos picos consecutivos se llama rango espectral libre (FSR). Como hay muchos picos, el etalon por sí solo no basta: hace falta un prefiltro (el ERF y a veces un filtro de banda más ancha) que deje pasar la zona alrededor de H-alpha y elimine los demás órdenes.",
+            "Por eso la curva de transmisión del etalon no es una sola caja limpia, sino una serie de picos muy finos y regulares: los picos de Airy. La distancia espectral entre dos picos consecutivos se llama rango espectral libre (FSR). Como hay muchos picos, el etalon por sí solo no basta: hace falta un prefiltro (el ERF y a veces un filtro de banda más ancha) que deje pasar la zona alrededor de H‑alpha y elimine los demás órdenes.",
             "La anchura de cada pico se mide por su FWHM (anchura a media altura). La finesse del etalon es la relación entre el FSR y la FWHM, y depende sobre todo de la reflectividad de las superficies: cuanta más reflectividad, más reflexiones efectivas y más estrechos los picos.",
             "Para que la cromosfera destaque sobre el disco, el bandpass (la FWHM) debe ser muy estrecho, típicamente por debajo de 0,5 ångström. Si la ventana es más ancha, deja entrar demasiada luz del continuo fotosférico y el contraste de los filamentos se pierde: el disco vuelve a verse liso.",
           ],
@@ -189,14 +181,14 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         lead: "La rendija de color del etalon se puede desplazar un poco. Ese pequeño ajuste decide si ves mejor el disco o el material en movimiento.",
         body: [
           "El centro exacto de la rendija de color que deja pasar el etalon no es completamente fijo: se puede afinar ligeramente. A eso lo llamamos tuning. Desplazar la ventana solo unas centésimas de ångström cambia de forma sorprendente lo que aparece en la imagen.",
-          "Con la ventana centrada justo en H-alpha se ve mejor el disco: los filamentos oscuros, las plages brillantes y la textura fina de la cromosfera. Si en cambio desplazamos la ventana hacia un ala de la línea —hacia el azul o hacia el rojo— se realza el material que se mueve a gran velocidad, como las protuberancias y las erupciones, porque su luz aparece corrida de color por efecto Doppler.",
+          "Con la ventana centrada justo en H‑alpha se ve mejor el disco: los filamentos oscuros, las plages brillantes y la textura fina de la cromosfera. Si en cambio desplazamos la ventana hacia un ala de la línea —hacia el azul o hacia el rojo— se realza el material que se mueve a gran velocidad, como las protuberancias y las erupciones, porque su luz aparece corrida de color por efecto Doppler.",
           "Por eso un mismo telescopio puede mostrar dos Soles distintos según cómo se afine: uno centrado en el detalle quieto del disco y otro desplazado para cazar los chorros y arcos de gas en movimiento. Afinar es, en el fondo, elegir qué historia del Sol quieres contar en ese momento.",
         ],
         deepDive: {
           title: "Pressure tuning, tilt tuning y el efecto Doppler",
           paragraphs: [
             "Hay dos formas habituales de afinar un etalon. El pressure tuning cambia la presión —y por tanto el índice de refracción n— del gas encerrado entre las placas, lo que desplaza la condición 2·n·d·cosθ = m·λ y mueve el pico de transmisión. El tilt tuning inclina el etalon un pequeño ángulo θ: como en la ecuación aparece cosθ, inclinarlo desplaza el pico hacia el azul.",
-            "El material en movimiento entra en juego por el efecto Doppler: el gas que se acerca a nosotros emite H-alpha corrido hacia el azul, y el que se aleja, hacia el rojo. Al desplazar la ventana del etalon hacia un ala, la sintonizamos con ese gas Doppler-corrido y lo hacemos visible, mientras el gas en reposo se atenúa.",
+            "El material en movimiento entra en juego por el efecto Doppler: el gas que se acerca a nosotros emite H‑alpha corrido hacia el azul, y el que se aleja, hacia el rojo. Al desplazar la ventana del etalon hacia un ala, la sintonizamos con ese gas Doppler-corrido y lo hacemos visible, mientras el gas en reposo se atenúa.",
             "Todo esto implica un compromiso permanente entre contraste y luz. Una ventana más estrecha y bien centrada da más contraste cromosférico, pero deja pasar menos luz y exige exposiciones más largas o una imagen más oscura. Afinar bien es encontrar el equilibrio para el detalle concreto que se quiere observar.",
           ],
         },
@@ -206,15 +198,15 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         heading: "El sistema óptico, pieza a pieza",
         lead: "El etalon no trabaja solo. Forma parte de una cadena en la que cada eslabón es imprescindible, y algunos lo son por seguridad.",
         body: [
-          "Un telescopio solar H-alpha es una cadena ordenada de componentes, y la luz los atraviesa en este orden: objetivo → filtro de rechazo de energía (ERF) → etalon → blocking filter → ojo o cámara. Si falta cualquiera de ellos, el sistema deja de funcionar o deja de ser seguro.",
-          "El objetivo recoge la luz del Sol. A continuación, el ERF (Energy Rejection Filter), situado al frente, rechaza la inmensa mayoría de la energía: casi todo el infrarrojo, el ultravioleta y buena parte del calor, dejando pasar principalmente la zona del rojo alrededor de H-alpha. Sin él, ese calor concentrado destruiría el etalon y sería peligrosísimo.",
-          "Después actúa el etalon, que selecciona la rendija de color de H-alpha. Pero a su salida todavía quedan los demás órdenes de transmisión y luz residual fuera de banda. De eso se encarga el blocking filter, justo antes del ojo o la cámara: bloquea esa luz sobrante, deja una imagen limpia en H-alpha y protege al observador. Solo entonces la luz llega con seguridad al ojo o al sensor.",
+          "Un telescopio solar H‑alpha es una cadena ordenada de componentes, y la luz los atraviesa en este orden: objetivo → filtro de rechazo de energía (ERF) → etalon → blocking filter → ojo o cámara. Si falta cualquiera de ellos, el sistema deja de funcionar o deja de ser seguro.",
+          "El objetivo recoge la luz del Sol. A continuación, el ERF (Energy Rejection Filter), situado al frente, rechaza la inmensa mayoría de la energía: casi todo el infrarrojo, el ultravioleta y buena parte del calor, dejando pasar principalmente la zona del rojo alrededor de H‑alpha. Sin él, ese calor concentrado destruiría el etalon y sería peligrosísimo.",
+          "Después actúa el etalon, que selecciona la rendija de color de H‑alpha. Pero a su salida todavía quedan los demás órdenes de transmisión y luz residual fuera de banda. De eso se encarga el blocking filter, justo antes del ojo o la cámara: bloquea esa luz sobrante, deja una imagen limpia en H‑alpha y protege al observador. Solo entonces la luz llega con seguridad al ojo o al sensor.",
         ],
         deepDive: {
           title: "Qué pasa si falta el ERF o el blocking filter",
           paragraphs: [
             "Sin el ERF, toda la energía solar recogida por el objetivo —incluido el infrarrojo invisible y el calor— llegaría concentrada hasta el etalon. El etalon, una pieza óptica delicada y muy fina, se calentaría, se deformaría y se arruinaría; y la energía acumulada en el camino representa un riesgo grave de quemadura e incendio. El ERF es la primera línea de defensa que descarta el grueso de la energía antes de que entre en el instrumento.",
-            "Sin el blocking filter, aunque el etalon haya seleccionado H-alpha, seguirían pasando los demás órdenes del etalon y luz fuera de banda potencialmente dañina, además de un brillo residual que arruinaría el contraste. Para el ojo eso es peligroso, porque parte de esa luz es intensa e invisible. Por eso un telescopio H-alpha nunca se usa sin su blocking filter o diagonal correspondiente: no es un accesorio opcional, es parte del sistema de seguridad.",
+            "Sin el blocking filter, aunque el etalon haya seleccionado H‑alpha, seguirían pasando los demás órdenes del etalon y luz fuera de banda potencialmente dañina, además de un brillo residual que arruinaría el contraste. Para el ojo eso es peligroso, porque parte de esa luz es intensa e invisible. Por eso un telescopio H‑alpha nunca se usa sin su blocking filter o diagonal correspondiente: no es un accesorio opcional, es parte del sistema de seguridad.",
           ],
         },
       },
@@ -225,13 +217,13 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         body: [
           "Existen tres grandes formas de mirar el Sol con seguridad, y conviene no confundirlas porque funcionan de maneras muy diferentes. Las gafas de eclipse certificadas (ISO 12312-2) se ponen delante de los ojos y solo sirven para mirar a simple vista, sin ningún instrumento que concentre la luz.",
           "El filtro solar de luz blanca se coloca delante de la apertura del telescopio o de los prismáticos, antes de que la luz entre en la óptica. Atenúa de forma pareja todo el espectro hasta un nivel seguro y muestra la fotosfera: el disco, las manchas solares y la granulación. Es como ponerse unas gafas de sol muy oscuras para todo el espectro a la vez.",
-          "El telescopio H-alpha es un sistema dedicado completo, no un simple filtro: combina el rechazo de energía, el etalon y el blocking filter para quedarse con una única rendija de color y revelar la cromosfera. El primero atenúa todo por igual; el segundo selecciona un color. Son herramientas para fines distintos, no intercambiables.",
+          "El telescopio H‑alpha es un sistema dedicado completo, no un simple filtro: combina el rechazo de energía, el etalon y el blocking filter para quedarse con una única rendija de color y revelar la cromosfera. El primero atenúa todo por igual; el segundo selecciona un color. Son herramientas para fines distintos, no intercambiables.",
         ],
         deepDive: {
           title: "Atenuación neutra frente a rechazo de energía más selección espectral",
           paragraphs: [
             "Un filtro de luz blanca actúa, en esencia, como un filtro de densidad neutra (ND): atenúa todas las longitudes de onda visibles más o menos por igual hasta un nivel seguro, conservando la forma del espectro pero reduciendo enormemente su intensidad. Lo que llega es una versión muy oscurecida del Sol completo, en la que se ve la fotosfera.",
-            "Un sistema H-alpha hace algo cualitativamente distinto en dos pasos: primero rechaza la energía (el ERF descarta el grueso del flujo, sobre todo infrarrojo y ultravioleta) y después selecciona el espectro (el etalon y el blocking filter dejan pasar solo la rendija de H-alpha). No es una atenuación uniforme: es una selección quirúrgica de un color, que es justo lo que permite ver la cromosfera y no la fotosfera.",
+            "Un sistema H‑alpha hace algo cualitativamente distinto en dos pasos: primero rechaza la energía (el ERF descarta el grueso del flujo, sobre todo infrarrojo y ultravioleta) y después selecciona el espectro (el etalon y el blocking filter dejan pasar solo la rendija de H‑alpha). No es una atenuación uniforme: es una selección quirúrgica de un color, que es justo lo que permite ver la cromosfera y no la fotosfera.",
           ],
         },
       },
@@ -249,8 +241,8 @@ export const siteCopy: Record<Locale, SiteCopy> = {
           body: "Cualquier telescopio, prismático o cámara que apunte al Sol necesita un filtro solar frontal adecuado o formar parte de un sistema solar dedicado. La luz debe filtrarse antes de entrar en la óptica, no después.",
         },
         {
-          title: "Un telescopio H-alpha no se usa sin su blocking filter",
-          body: "El blocking filter (o la diagonal de bloqueo) forma parte del sistema de seguridad de un telescopio H-alpha. Nunca se retira ni se observa sin él: deja pasar luz residual peligrosa para la vista.",
+          title: "Un telescopio H‑alpha no se usa sin su blocking filter",
+          body: "El blocking filter (o la diagonal de bloqueo) forma parte del sistema de seguridad de un telescopio H‑alpha. Nunca se retira ni se observa sin él: deja pasar luz residual peligrosa para la vista.",
         },
         {
           title: "No se improvisan filtros solares",
@@ -271,10 +263,10 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     finalImage: {
       eyebrow: "Pagar el gancho",
       heading: "Ahora sabes leer la imagen del principio",
-      lead: "Esta es la misma imagen H-alpha con la que abrimos. Con todo lo anterior, cada estructura tiene ya un nombre y una explicación.",
-      caption: "Disco solar completo en H-alpha. Pasa el cursor o toca los puntos para identificar cada estructura.",
+      lead: "Esta es la misma imagen H‑alpha con la que abrimos. Con todo lo anterior, cada estructura tiene ya un nombre y una explicación.",
+      caption: "Disco solar completo en H‑alpha. Pasa el cursor o toca los puntos para identificar cada estructura.",
       imageAlt:
-        "Disco solar en H-alpha con filamentos oscuros, protuberancias en el limbo, plages brillantes y textura cromosférica.",
+        "Disco solar en H‑alpha con filamentos oscuros, protuberancias en el limbo, plages brillantes y textura cromosférica.",
       annotations: [
         {
           id: "filaments",
@@ -309,22 +301,17 @@ export const siteCopy: Record<Locale, SiteCopy> = {
             "El moteado fino del disco son las espículas y la red cromosférica: pequeños chorros de gas que dan a la superficie su aspecto granulado.",
         },
       ],
-      beforeAfter: {
-        beforeLabel: "Luz blanca",
-        afterLabel: "H-alpha",
-        instruction: "Arrastra el control para comparar la luz blanca (fotosfera, manchas) con la vista en H-alpha (cromosfera, filamentos y protuberancias).",
-      },
     },
     glossary: {
       angstrom: {
         term: "ångström",
         short: "Unidad de longitud muy pequeña usada en espectroscopía.",
-        detail: "Un ångström equivale a 0,1 nanómetros. En H-alpha se usa para hablar de anchuras de banda extremadamente estrechas, por debajo de 0,5 Å.",
+        detail: "Un ångström equivale a 0,1 nanómetros. En H‑alpha se usa para hablar de anchuras de banda extremadamente estrechas, por debajo de 0,5 Å.",
       },
       bandpass: {
         term: "bandpass",
         short: "La anchura de longitudes de onda que deja pasar un filtro.",
-        detail: "En H-alpha, un bandpass menor de 0,5 Å ayuda a aislar la cromosfera y aumentar el contraste de filamentos y protuberancias.",
+        detail: "En H‑alpha, un bandpass menor de 0,5 Å ayuda a aislar la cromosfera y aumentar el contraste de filamentos y protuberancias.",
       },
       etalon: {
         term: "etalon",
@@ -334,22 +321,22 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       blockingFilter: {
         term: "blocking filter",
         short: "Filtro de seguridad que bloquea la luz residual peligrosa.",
-        detail: "En un telescopio H-alpha visual o de imagen, el blocking filter forma parte del sistema seguro. No debe retirarse ni sustituirse por piezas improvisadas.",
+        detail: "En un telescopio H‑alpha visual o de imagen, el blocking filter forma parte del sistema seguro. No debe retirarse ni sustituirse por piezas improvisadas.",
       },
       chromosphere: {
         term: "cromosfera",
         short: "Capa fina del Sol, por encima de la superficie visible.",
-        detail: "La cromosfera es una capa tenue de hidrógeno sobre la fotosfera. Brilla en H-alpha y es donde se ven filamentos, plages y protuberancias.",
+        detail: "La cromosfera es una capa tenue de hidrógeno sobre la fotosfera. Brilla en H‑alpha y es donde se ven filamentos, plages y protuberancias.",
       },
       fraunhofer: {
         term: "líneas de Fraunhofer",
         short: "Líneas oscuras de absorción en el espectro solar.",
-        detail: "Son las rayas oscuras que cruzan el arcoíris solar, cada una producida por la absorción de un elemento. H-alpha es la línea de absorción del hidrógeno en 656,28 nm.",
+        detail: "Son las rayas oscuras que cruzan el arcoíris solar, cada una producida por la absorción de un elemento. H‑alpha es la línea de absorción del hidrógeno en 656,28 nm.",
       },
     },
     diagrams: {
       hydrogenLevels: {
-        caption: "Niveles de energía del hidrógeno y la transición que produce H-alpha.",
+        caption: "Niveles de energía del hidrógeno y la transición que produce H‑alpha.",
         aria: "Diagrama de los niveles de energía del átomo de hidrógeno con la transición n=3 a n=2 resaltada.",
         axisEnergy: "Energía",
         level1: "n=1",
@@ -358,20 +345,20 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         level4: "n=4",
         level5: "n=5",
         level6: "n=6",
-        transitionLabel: "H-alpha · 656,28 nm",
+        transitionLabel: "H‑alpha · 656,28 nm",
         transitionNote: "El electrón cae de n=3 a n=2 y emite luz roja.",
         balmerLabel: "Serie de Balmer (al nivel n=2)",
       },
       sunLayers: {
-        caption: "Capas del Sol: qué ve la luz blanca y qué ve el H-alpha.",
+        caption: "Capas del Sol: qué ve la luz blanca y qué ve el H‑alpha.",
         aria: "Diagrama en sección de las capas del Sol, de la fotosfera a la corona.",
         photosphere: "Fotosfera",
         chromosphere: "Cromosfera",
         corona: "Corona",
         whiteLightLabel: "Luz blanca: ve la fotosfera",
-        hAlphaLabel: "H-alpha: ve la cromosfera",
+        hAlphaLabel: "H‑alpha: ve la cromosfera",
         photosphereNote: "Superficie visible y brillante.",
-        chromosphereNote: "Capa fina que brilla en H-alpha.",
+        chromosphereNote: "Capa fina que brilla en H‑alpha.",
         coronaNote: "Atmósfera exterior tenue.",
       },
       etalon: {
@@ -389,7 +376,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         peakLabel: "Pico de transmisión",
       },
       opticalChain: {
-        caption: "La cadena óptica completa de un telescopio H-alpha.",
+        caption: "La cadena óptica completa de un telescopio H‑alpha.",
         aria: "Diagrama de la cadena óptica: objetivo, ERF, etalon, blocking filter y cámara u ojo.",
         sunlight: "Luz solar",
         objective: "Objetivo",
@@ -398,7 +385,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         blocking: "Blocking filter",
         camera: "Ojo / cámara",
         erfNote: "Rechaza la energía y el calor.",
-        etalonNote: "Selecciona el color H-alpha.",
+        etalonNote: "Selecciona el color H‑alpha.",
         blockingNote: "Elimina la luz residual peligrosa.",
         energyDiscarded: "Energía descartada",
         erfMissing: "Sin él: se quema el etalon",
@@ -406,10 +393,10 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       },
       threeMethods: {
         caption: "Tres métodos para mirar el Sol con seguridad.",
-        aria: "Comparación de tres métodos: gafas de eclipse, filtro de luz blanca y telescopio H-alpha.",
+        aria: "Comparación de tres métodos: gafas de eclipse, filtro de luz blanca y telescopio H‑alpha.",
         eclipseGlasses: "Gafas de eclipse",
         whiteLight: "Filtro de luz blanca",
-        hAlpha: "Telescopio H-alpha",
+        hAlpha: "Telescopio H‑alpha",
         eclipsePlacement: "Delante de los ojos",
         whiteLightPlacement: "Delante de la apertura",
         hAlphaPlacement: "Sistema interno completo",
@@ -419,8 +406,8 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       },
       dopplerTuning: {
         caption: "Tuning y efecto Doppler: la ventana del etalon sobre la línea.",
-        aria: "Diagrama de la línea H-alpha desplazándose por efecto Doppler con la ventana de transmisión del etalon.",
-        lineLabel: "Línea H-alpha",
+        aria: "Diagrama de la línea H‑alpha desplazándose por efecto Doppler con la ventana de transmisión del etalon.",
+        lineLabel: "Línea H‑alpha",
         windowLabel: "Ventana del etalon",
         blueshift: "Corrimiento al azul (se acerca)",
         redshift: "Corrimiento al rojo (se aleja)",
@@ -437,7 +424,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         transition: "Transición del hidrógeno",
       },
       tuningSimulator: {
-        aria: "Simulador de tuning: ajusta la anchura y el desplazamiento de la ventana del etalon sobre la línea H-alpha y observa cómo cambia la vista.",
+        aria: "Simulador de tuning: ajusta la anchura y el desplazamiento de la ventana del etalon sobre la línea H‑alpha y observa cómo cambia la vista.",
         width: "Anchura de banda (FWHM)",
         offset: "Desplazamiento del centro",
         contrast: "Contraste del disco",
@@ -446,34 +433,6 @@ export const siteCopy: Record<Locale, SiteCopy> = {
           prominence: "Protuberancias en el limbo",
           washed: "Lavado: poco contraste",
         },
-      },
-      lightPath: {
-        aria: "Animación del recorrido de la luz por la cadena óptica del telescopio H-alpha.",
-        play: "Reproducir",
-        pause: "Pausar",
-        reset: "Reiniciar",
-        stages: [
-          {
-            name: "Objetivo",
-            discards: "Recoge toda la luz solar. La concentra hacia el interior del instrumento.",
-          },
-          {
-            name: "ERF",
-            discards: "Descarta la mayor parte de la energía: infrarrojo, ultravioleta y calor. Solo pasa la banda roja alrededor de H-alpha.",
-          },
-          {
-            name: "Etalon",
-            discards: "Selecciona la rendija de H-alpha mediante interferencia. El resto de colores queda cancelado.",
-          },
-          {
-            name: "Blocking filter",
-            discards: "Elimina la luz residual fuera de banda y los órdenes secundarios del etalon. Protege al observador.",
-          },
-          {
-            name: "Ojo / Cámara",
-            discards: "Solo llega la luz H-alpha de la cromosfera: filamentos, plages y protuberancias con pleno contraste.",
-          },
-        ],
       },
       filterComparison: {
         aria: "Comparador de métodos de filtrado solar: selecciona un método para ver dónde actúa y qué revela.",
@@ -497,7 +456,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
           },
           {
             id: "halpha",
-            name: "Telescopio H-alpha",
+            name: "Telescopio H‑alpha",
             where: "Sistema interno completo: ERF frontal + etalon + blocking filter antes del ojo o cámara.",
             passes: "Solo una rendija de 0,5 Å centrada en 656,28 nm. Todo lo demás queda bloqueado.",
             layer: "Cromosfera: filamentos, plages, protuberancias y textura cromosférica.",
@@ -508,9 +467,9 @@ export const siteCopy: Record<Locale, SiteCopy> = {
   },
   en: {
     meta: {
-      title: "How an H-alpha Telescope Works",
+      title: "How an H‑alpha Telescope Works",
       description:
-        "Bilingual teaching material on the physics of the H-alpha line, Fabry-Pérot etalons, tuning, the solar optical chain, and safety.",
+        "Bilingual teaching material on the physics of the H‑alpha line, Fabry-Pérot etalons, tuning, the solar optical chain, and safety.",
     },
     nav: {
       origin: "The origin",
@@ -522,29 +481,29 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     languageLabel: "Español",
     hero: {
       eyebrow: "The Sun in a single color of light",
-      title: "Why does the Sun look so different in H-alpha?",
+      title: "Why does the Sun look so different in H‑alpha?",
       intro:
-        "To the naked eye the Sun is a smooth, yellowish disk. In the light of the H-alpha line, however, it becomes covered with dark filaments, bright plages, and huge prominences at its edge. It is not a different Sun: it is the same star seen in a single color. Here we explain, step by step, what makes that color special, how an instrument isolates it, and why it is done safely.",
+        "To the naked eye the Sun is a smooth, yellowish disk. In the light of the H‑alpha line, however, it becomes covered with dark filaments, bright plages, and huge prominences at its edge. It is not a different Sun: it is the same star seen in a single color. Here we explain, step by step, what makes that color special, how an instrument isolates it, and why it is done safely.",
       imageAlt:
-        "Full solar disk photographed in the H-alpha line, showing dark filaments, bright regions, and prominences at the limb.",
+        "Full solar disk photographed in the H‑alpha line, showing dark filaments, bright regions, and prominences at the limb.",
     },
     sections: {
       origin: {
         eyebrow: "The origin of the line · 656.28 nm",
-        heading: "Why does the Sun glow in H-alpha?",
+        heading: "Why does the Sun glow in H‑alpha?",
         lead: "It all starts with the simplest atom in the universe: hydrogen, which makes up almost all of the Sun.",
         body: [
-          "The Sun is overwhelmingly made of hydrogen. And every chemical element has a kind of fingerprint: it only absorbs and emits light at very specific colors, not just any. Hydrogen has several of those characteristic colors, and one of them lies in the deep red, at a wavelength of 656.28 nanometers. We call that line hydrogen-alpha, or H-alpha.",
-          "That color is produced by hydrogen when one of its electrons changes orbit and releases exactly that amount of energy as red light. Because all hydrogen atoms are identical, they all emit and absorb at that very same wavelength: that is why the line is so sharp and so reliable as a reference.",
-          "Above the visible surface of the Sun there is a thin, faint layer called the chromosphere, made mostly of hydrogen. That layer glows precisely in H-alpha. The trouble is that its light is completely drowned out by the dazzling white glare of the surface. A filter that lets through only the H-alpha color switches off that glare and finally reveals the glowing chromosphere: filaments, plages, and prominences.",
+          "The Sun is overwhelmingly made of hydrogen. And every chemical element has a kind of fingerprint: it only absorbs and emits light at very specific colors, not just any. Hydrogen has several of those characteristic colors, and one of them lies in the deep red, at a wavelength of 656.28 nanometers. We call that line hydrogen-alpha, or H‑alpha.",
+          "That color is produced by hydrogen when one of its electrons drops to a lower-energy orbital and releases exactly that amount of energy as red light. Because all hydrogen atoms are identical, they all emit and absorb at that very same wavelength: that is why the line is so sharp and so reliable as a reference.",
+          "Above the visible surface of the Sun there is a thin, faint layer called the chromosphere, made mostly of hydrogen. That layer glows precisely in H‑alpha. The trouble is that its light is completely drowned out by the dazzling white glare of the surface. A filter that lets through only the H‑alpha color switches off that glare and finally reveals the glowing chromosphere: filaments, plages, and prominences.",
         ],
         deepDive: {
           title: "The physics: the Bohr model and the Balmer series",
           paragraphs: [
-            "In the Bohr model, the electron of hydrogen can only occupy orbits with specific energies, labeled by an integer n = 1, 2, 3... The larger n is, the higher and more loosely bound the electron. Energy is not continuous: it is quantized, which means the atom can only gain or lose energy in discrete jumps between those levels.",
-            "When an electron falls from a high level to a lower one, the atom emits a photon whose energy is exactly the difference between the two levels. The H-alpha line corresponds to the transition n=3 → n=2. Transitions ending at n=2 form the so-called Balmer series, which falls in the visible; H-alpha is the first and most intense of that series.",
-            "The energy of the jump sets the color of the light through the Planck-Einstein relation: the higher the energy, the shorter the wavelength. For the n=3 → n=2 transition that energy corresponds to λ = 656.28 nm, the deep red of H-alpha.",
-            "The same energy level explains two opposite things we see on the Sun. Over the disk, the cooler hydrogen of the chromosphere absorbs the white light coming from below and creates a dark line: it is one of the Fraunhofer lines, a black stripe across the continuous spectrum. At the limb and in prominences, by contrast, there is no bright background behind, and that same hydrogen emits its H-alpha light against the black sky: we see it in emission, bright.",
+            "In the Bohr model, the electron of hydrogen can only occupy orbitals with specific energies, labeled by an integer n = 1, 2, 3... The larger n is, the higher and more loosely bound the electron. Energy is not continuous: it is quantized, which means the atom can only gain or lose energy in discrete jumps between those energy levels.",
+            "When an electron falls from a high level to a lower one, the atom emits a photon whose energy is exactly the difference between the two levels. The H‑alpha line corresponds to the transition n=3 → n=2. Transitions ending at n=2 form the so-called Balmer series, which falls in the visible; H‑alpha is the first and most intense of that series.",
+            "The energy of the jump sets the color of the light through the Planck-Einstein relation: the higher the energy, the shorter the wavelength. For the n=3 → n=2 transition that energy corresponds to λ = 656.28 nm, the deep red of H‑alpha.",
+            "The same energy level explains two opposite things we see on the Sun. Over the disk, the cooler hydrogen of the chromosphere absorbs the white light coming from below and creates a dark line: it is one of the Fraunhofer lines, a black stripe across the continuous spectrum. At the limb and in prominences, by contrast, there is no bright background behind, and that same hydrogen emits its H‑alpha light against the black sky: we see it in emission, bright.",
           ],
           formula: "E = h·c / λ",
         },
@@ -552,16 +511,16 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       spectrum: {
         eyebrow: "The solar spectrum",
         heading: "The spectrum is not a smooth rainbow",
-        lead: "If we carefully break up the Sun's light, the rainbow appears crossed by thin dark lines. H-alpha is one of them.",
+        lead: "If we carefully break up the Sun's light, the rainbow appears crossed by thin dark lines. H‑alpha is one of them.",
         body: [
           "When we split sunlight into its colors we expect a continuous rainbow, but on closer inspection it is interrupted by hundreds of very narrow dark lines. These are the Fraunhofer lines, and each one marks a color that was absorbed by a specific element present in the Sun before its light reached us.",
-          "Each dark line is the signature of an atom: sodium, calcium, magnesium, iron and, of course, hydrogen each have their own. The H-alpha line is one of the best known, a dark stripe in the deep red, at 656.28 nm. An H-alpha solar telescope is designed to do exactly the opposite of the rest of the spectrum: instead of discarding that slit, it keeps only that one and rejects everything else.",
+          "Each dark line is the signature of an atom: sodium, calcium, magnesium, iron and, of course, hydrogen each have their own. The H‑alpha line is one of the best known, a dark stripe in the deep red, at 656.28 nm. An H‑alpha solar telescope is designed to do exactly the opposite of the rest of the spectrum: instead of discarding that slit, it keeps only that one and rejects everything else.",
         ],
         deepDive: {
           title: "Dark line on the disk, bright line at the limb",
           paragraphs: [
-            "Over the solar disk, the bright white light of the photosphere travels through the chromosphere above it. The hydrogen in that layer selectively absorbs the 656.28 nm photons, subtracting them from the continuous background. That is why, in the disk spectrum, H-alpha appears as an absorption line: a dark notch on an intense background.",
-            "At the Sun's limb and in the prominences that rise above it there is no bright photosphere behind, only the dark sky. That same hydrogen, instead of absorbing, emits its own H-alpha photons. The result is a bright emission line. This is why prominences appear lit up at the edge while filaments (the same gas, but projected onto the disk) appear dark: they are two sides of the same phenomenon.",
+            "Over the solar disk, the bright white light of the photosphere travels through the chromosphere above it. The hydrogen in that layer selectively absorbs the 656.28 nm photons, subtracting them from the continuous background. That is why, in the disk spectrum, H‑alpha appears as an absorption line: a dark notch on an intense background.",
+            "At the Sun's limb and in the prominences that rise above it there is no bright photosphere behind, only the dark sky. That same hydrogen, instead of absorbing, emits its own H‑alpha photons. The result is a bright emission line. This is why prominences appear lit up at the edge while filaments (the same gas, but projected onto the disk) appear dark: they are two sides of the same phenomenon.",
           ],
         },
       },
@@ -570,15 +529,15 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         heading: "The etalon: how a single color is isolated",
         lead: "Keeping only a 0.5-ångström slit in the deep red is an extreme optical challenge. The solution is the interference of light.",
         body: [
-          "The key component of an H-alpha telescope is the etalon, also called a Fabry-Pérot interferometer. In essence it is two ultra-flat glass surfaces, almost like mirrors, very parallel to each other and separated by a tiny, exquisitely controlled distance. Each surface reflects part of the light and lets another part through.",
+          "The key component of an H‑alpha telescope is the etalon, also called a Fabry-Pérot interferometer. In essence it is two ultra-flat glass surfaces, almost like mirrors, very parallel to each other and separated by a tiny, exquisitely controlled distance. Each surface reflects part of the light and lets another part through.",
           "When light enters that gap, it bounces back and forth many times before leaving. On each pass, the waves coming out overlap with those that left earlier. For most colors those waves end up out of phase and cancel each other (destructive interference). But for a few very specific colors, the waves come out perfectly in step and reinforce one another (constructive interference).",
-          "The result is that the etalon lets through only an extremely narrow slit of color. By adjusting the spacing between the plates, that slit is placed right on top of H-alpha. It is like a choir of thousands of reflections that only sing in unison on a single note: the red at 656.28 nm.",
+          "The result is that the etalon lets through only an extremely narrow slit of color. By adjusting the spacing between the plates, that slit is placed right on top of H‑alpha. It is like a choir of thousands of reflections that only sing in unison on a single note: the red at 656.28 nm.",
         ],
         deepDive: {
           title: "Fabry-Pérot: Airy peaks, FSR, finesse, and FWHM",
           paragraphs: [
             "The condition for constructive interference is 2·n·d·cosθ = m·λ, where d is the spacing between plates, n the index of the medium between them, θ the ray angle relative to the normal, and m an integer (the order). For each order m there is a wavelength that satisfies the condition and emerges reinforced.",
-            "That is why the etalon's transmission curve is not a single clean box, but a series of very thin, regular peaks: the Airy peaks. The spectral distance between two consecutive peaks is called the free spectral range (FSR). Because there are many peaks, the etalon alone is not enough: a prefilter is needed (the ERF and sometimes a broader-band filter) to pass the region around H-alpha and remove the other orders.",
+            "That is why the etalon's transmission curve is not a single clean box, but a series of very thin, regular peaks: the Airy peaks. The spectral distance between two consecutive peaks is called the free spectral range (FSR). Because there are many peaks, the etalon alone is not enough: a prefilter is needed (the ERF and sometimes a broader-band filter) to pass the region around H‑alpha and remove the other orders.",
             "The width of each peak is measured by its FWHM (full width at half maximum). The finesse of the etalon is the ratio of the FSR to the FWHM, and it depends above all on the reflectivity of the surfaces: the higher the reflectivity, the more effective reflections and the narrower the peaks.",
             "For the chromosphere to stand out over the disk, the bandpass (the FWHM) must be very narrow, typically below 0.5 ångström. If the window is wider, it lets in too much light from the photospheric continuum and the contrast of the filaments is lost: the disk looks smooth again.",
           ],
@@ -591,14 +550,14 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         lead: "The etalon's slit of color can be shifted a little. That small adjustment decides whether you see the disk or the moving material better.",
         body: [
           "The exact center of the color slit that the etalon lets through is not completely fixed: it can be fine-tuned slightly. We call that tuning. Shifting the window by only a few hundredths of an ångström surprisingly changes what appears in the image.",
-          "With the window centered right on H-alpha you see the disk better: the dark filaments, the bright plages, and the fine texture of the chromosphere. If instead we shift the window toward a wing of the line —toward the blue or the red— it enhances material moving at high speed, such as prominences and flares, because their light appears color-shifted by the Doppler effect.",
+          "With the window centered right on H‑alpha you see the disk better: the dark filaments, the bright plages, and the fine texture of the chromosphere. If instead we shift the window toward a wing of the line —toward the blue or the red— it enhances material moving at high speed, such as prominences and flares, because their light appears color-shifted by the Doppler effect.",
           "That is why the same telescope can show two different Suns depending on how it is tuned: one centered on the still detail of the disk and another shifted to catch the jets and arcs of moving gas. Tuning is, in the end, choosing which story of the Sun you want to tell at that moment.",
         ],
         deepDive: {
           title: "Pressure tuning, tilt tuning, and the Doppler effect",
           paragraphs: [
             "There are two common ways to tune an etalon. Pressure tuning changes the pressure —and therefore the refractive index n— of the gas sealed between the plates, which shifts the condition 2·n·d·cosθ = m·λ and moves the transmission peak. Tilt tuning tips the etalon by a small angle θ: since cosθ appears in the equation, tilting it shifts the peak toward the blue.",
-            "Moving material comes into play through the Doppler effect: gas approaching us emits H-alpha shifted toward the blue, and gas moving away, toward the red. By shifting the etalon's window toward a wing, we tune it to that Doppler-shifted gas and make it visible, while gas at rest is dimmed.",
+            "Moving material comes into play through the Doppler effect: gas approaching us emits H‑alpha shifted toward the blue, and gas moving away, toward the red. By shifting the etalon's window toward a wing, we tune it to that Doppler-shifted gas and make it visible, while gas at rest is dimmed.",
             "All of this implies a constant trade-off between contrast and light. A narrower, well-centered window gives more chromospheric contrast, but lets through less light and requires longer exposures or a darker image. Tuning well means finding the balance for the specific detail you want to observe.",
           ],
         },
@@ -608,15 +567,15 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         heading: "The optical system, piece by piece",
         lead: "The etalon does not work alone. It is part of a chain in which every link is essential, and some of them are essential for safety.",
         body: [
-          "An H-alpha solar telescope is an ordered chain of components, and light passes through them in this order: objective → energy rejection filter (ERF) → etalon → blocking filter → eye or camera. If any of them is missing, the system stops working or stops being safe.",
-          "The objective gathers the Sun's light. Next, the ERF (Energy Rejection Filter), placed at the front, rejects the vast majority of the energy: nearly all the infrared, the ultraviolet, and much of the heat, letting through mainly the red region around H-alpha. Without it, that concentrated heat would destroy the etalon and be extremely dangerous.",
-          "The etalon then acts, selecting the H-alpha slit of color. But at its output there is still residual out-of-band light and the etalon's other orders. The blocking filter takes care of that, right before the eye or camera: it blocks the leftover light, leaves a clean H-alpha image, and protects the observer. Only then does the light reach the eye or sensor safely.",
+          "An H‑alpha solar telescope is an ordered chain of components, and light passes through them in this order: objective → energy rejection filter (ERF) → etalon → blocking filter → eye or camera. If any of them is missing, the system stops working or stops being safe.",
+          "The objective gathers the Sun's light. Next, the ERF (Energy Rejection Filter), placed at the front, rejects the vast majority of the energy: nearly all the infrared, the ultraviolet, and much of the heat, letting through mainly the red region around H‑alpha. Without it, that concentrated heat would destroy the etalon and be extremely dangerous.",
+          "The etalon then acts, selecting the H‑alpha slit of color. But at its output there is still residual out-of-band light and the etalon's other orders. The blocking filter takes care of that, right before the eye or camera: it blocks the leftover light, leaves a clean H‑alpha image, and protects the observer. Only then does the light reach the eye or sensor safely.",
         ],
         deepDive: {
           title: "What happens if the ERF or the blocking filter is missing",
           paragraphs: [
             "Without the ERF, all the solar energy gathered by the objective —including the invisible infrared and heat— would reach the etalon concentrated. The etalon, a delicate and very thin optical part, would heat up, warp, and be ruined; and the energy built up along the path is a serious risk of burns and fire. The ERF is the first line of defense that discards the bulk of the energy before it enters the instrument.",
-            "Without the blocking filter, even though the etalon has selected H-alpha, the etalon's other orders and potentially harmful out-of-band light would still pass through, along with a residual glow that would ruin the contrast. For the eye that is dangerous, because some of that light is intense and invisible. That is why an H-alpha telescope is never used without its corresponding blocking filter or diagonal: it is not an optional accessory, it is part of the safety system.",
+            "Without the blocking filter, even though the etalon has selected H‑alpha, the etalon's other orders and potentially harmful out-of-band light would still pass through, along with a residual glow that would ruin the contrast. For the eye that is dangerous, because some of that light is intense and invisible. That is why an H‑alpha telescope is never used without its corresponding blocking filter or diagonal: it is not an optional accessory, it is part of the safety system.",
           ],
         },
       },
@@ -627,13 +586,13 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         body: [
           "There are three main ways to look at the Sun safely, and it is important not to confuse them because they work in very different ways. Certified eclipse glasses (ISO 12312-2) are placed in front of the eyes and are only for naked-eye viewing, without any instrument that concentrates the light.",
           "The white-light solar filter is placed in front of the aperture of the telescope or binoculars, before the light enters the optics. It attenuates the whole spectrum evenly down to a safe level and shows the photosphere: the disk, sunspots, and granulation. It is like wearing very dark sunglasses for the whole spectrum at once.",
-          "The H-alpha telescope is a complete dedicated system, not a mere filter: it combines energy rejection, the etalon, and the blocking filter to keep a single slit of color and reveal the chromosphere. The first attenuates everything equally; the second selects one color. They are tools for different purposes, not interchangeable.",
+          "The H‑alpha telescope is a complete dedicated system, not a mere filter: it combines energy rejection, the etalon, and the blocking filter to keep a single slit of color and reveal the chromosphere. The first attenuates everything equally; the second selects one color. They are tools for different purposes, not interchangeable.",
         ],
         deepDive: {
           title: "Neutral attenuation versus energy rejection plus spectral selection",
           paragraphs: [
             "A white-light filter acts, in essence, like a neutral density (ND) filter: it attenuates all visible wavelengths more or less equally down to a safe level, preserving the shape of the spectrum but greatly reducing its intensity. What reaches you is a heavily darkened version of the whole Sun, in which you see the photosphere.",
-            "An H-alpha system does something qualitatively different in two steps: first it rejects energy (the ERF discards the bulk of the flux, especially infrared and ultraviolet) and then it selects the spectrum (the etalon and blocking filter pass only the H-alpha slit). It is not a uniform attenuation: it is a surgical selection of one color, which is exactly what lets you see the chromosphere rather than the photosphere.",
+            "An H‑alpha system does something qualitatively different in two steps: first it rejects energy (the ERF discards the bulk of the flux, especially infrared and ultraviolet) and then it selects the spectrum (the etalon and blocking filter pass only the H‑alpha slit). It is not a uniform attenuation: it is a surgical selection of one color, which is exactly what lets you see the chromosphere rather than the photosphere.",
           ],
         },
       },
@@ -651,8 +610,8 @@ export const siteCopy: Record<Locale, SiteCopy> = {
           body: "Any telescope, binoculars, or camera pointed at the Sun needs a proper front solar filter or must be part of a dedicated solar system. The light must be filtered before it enters the optics, not after.",
         },
         {
-          title: "An H-alpha telescope is not used without its blocking filter",
-          body: "The blocking filter (or blocking diagonal) is part of the safety system of an H-alpha telescope. It is never removed, and you never observe without it: it lets through residual light that is dangerous to the eye.",
+          title: "An H‑alpha telescope is not used without its blocking filter",
+          body: "The blocking filter (or blocking diagonal) is part of the safety system of an H‑alpha telescope. It is never removed, and you never observe without it: it lets through residual light that is dangerous to the eye.",
         },
         {
           title: "Solar filters are never improvised",
@@ -673,10 +632,10 @@ export const siteCopy: Record<Locale, SiteCopy> = {
     finalImage: {
       eyebrow: "Paying off the hook",
       heading: "Now you can read the image from the start",
-      lead: "This is the same H-alpha image we opened with. With everything above, each structure now has a name and an explanation.",
-      caption: "Full solar disk in H-alpha. Hover or tap the points to identify each structure.",
+      lead: "This is the same H‑alpha image we opened with. With everything above, each structure now has a name and an explanation.",
+      caption: "Full solar disk in H‑alpha. Hover or tap the points to identify each structure.",
       imageAlt:
-        "Solar disk in H-alpha with dark filaments, prominences at the limb, bright plages, and chromospheric texture.",
+        "Solar disk in H‑alpha with dark filaments, prominences at the limb, bright plages, and chromospheric texture.",
       annotations: [
         {
           id: "filaments",
@@ -711,22 +670,17 @@ export const siteCopy: Record<Locale, SiteCopy> = {
             "The fine mottling of the disk is the spicules and the chromospheric network: small jets of gas that give the surface its grainy look.",
         },
       ],
-      beforeAfter: {
-        beforeLabel: "White light",
-        afterLabel: "H-alpha",
-        instruction: "Drag the control to compare white light (photosphere, sunspots) with the H-alpha view (chromosphere, filaments, and prominences).",
-      },
     },
     glossary: {
       angstrom: {
         term: "ångström",
         short: "A very small length unit used in spectroscopy.",
-        detail: "One ångström is 0.1 nanometers. In H-alpha observing it describes extremely narrow filter bandwidths, below 0.5 Å.",
+        detail: "One ångström is 0.1 nanometers. In H‑alpha observing it describes extremely narrow filter bandwidths, below 0.5 Å.",
       },
       bandpass: {
         term: "bandpass",
         short: "The range of wavelengths a filter allows through.",
-        detail: "In H-alpha, a bandpass below 0.5 Å helps isolate the chromosphere and increase contrast in filaments and prominences.",
+        detail: "In H‑alpha, a bandpass below 0.5 Å helps isolate the chromosphere and increase contrast in filaments and prominences.",
       },
       etalon: {
         term: "etalon",
@@ -736,22 +690,22 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       blockingFilter: {
         term: "blocking filter",
         short: "A safety filter that blocks dangerous residual light.",
-        detail: "In visual or imaging H-alpha telescopes, the blocking filter is part of the safe system. It must not be removed or replaced with improvised parts.",
+        detail: "In visual or imaging H‑alpha telescopes, the blocking filter is part of the safe system. It must not be removed or replaced with improvised parts.",
       },
       chromosphere: {
         term: "chromosphere",
         short: "A thin layer of the Sun, above the visible surface.",
-        detail: "The chromosphere is a faint layer of hydrogen above the photosphere. It glows in H-alpha and is where filaments, plages, and prominences are seen.",
+        detail: "The chromosphere is a faint layer of hydrogen above the photosphere. It glows in H‑alpha and is where filaments, plages, and prominences are seen.",
       },
       fraunhofer: {
         term: "Fraunhofer lines",
         short: "Dark absorption lines in the solar spectrum.",
-        detail: "These are the dark stripes crossing the solar rainbow, each produced by the absorption of an element. H-alpha is hydrogen's absorption line at 656.28 nm.",
+        detail: "These are the dark stripes crossing the solar rainbow, each produced by the absorption of an element. H‑alpha is hydrogen's absorption line at 656.28 nm.",
       },
     },
     diagrams: {
       hydrogenLevels: {
-        caption: "Energy levels of hydrogen and the transition that produces H-alpha.",
+        caption: "Energy levels of hydrogen and the transition that produces H‑alpha.",
         aria: "Diagram of the energy levels of the hydrogen atom with the n=3 to n=2 transition highlighted.",
         axisEnergy: "Energy",
         level1: "n=1",
@@ -760,20 +714,20 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         level4: "n=4",
         level5: "n=5",
         level6: "n=6",
-        transitionLabel: "H-alpha · 656.28 nm",
+        transitionLabel: "H‑alpha · 656.28 nm",
         transitionNote: "The electron falls from n=3 to n=2 and emits red light.",
         balmerLabel: "Balmer series (to level n=2)",
       },
       sunLayers: {
-        caption: "Layers of the Sun: what white light sees and what H-alpha sees.",
+        caption: "Layers of the Sun: what white light sees and what H‑alpha sees.",
         aria: "Cross-section diagram of the Sun's layers, from the photosphere to the corona.",
         photosphere: "Photosphere",
         chromosphere: "Chromosphere",
         corona: "Corona",
         whiteLightLabel: "White light: sees the photosphere",
-        hAlphaLabel: "H-alpha: sees the chromosphere",
+        hAlphaLabel: "H‑alpha: sees the chromosphere",
         photosphereNote: "Bright, visible surface.",
-        chromosphereNote: "Thin layer that glows in H-alpha.",
+        chromosphereNote: "Thin layer that glows in H‑alpha.",
         coronaNote: "Faint outer atmosphere.",
       },
       etalon: {
@@ -791,7 +745,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         peakLabel: "Transmission peak",
       },
       opticalChain: {
-        caption: "The full optical chain of an H-alpha telescope.",
+        caption: "The full optical chain of an H‑alpha telescope.",
         aria: "Diagram of the optical chain: objective, ERF, etalon, blocking filter, and camera or eye.",
         sunlight: "Sunlight",
         objective: "Objective",
@@ -800,7 +754,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         blocking: "Blocking filter",
         camera: "Eye / camera",
         erfNote: "Rejects energy and heat.",
-        etalonNote: "Selects the H-alpha color.",
+        etalonNote: "Selects the H‑alpha color.",
         blockingNote: "Removes dangerous residual light.",
         energyDiscarded: "Energy discarded",
         erfMissing: "Missing: the etalon burns",
@@ -808,10 +762,10 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       },
       threeMethods: {
         caption: "Three methods for viewing the Sun safely.",
-        aria: "Comparison of three methods: eclipse glasses, white-light filter, and H-alpha telescope.",
+        aria: "Comparison of three methods: eclipse glasses, white-light filter, and H‑alpha telescope.",
         eclipseGlasses: "Eclipse glasses",
         whiteLight: "White-light filter",
-        hAlpha: "H-alpha telescope",
+        hAlpha: "H‑alpha telescope",
         eclipsePlacement: "In front of the eyes",
         whiteLightPlacement: "In front of the aperture",
         hAlphaPlacement: "Complete internal system",
@@ -821,8 +775,8 @@ export const siteCopy: Record<Locale, SiteCopy> = {
       },
       dopplerTuning: {
         caption: "Tuning and the Doppler effect: the etalon window over the line.",
-        aria: "Diagram of the H-alpha line shifting by the Doppler effect with the etalon's transmission window.",
-        lineLabel: "H-alpha line",
+        aria: "Diagram of the H‑alpha line shifting by the Doppler effect with the etalon's transmission window.",
+        lineLabel: "H‑alpha line",
         windowLabel: "Etalon window",
         blueshift: "Blueshift (approaching)",
         redshift: "Redshift (receding)",
@@ -839,7 +793,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
         transition: "Hydrogen transition",
       },
       tuningSimulator: {
-        aria: "Tuning simulator: adjust the width and offset of the etalon window over the H-alpha line and watch how the view changes.",
+        aria: "Tuning simulator: adjust the width and offset of the etalon window over the H‑alpha line and watch how the view changes.",
         width: "Bandpass width (FWHM)",
         offset: "Center offset",
         contrast: "Disk contrast",
@@ -848,34 +802,6 @@ export const siteCopy: Record<Locale, SiteCopy> = {
           prominence: "Prominences at the limb",
           washed: "Washed out: low contrast",
         },
-      },
-      lightPath: {
-        aria: "Animation of the light path through the optical chain of an H-alpha telescope.",
-        play: "Play",
-        pause: "Pause",
-        reset: "Reset",
-        stages: [
-          {
-            name: "Objective",
-            discards: "Collects all solar light and concentrates it into the instrument.",
-          },
-          {
-            name: "ERF",
-            discards: "Rejects most of the energy: infrared, ultraviolet, and heat. Only the red band around H-alpha passes through.",
-          },
-          {
-            name: "Etalon",
-            discards: "Selects the H-alpha slit via interference. All other colors are cancelled out.",
-          },
-          {
-            name: "Blocking filter",
-            discards: "Removes residual out-of-band light and the etalon's secondary orders. Protects the observer.",
-          },
-          {
-            name: "Eye / Camera",
-            discards: "Only H-alpha light from the chromosphere arrives: filaments, plages, and prominences at full contrast.",
-          },
-        ],
       },
       filterComparison: {
         aria: "Solar filter method comparator: select a method to see where it acts and what it reveals.",
@@ -899,7 +825,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
           },
           {
             id: "halpha",
-            name: "H-alpha telescope",
+            name: "H‑alpha telescope",
             where: "Complete internal system: front ERF + etalon + blocking filter before the eye or camera.",
             passes: "Only a 0.5 Å slit centered at 656.28 nm. Everything else is blocked.",
             layer: "Chromosphere: filaments, plages, prominences, and chromospheric texture.",
