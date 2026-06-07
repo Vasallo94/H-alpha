@@ -1,0 +1,21 @@
+---
+import type { Locale } from "../../i18n/routes";
+import { siteCopy } from "../../content/siteCopy";
+import DeepDive from "../DeepDive.astro";
+import HydrogenLevels from "../diagrams/HydrogenLevels.astro";
+import SunLayers from "../diagrams/SunLayers.astro";
+const { locale } = Astro.props as { locale: Locale };
+const copy = siteCopy[locale];
+const s = copy.sections.origin;
+---
+<section class="section" id="origin">
+  <div class="section__inner">
+    <p class="eyebrow">{s.eyebrow}</p>
+    <h2 class="section-title">{s.heading}</h2>
+    <p class="lead">{s.lead}</p>
+    {s.body.map((p) => <p>{p}</p>)}
+    <HydrogenLevels labels={copy.diagrams.hydrogenLevels} />
+    <SunLayers labels={copy.diagrams.sunLayers} />
+    {s.deepDive && <DeepDive deepDive={s.deepDive} />}
+  </div>
+</section>
