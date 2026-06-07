@@ -28,8 +28,8 @@ The site is static, free to host, and designed for GitHub Pages.
 ## Local Development
 
 ```bash
-npm ci
-npm run dev
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
 Open `http://127.0.0.1:4321/`.
@@ -37,11 +37,11 @@ Open `http://127.0.0.1:4321/`.
 ## Verification
 
 ```bash
-npm test
-npm run build
+pnpm test
+pnpm run build
 ```
 
-`npm test` runs Vitest and Playwright. The Playwright config starts the Astro dev server automatically.
+`pnpm test` runs Vitest and Playwright. The Playwright config starts the Astro dev server automatically.
 
 ## Deployment
 

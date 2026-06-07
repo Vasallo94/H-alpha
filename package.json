@@ -32,7 +32,15 @@
     "@playwright/test": "^1.60.0",
     "@types/katex": "^0.16.8",
     "@types/node": "^22.19.20",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
     "typescript": "^6.0.3",
     "vitest": "^4.1.8"
+  },
+  "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977",
+  "pnpm": {
+    "overrides": {
+      "yaml": "^2.8.3"
+    }
   }
 }
