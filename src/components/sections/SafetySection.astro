@@ -1,38 +1,29 @@
 ---
 import type { Locale } from "../../i18n/routes";
 import { siteCopy } from "../../content/siteCopy";
-
-interface Props {
-  locale: Locale;
-}
-
-const { locale } = Astro.props;
-const safety = siteCopy[locale].safety;
-const seasonal = safety.seasonalCallout;
-const seasonalSafetyTitleId = `seasonal-safety-title-${locale}`;
+const { locale } = Astro.props as { locale: Locale };
+const copy = siteCopy[locale];
+const s = copy.safety;
+const seasonalId = `seasonal-${locale}`;
 ---
 
 <section class="section" id="safety">
   <div class="section__inner">
-    <p class="eyebrow">{safety.eyebrow}</p>
-    <h2 class="section-title">{safety.heading}</h2>
+    <p class="eyebrow">{s.eyebrow}</p>
+    <h2 class="section-title">{s.heading}</h2>
     <ul class="safety-rules">
-      {
-        safety.rules.map((rule) => (
-          <li class="safety-rules__item">
-            <h3>{rule.title}</h3>
-            <p>{rule.body}</p>
-          </li>
-        ))
-      }
+      {s.rules.map((r) => (
+        <li class="safety-rules__item">
+          <strong>{r.title}</strong>
+          <p>{r.body}</p>
+        </li>
+      ))}
     </ul>
-    {
-      seasonal.enabled && (
-        <aside class="warning" role="note" aria-labelledby={seasonalSafetyTitleId}>
-          <h3 id={seasonalSafetyTitleId}>{seasonal.title}</h3>
-          <p>{seasonal.body}</p>
-        </aside>
-      )
-    }
+    {s.seasonalCallout.enabled && (
+      <aside class="warning" role="note" aria-labelledby={seasonalId}>
+        <h3 id={seasonalId}>{s.seasonalCallout.title}</h3>
+        <p>{s.seasonalCallout.body}</p>
+      </aside>
+    )}
   </div>
 </section>

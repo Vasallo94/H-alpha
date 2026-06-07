@@ -540,3 +540,7 @@ button, input { font: inherit; }
 .diagram { margin: 26px 0 0; }
 .diagram svg { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
 .diagram figcaption { color: var(--muted); margin-top: 10px; font-size: 0.92rem; }
+
+.safety-rules { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.safety-rules__item { border: 1px solid var(--line); border-left: 4px solid var(--solar); border-radius: 8px; background: var(--surface); padding: 16px 18px; }
+.safety-rules__item p { margin: 6px 0 0; color: var(--muted); }
