@@ -36,9 +36,21 @@ describe("Task 6 interactive spectrum and filter modules", () => {
     expect(filterComparisonSection).toContain("{filters.eyebrow}");
     expect(filterComparisonSection).toContain("{filters.heading}");
     expect(filterComparisonSection).toContain("{filters.lead}");
-    expect(filterComparisonSection).toMatch(/<FilterComparison\s+ariaLabel=\{filters\.ariaLabel\}\s+cards=\{filters\.cards\}\s+client:load\s+\/>/);
+    expect(filterComparisonSection).toMatch(/<FilterComparison\s+ariaLabel=\{filters\.ariaLabel\}\s+cards=\{filters\.cards\}\s+\/>/);
+    expect(filterComparisonSection).not.toContain("client:load");
     expect(filterComparisonSection).not.toContain("Eclipse glasses");
     expect(filterComparisonSection).not.toContain("Gafas de eclipse");
+  });
+
+  it("wires the spectrum explorer controls to live readout and marker help text", () => {
+    expect(spectrumExplorer).toMatch(/useId/);
+    expect(spectrumExplorer).toContain("aria-live=\"polite\"");
+    expect(spectrumExplorer).toContain("aria-describedby={`${readoutId} ${markerDescriptionId}`}");
+    expect(spectrumExplorer).toContain("id={readoutId}");
+    expect(spectrumExplorer).toContain("id={markerDescriptionId}");
+    expect(spectrumExplorer).toContain("copy.markerDescription");
+    expect(spectrumExplorer).not.toContain('id="spectrum-wavelength"');
+    expect(spectrumExplorer).not.toContain("onInput=");
   });
 
   it("wires the filter section between spectrum and optics on both localized pages", () => {
@@ -58,6 +70,7 @@ describe("Task 6 interactive spectrum and filter modules", () => {
     expect(css).toMatch(/\.spectrum-explorer__line\s*\{/);
     expect(css).toMatch(/\.filter-comparison\s*\{[^}]*grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\);/s);
     expect(css).toMatch(/\.filter-comparison__card\s*\{/);
+    expect(css).toMatch(/\.sr-only\s*\{/);
     expect(css).toMatch(/@media\s*\(max-width:\s*860px\)\s*\{[\s\S]*\.filter-comparison\s*\{[^}]*grid-template-columns:\s*1fr;/s);
   });
 });

@@ -1,10 +1,11 @@
-import { type ChangeEvent, type InputEvent, useMemo, useState } from "react";
+import { type ChangeEvent, useId, useMemo, useState } from "react";
 
 type SpectrumExplorerCopy = {
   ariaLabel: string;
   label: string;
   body: string;
   lineLabel: string;
+  markerDescription: string;
   controlLabel: string;
   selectedLabel: string;
 };
@@ -21,10 +22,14 @@ const getPosition = (wavelength: number) =>
   ((wavelength - MIN_WAVELENGTH) / (MAX_WAVELENGTH - MIN_WAVELENGTH)) * 100;
 
 export default function SpectrumExplorer({ copy }: SpectrumExplorerProps) {
+  const baseId = useId();
+  const inputId = `${baseId}-wavelength`;
+  const readoutId = `${baseId}-readout`;
+  const markerDescriptionId = `${baseId}-marker-description`;
   const [selectedWavelength, setSelectedWavelength] = useState(H_ALPHA_WAVELENGTH);
   const selectedPosition = useMemo(() => getPosition(selectedWavelength), [selectedWavelength]);
   const hAlphaPosition = getPosition(H_ALPHA_WAVELENGTH);
-  const updateSelectedWavelength = (event: ChangeEvent<HTMLInputElement> | InputEvent<HTMLInputElement>) => {
+  const updateSelectedWavelength = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedWavelength(Number(event.currentTarget.value));
   };
 
@@ -35,7 +40,12 @@ export default function SpectrumExplorer({ copy }: SpectrumExplorerProps) {
           <p className="spectrum-explorer__label">{copy.label}</p>
           <p>{copy.body}</p>
         </div>
-        <output className="spectrum-explorer__readout" htmlFor="spectrum-wavelength">
+        <output
+          aria-live="polite"
+          className="spectrum-explorer__readout"
+          htmlFor={inputId}
+          id={readoutId}
+        >
           {copy.selectedLabel}: {selectedWavelength.toFixed(0)} nm
         </output>
       </div>
@@ -57,17 +67,21 @@ export default function SpectrumExplorer({ copy }: SpectrumExplorerProps) {
         <span>700 nm</span>
       </div>
 
-      <label className="spectrum-explorer__control" htmlFor="spectrum-wavelength">
+      <p className="sr-only" id={markerDescriptionId}>
+        {copy.markerDescription}
+      </p>
+
+      <label className="spectrum-explorer__control" htmlFor={inputId}>
         <span>{copy.controlLabel}</span>
         <input
-          id="spectrum-wavelength"
+          aria-describedby={`${readoutId} ${markerDescriptionId}`}
+          id={inputId}
           max={MAX_WAVELENGTH}
           min={MIN_WAVELENGTH}
           step="1"
           type="range"
           value={Math.round(selectedWavelength)}
           onChange={updateSelectedWavelength}
-          onInput={updateSelectedWavelength}
         />
       </label>
     </div>

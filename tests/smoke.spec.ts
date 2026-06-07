@@ -25,3 +25,17 @@ test("updates the Spanish spectrum explorer readout", async ({ page }) => {
 
   await expect(page.getByText("Selección: 520 nm")).toBeVisible();
 });
+
+test("renders the Spanish filter comparison as three safety-focused cards", async ({ page }) => {
+  await page.goto("/");
+
+  const filterComparison = page.getByRole("list", { name: "Comparación de tipos de filtros solares" });
+
+  await expect(filterComparison.getByRole("listitem")).toHaveCount(3);
+  await expect(filterComparison).toContainText("Gafas de eclipse");
+  await expect(filterComparison).toContainText("ISO 12312-2");
+  await expect(filterComparison).toContainText("Filtro telescópico de luz blanca");
+  await expect(filterComparison).toContainText("Apertura frontal");
+  await expect(filterComparison).toContainText("blocking filter");
+  await expect(filterComparison).toContainText("seguridad");
+});

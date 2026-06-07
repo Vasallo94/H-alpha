@@ -52,6 +52,7 @@ describe("site copy", () => {
         body: expect.any(String),
         label: expect.any(String),
         lineLabel: expect.any(String),
+        markerDescription: expect.any(String),
       }),
     );
     expect(siteCopy.en.sections.spectrum.explorer).toEqual(
@@ -60,6 +61,7 @@ describe("site copy", () => {
         body: expect.any(String),
         label: expect.any(String),
         lineLabel: expect.any(String),
+        markerDescription: expect.any(String),
       }),
     );
     expect(siteCopy.es.sections.filters.cards).toHaveLength(3);

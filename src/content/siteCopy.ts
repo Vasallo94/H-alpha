@@ -18,6 +18,7 @@ type SpectrumExplorerCopy = {
   label: string;
   body: string;
   lineLabel: string;
+  markerDescription: string;
   controlLabel: string;
   selectedLabel: string;
 };
@@ -90,6 +91,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
           label: "Panel espectral",
           body: "Mueve el selector para ver lo estrecha que es la ventana H-alpha dentro del espectro visible.",
           lineLabel: "Línea H-alpha: 656,28 nm",
+          markerDescription: "La marca fija de H-alpha permanece en 656,28 nm mientras el selector cambia la longitud de onda elegida.",
           controlLabel: "Longitud de onda seleccionada",
           selectedLabel: "Selección",
         },
@@ -181,6 +183,7 @@ export const siteCopy: Record<Locale, SiteCopy> = {
           label: "Spectrum panel",
           body: "Move the selector to see how narrow the H-alpha window is within the visible spectrum.",
           lineLabel: "H-alpha line: 656.28 nm",
+          markerDescription: "The fixed H-alpha marker stays at 656.28 nm while the slider changes the selected wavelength.",
           controlLabel: "Selected wavelength",
           selectedLabel: "Selection",
         },
