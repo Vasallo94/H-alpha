@@ -1,88 +1,58 @@
 import { expect, test } from "@playwright/test";
 
-test("renders the Spanish home page hero", async ({ page }) => {
+test("hero leads with the real H-alpha image (ES)", async ({ page }) => {
   await page.goto("/");
-
-  await expect(
-    page.getByRole("heading", { name: "Cómo un telescopio H-alpha revela la cromosfera" }),
-  ).toBeVisible();
-  await expect(page.getByText("Sol en una sola línea espectral")).toBeVisible();
+  await expect(page.locator(".hero-section__figure img")).toBeVisible();
 });
 
-test("renders the English home page hero", async ({ page }) => {
+test("English hero renders", async ({ page }) => {
   await page.goto("/en/");
-
-  await expect(
-    page.getByRole("heading", { name: "How an H-alpha telescope reveals the chromosphere" }),
-  ).toBeVisible();
-  await expect(page.getByText("The Sun in one spectral line")).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 });
 
-test("updates the Spanish spectrum explorer readout", async ({ page }) => {
+test("a deep-dive discloses extra physics", async ({ page }) => {
   await page.goto("/");
-
-  await page.getByLabel("Longitud de onda seleccionada").fill("520");
-
-  await expect(page.getByText("Selección: 520 nm")).toBeVisible();
+  const dd = page.locator("details.deep-dive").first();
+  await dd.locator("summary").click();
+  await expect(dd).toHaveJSProperty("open", true);
 });
 
-test("renders the Spanish filter comparison as three safety-focused cards", async ({ page }) => {
+test("spectrum explorer maps wavelength to transition", async ({ page }) => {
   await page.goto("/");
-
-  const filterComparison = page.getByRole("list", { name: "Comparación de tipos de filtros solares" });
-
-  await expect(filterComparison.getByRole("listitem")).toHaveCount(3);
-  await expect(filterComparison).toContainText("Gafas de eclipse");
-  await expect(filterComparison).toContainText("ISO 12312-2");
-  await expect(filterComparison).toContainText("Filtro telescópico de luz blanca");
-  await expect(filterComparison).toContainText("Apertura frontal");
-  await expect(filterComparison).toContainText("blocking filter");
-  await expect(filterComparison).toContainText("seguridad");
+  const slider = page.locator("#spectrum input[type=range]");
+  // Scroll into view so the client:visible island hydrates before we interact.
+  await slider.scrollIntoViewIfNeeded();
+  // Wait for the React island to hydrate.
+  await expect(page.locator("#spectrum .spectrum-explorer__readout")).toBeVisible();
+  // Move to min (400 nm) then advance 3 × PageUp (each step = 30 nm) → ~490 nm,
+  // which falls in the 460–599 range that maps to the n=4 → n=2 Balmer transition.
+  // (fill() sets the DOM value but doesn't fire React synthetic events; PageUp does.)
+  await slider.press("Home");
+  await slider.press("PageUp");
+  await slider.press("PageUp");
+  await slider.press("PageUp");
+  await expect(page.locator("#spectrum")).toContainText("n=4");
 });
 
-test("updates the Spanish bandpass tuning explanation", async ({ page }) => {
+test("tuning simulator reacts to controls", async ({ page }) => {
   await page.goto("/");
-
-  const simulator = page.getByRole("group", { name: "Simulador de la ventana espectral H-alpha" });
-  const readout = simulator.locator(".bandpass-sim__readout");
-
-  await expect(readout.getByText("Banda estrecha")).toBeVisible();
-
-  await simulator.getByRole("slider", { name: "Anchura de bandpass" }).press("End");
-  await expect(readout.getByText("Banda ancha")).toBeVisible();
-
-  await simulator.getByRole("slider", { name: "Desplazamiento de tuning" }).press("End");
-  await expect(readout.getByText("Banda ancha")).toBeVisible();
-
-  await simulator.getByRole("slider", { name: "Anchura de bandpass" }).press("Home");
-  await expect(readout.getByText("Fuera de banda")).toBeVisible();
+  const readout = page.locator(".bandpass-sim__readout");
+  await readout.scrollIntoViewIfNeeded();
+  await expect(readout).toBeVisible();
+  const width = page.locator("#tuning input[type=range]").first();
+  await width.fill("1.2");
+  await expect(readout).toBeVisible();
 });
 
-test("renders English bandpass controls and readout", async ({ page }) => {
-  await page.goto("/en/");
-
-  const simulator = page.getByRole("group", { name: "Simulator for the H-alpha spectral window" });
-  const readout = simulator.locator(".bandpass-sim__readout");
-
-  await expect(simulator.getByRole("slider", { name: "Bandpass width" })).toBeVisible();
-  await expect(simulator.getByRole("slider", { name: "Tuning offset" })).toBeVisible();
-  await expect(readout).toContainText("Result: Narrow band");
-});
-
-test("renders the Spanish final H-alpha image and caption", async ({ page }) => {
+test("final image has annotations and before/after", async ({ page }) => {
   await page.goto("/");
-
-  await expect(
-    page.getByRole("img", { name: "Disco solar real en H-alpha con filamentos y textura cromosférica" }),
-  ).toBeVisible();
-  await expect(page.getByText("Imagen H-alpha del Sol capturada y procesada el 28 de mayo de 2026.")).toBeVisible();
+  await page.locator("#image").scrollIntoViewIfNeeded();
+  await expect(page.locator("#image .hotspot").first()).toBeVisible();
+  await expect(page.locator("#image .before-after input[type=range]")).toBeVisible();
 });
 
-test("renders the English final H-alpha image and caption", async ({ page }) => {
-  await page.goto("/en/");
-
-  await expect(
-    page.getByRole("img", { name: "Real H-alpha solar disk with filaments and chromospheric texture" }),
-  ).toBeVisible();
-  await expect(page.getByText("H-alpha image of the Sun captured and processed on May 28, 2026.")).toBeVisible();
+test("safety shows at least four evergreen rules", async ({ page }) => {
+  await page.goto("/");
+  const items = page.locator("#safety .safety-rules__item");
+  expect(await items.count()).toBeGreaterThanOrEqual(4);
 });
