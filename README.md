@@ -48,10 +48,3 @@ pnpm run build
 GitHub Actions handles everything: `ci.yml` runs tests and the production build on every push and PR, while `deploy-pages.yml` deploys `dist/` to GitHub Pages from `main`.
 
 The Pages project lives under a sub-path, so the deploy sets `PUBLIC_BASE_PATH=/H-alpha`. For a custom domain at the site root, drop that variable or set it to `/`.
-
-## Author
-
-Built by [Enrique Vasallo](https://www.linkedin.com/in/enrique-vasallo/).
-
-- GitHub: [Vasallo94](https://github.com/Vasallo94)
-- LinkedIn: [enrique-vasallo](https://www.linkedin.com/in/enrique-vasallo/)
