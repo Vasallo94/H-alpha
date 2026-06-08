@@ -5,7 +5,7 @@
 
 Educational bilingual website explaining how hydrogen-alpha solar telescopes work: the Hα spectral line, Fabry-Perot etalons, optical safety, solar filters, Doppler tuning, and what each structure means in a real Hα image of the Sun.
 
-The site is static, free to host, and designed for GitHub Pages.
+**Live site → [vasallo94.github.io/H-alpha](https://vasallo94.github.io/H-alpha/)**
 
 ## Features
 
@@ -45,18 +45,9 @@ pnpm run build
 
 ## Deployment
 
-The repository includes two workflows:
+GitHub Actions handles everything: `ci.yml` runs tests and the production build on every push and PR, while `deploy-pages.yml` deploys `dist/` to GitHub Pages from `main`.
 
-- `.github/workflows/ci.yml`: verifies tests and production build on pushes and pull requests.
-- `.github/workflows/deploy-pages.yml`: builds and deploys `dist/` to GitHub Pages from `main`.
-
-For the GitHub Pages project URL `https://vasallo94.github.io/H-alpha/`, the deploy workflow sets:
-
-```bash
-PUBLIC_BASE_PATH=/H-alpha
-```
-
-For a custom domain at the root of a site, remove that environment variable or set it to `/`.
+The Pages project lives under a sub-path, so the deploy sets `PUBLIC_BASE_PATH=/H-alpha`. For a custom domain at the site root, drop that variable or set it to `/`.
 
 ## Author
 
