@@ -1,17 +1,25 @@
 import { expect, test } from "@playwright/test";
+import type { Page } from "@playwright/test";
+
+const staticBasePath = (process.env.PUBLIC_BASE_PATH ?? "").replace(/\/$/, "");
+const withStaticBasePath = (path: string) => `${staticBasePath}${path}`;
+
+async function gotoHome(page: Page) {
+  await page.goto(".");
+}
 
 test("hero leads with the real Hα image (ES)", async ({ page }) => {
-  await page.goto("/");
+  await gotoHome(page);
   await expect(page.locator(".hero-section__figure img")).toBeVisible();
 });
 
 test("English hero renders", async ({ page }) => {
-  await page.goto("/en/");
+  await page.goto("en/");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 });
 
 test("a deep-dive discloses extra physics", async ({ page }) => {
-  await page.goto("/");
+  await gotoHome(page);
   const dd = page.locator("details.deep-dive").first();
   await dd.locator("summary").click();
   await expect(dd).toHaveJSProperty("open", true);
@@ -19,14 +27,14 @@ test("a deep-dive discloses extra physics", async ({ page }) => {
 });
 
 test("etalon diagram names orders and the prefilter window", async ({ page }) => {
-  await page.goto("/");
+  await gotoHome(page);
   await page.locator("#etalon").scrollIntoViewIfNeeded();
   await expect(page.locator("#etalon")).toContainText("órdenes");
   await expect(page.locator("#etalon")).toContainText("Prefiltro");
 });
 
 test("spectrum explorer maps wavelength to transition", async ({ page }) => {
-  await page.goto("/");
+  await gotoHome(page);
   const slider = page.locator("#spectrum input[type=range]");
   // Scroll into view so the client:visible island hydrates before we interact.
   await slider.scrollIntoViewIfNeeded();
@@ -42,7 +50,7 @@ test("spectrum explorer maps wavelength to transition", async ({ page }) => {
 });
 
 test("tuning section keeps the diagram without the interactive simulator", async ({ page }) => {
-  await page.goto("/");
+  await gotoHome(page);
   await page.locator("#tuning").scrollIntoViewIfNeeded();
   await expect(page.locator("#tuning .diagram svg").first()).toBeVisible();
   await expect(page.locator("#tuning")).toContainText("Centro Hα");
@@ -55,18 +63,18 @@ test("tuning section keeps the diagram without the interactive simulator", async
 });
 
 test("filter comparison uses real images with attribution", async ({ page }) => {
-  await page.goto("/");
+  await gotoHome(page);
   await page.locator("#filters").scrollIntoViewIfNeeded();
   const image = page.locator("#filters .filter-comparison__photo img");
   await expect(image).toBeVisible();
-  await expect(image).toHaveAttribute("src", "/images/filter-eclipse-glasses.jpg");
+  await expect(image).toHaveAttribute("src", withStaticBasePath("/images/filter-eclipse-glasses.jpg"));
   await expect(page.locator("#filters .filter-comparison__photo figcaption")).toContainText(
     "Wikimedia Commons",
   );
 });
 
 test("final image has annotations", async ({ page }) => {
-  await page.goto("/");
+  await gotoHome(page);
   await page.locator("#image").scrollIntoViewIfNeeded();
   await expect(page.locator("#image .hotspot").first()).toBeVisible();
   await expect(
@@ -75,13 +83,13 @@ test("final image has annotations", async ({ page }) => {
 });
 
 test("safety shows seven evergreen rules", async ({ page }) => {
-  await page.goto("/");
+  await gotoHome(page);
   const items = page.locator("#safety .safety-rules__item");
   await expect(items).toHaveCount(7);
 });
 
 test("sun layer leaders target named layers", async ({ page }) => {
-  await page.goto("/");
+  await gotoHome(page);
   await page.locator(".sun-layers").scrollIntoViewIfNeeded();
   await expect(page.locator(".sun-layers [data-layer='photosphere']")).toHaveCount(1);
   await expect(page.locator(".sun-layers [data-layer='chromosphere']")).toHaveCount(1);
@@ -89,7 +97,7 @@ test("sun layer leaders target named layers", async ({ page }) => {
 });
 
 test("footer uses icon-only social profile links", async ({ page }) => {
-  await page.goto("/");
+  await gotoHome(page);
   const github = page.locator(".site-footer__links a[href='https://github.com/Vasallo94']");
   const linkedin = page.locator(".site-footer__links a[href='https://www.linkedin.com/in/enrique-vasallo/']");
   await expect(github).toHaveAttribute("aria-label", "GitHub");
