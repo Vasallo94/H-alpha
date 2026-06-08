@@ -13,6 +13,18 @@ test("hero leads with the real Hα image (ES)", async ({ page }) => {
   await expect(page.locator(".hero-section__figure img")).toBeVisible();
 });
 
+test("favicon links respect the static base path", async ({ page }) => {
+  await gotoHome(page);
+  await expect(page.locator("link[rel~='icon'][type='image/svg+xml']")).toHaveAttribute(
+    "href",
+    withStaticBasePath("/favicon.svg"),
+  );
+  await expect(page.locator("link[rel='shortcut icon']")).toHaveAttribute(
+    "href",
+    withStaticBasePath("/favicon.ico"),
+  );
+});
+
 test("English hero renders", async ({ page }) => {
   await page.goto("en/");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
